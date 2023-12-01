@@ -1,0 +1,11 @@
+{
+    "type": "the_matrix:dust_world",
+    "generator": {
+        "type": "minecraft:noise",
+        "settings": "the_matrix:robot_world",
+        "biome_source": {
+            "type": "minecraft:multi_noise",
+            "preset": "minecraft:overworld"
+        }
+    }
+}
