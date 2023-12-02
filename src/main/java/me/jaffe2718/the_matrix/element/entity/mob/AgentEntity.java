@@ -24,7 +24,7 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
     // public static final TrackedData<Integer> ATTACKING_TICKS = DataTracker.registerData(AgentEntity.class, TrackedDataHandlerRegistry.INTEGER);
     // public static final TrackedData<Boolean> FIST_OR_KICK = DataTracker.registerData(AgentEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    public static DefaultAttributeContainer.Builder createAgentAttributes() {
+    public static DefaultAttributeContainer.Builder createAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5.0D)
@@ -49,10 +49,11 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2D, false));
-        this.goalSelector.add(3, new WanderAroundFarGoal(this, 1.0D));
-        this.goalSelector.add(3, new LookAroundGoal(this));
-        this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 32.0F));
+        this.goalSelector.add(2, new RevengeGoal(this));
+        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.add(4, new WanderAroundFarGoal(this, 1.0D));
+        this.goalSelector.add(4, new LookAroundGoal(this));
+        this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 32.0F));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
     }
 
@@ -60,6 +61,13 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
     public boolean tryAttack(Entity target) {
         this.handSwinging = true;
         return super.tryAttack(target);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.fallDistance = 0.0F;
+        this.setAir(this.getMaxAir());
     }
 
     @Override

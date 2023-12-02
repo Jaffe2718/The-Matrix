@@ -1,9 +1,9 @@
 package me.jaffe2718.the_matrix.client;
 
-import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.client.render.entity.AgentRenderer;
+import me.jaffe2718.the_matrix.client.render.entity.RobotSentinelRenderer;
+import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientEntityEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class TheMatrixClient implements ClientModInitializer {
@@ -13,5 +13,6 @@ public class TheMatrixClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         EntityRendererRegistry.register(EntityRegistry.AGENT, AgentRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.ROBOT_SENTINEL, RobotSentinelRenderer::new);
     }
 }

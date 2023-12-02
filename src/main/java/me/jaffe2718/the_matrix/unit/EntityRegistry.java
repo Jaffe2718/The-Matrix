@@ -1,9 +1,8 @@
 package me.jaffe2718.the_matrix.unit;
 
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
+import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -17,12 +16,30 @@ public class EntityRegistry {
     public static final EntityType<AgentEntity> AGENT = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(MOD_ID, "agent"),
-            FabricEntityTypeBuilder
-                    .create(SpawnGroup.MONSTER, AgentEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.6F, 1.95F)).build()
+            EntityType.Builder.create(AgentEntity::new, SpawnGroup.MONSTER)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(0.6F, 1.95F)
+                    .build("agent")
+//            FabricEntityTypeBuilder
+//                    .create(SpawnGroup.MONSTER, AgentEntity::new)
+//                    .trackRangeBlocks(64)
+//                    .fireImmune()
+//                    .dimensions(EntityDimensions.fixed(0.6F, 1.95F)).build()
+    );
+
+    public static final EntityType<RobotSentinelEntity> ROBOT_SENTINEL = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "robot_sentinel"),
+            EntityType.Builder.create(RobotSentinelEntity::new, SpawnGroup.MONSTER)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(2.0F, 1.4F)
+                    .build("robot_sentinel")
     );
 
     public static void register() {
-        FabricDefaultAttributeRegistry.register(AGENT, AgentEntity.createAgentAttributes());
+        FabricDefaultAttributeRegistry.register(AGENT, AgentEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(ROBOT_SENTINEL, RobotSentinelEntity.createAttributes());
     }
 }
