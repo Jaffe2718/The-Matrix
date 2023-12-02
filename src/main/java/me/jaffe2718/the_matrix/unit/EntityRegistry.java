@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
-public class EntityRegistry {
+public abstract class EntityRegistry {
 
     public static final EntityType<AgentEntity> AGENT = Registry.register(
             Registries.ENTITY_TYPE,

@@ -1,0 +1,8 @@
+{
+    "robot_sentinel_ambient": {
+        "subtitle": "sound.the_matrix.robot_sentinel_ambient",
+        "sounds": [
+            "the_matrix:robot_sentinel_ambient"
+        ]
+    }
+}

@@ -1,5 +1,8 @@
 {
+    "entity.the_matrix.agent": "Agent",
+    "entity.the_matrix.robot_sentinel": "Robot Sentinel",
     "item.the_matrix.agent_spawn_egg": "Agent Spawn Egg",
+    "item.the_matrix.robot_sentinel_spawn_egg": "Robot Sentinel Spawn Egg",
     "item.the_matrix.v_mask": "V Mask",
     "itemGroup.the_matrix": "The Matrix"
 

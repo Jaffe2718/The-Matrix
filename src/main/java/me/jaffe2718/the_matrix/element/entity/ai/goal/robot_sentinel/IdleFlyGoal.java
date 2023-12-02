@@ -2,7 +2,6 @@ package me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel;
 
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class IdleFlyGoal extends FlyMovementGoal {
@@ -20,19 +19,23 @@ public class IdleFlyGoal extends FlyMovementGoal {
     }
 
     @Override
+    public boolean canStop() {
+        return this.mob.canContinueAttacking();
+    }
+
+    @Override
     public void start() {
         this.adjustDirection();
     }
 
     @Override
     public void tick() {
-        if (this.mob.getRandom().nextInt(100) == 0) {
+        if (this.mob.getRandom().nextInt(100) == 0 || this.mob.isOnGround() || this.mob.isTouchingWater()) {
             this.adjustDirection();
         }
         Vec3d velocity = this.calculateVelocity();
         this.mob.setVelocity(velocity);
-        this.mob.setYaw((float) Math.toDegrees(MathHelper.atan2(velocity.getZ(), velocity.getX())) - 90.0F);
-
+        this.adjustFacing();
     }
 
     private void adjustDirection() {

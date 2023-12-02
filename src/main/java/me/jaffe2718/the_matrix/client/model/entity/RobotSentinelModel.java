@@ -8,7 +8,7 @@ import software.bernie.geckolib.model.GeoModel;
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class RobotSentinelModel extends GeoModel<RobotSentinelEntity> {
-    private static final String VERTICAL_SPEED = "query.vertical_speed";
+    private static final String DEPRESSION = "variable.depression";
     @Override
     public Identifier getModelResource(RobotSentinelEntity animatable) {
         return new Identifier(MOD_ID, "geo/entity/robot_sentinel.geo.json");
@@ -28,9 +28,21 @@ public class RobotSentinelModel extends GeoModel<RobotSentinelEntity> {
     public void applyMolangQueries(RobotSentinelEntity animatable, double animTime) {  // TODO: check if this is actually working
         super.applyMolangQueries(animatable, animTime);
         MolangParser parser = MolangParser.INSTANCE;
-        parser.setMemoizedValue(VERTICAL_SPEED, () -> animatable.getVelocity().getY());
-//        System.out.println(animatable.getVelocity().x + " " + animatable.getVelocity().y + " " + animatable.getVelocity().z);
-//        System.out.println(parser.getVariable(MolangQueries.GROUND_SPEED).get());
-//        System.out.println(parser.getVariable(VERTICAL_SPEED).get());
+        parser.setMemoizedValue(DEPRESSION, () -> {      // register depression variable to molang parser
+            var velocity = animatable.getVelocity();
+            double hSpeed = Math.sqrt(velocity.getX() * velocity.getX() + velocity.getZ() * velocity.getZ());
+            double vSpeed = velocity.getY();
+            if (Math.abs(hSpeed) < 1E-3) {   // 1E-3 is error limit
+                if (vSpeed > 1E-3) {
+                    return -90.0;
+                } else if (vSpeed < -1E-3) {
+                    return 90.0;
+                } else {
+                    return 0.0;
+                }
+            } else {
+                return Math.toDegrees(-Math.atan(vSpeed / hSpeed));
+            }
+        });
     }
 }
