@@ -2,16 +2,23 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 
 import me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel.IdleFlyGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel.RobotSentinelAttackGoal;
+import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,9 +30,11 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
 
+    // TODO: add more animations
+    static final RawAnimation ATTACK_0 = RawAnimation.begin().then("animation.robot_sentinel.attack_0", Animation.LoopType.DEFAULT);
     static final RawAnimation COMMON = RawAnimation.begin().then("animation.robot_sentinel.common", Animation.LoopType.DEFAULT);
 
-    public int attackCooldown = 0;
+    private int attackCooldown = 0;
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return HostileEntity.createMobAttributes()
@@ -65,24 +74,49 @@ public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
         if (this.attackCooldown > 0) {
             this.attackCooldown--;
         }
+        if (!this.getWorld().isClient() &&
+                this.getTarget() != null &&
+                this.canContinueAttacking() &&
+                MathUnit.isBetween(this.distanceTo(this.getTarget()), 7.0D, 11.0D) &&
+                MathUnit.vec3dCos(this.getVelocity(),
+                        MathUnit.relativePos(this.getPos(), this.getTarget().getPos())) > 0.5D) {
+                this.swingHand(this.getActiveHand(), true);
+        }
+
+    }
+
+    @Override
+    public void onDamaged(DamageSource damageSource) {
+        super.onDamaged(damageSource);
+        if (damageSource.getAttacker() != null) {
+            if (damageSource.getAttacker() instanceof LivingEntity livingEntity) {
+                this.setTarget(livingEntity);
+            } else if (damageSource.getAttacker() instanceof ProjectileEntity projectileEntity) {
+                if (projectileEntity.getOwner() instanceof LivingEntity livingEntity) {
+                    this.setTarget(livingEntity);
+                }
+            }
+        }
     }
 
     @Override
     public void registerControllers(AnimatableManager.@NotNull ControllerRegistrar controllers) {
-        // TODO: register controllers
         controllers.add(
-                new AnimationController<>(this, "common", 0, this::predicate)
+                new AnimationController<>(this, "Robot Sentinel Controller", this::handleAnimation)//,
         );
+    }
+
+    private PlayState handleAnimation(AnimationState<RobotSentinelEntity> state) {
+        if (this.handSwinging || (state.isCurrentAnimation(ATTACK_0) && !state.getController().hasAnimationFinished())) {
+            return state.setAndContinue(ATTACK_0);
+        } else {
+            return state.setAndContinue(COMMON);
+        }
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
-    }
-
-    private PlayState predicate(@NotNull AnimationState<RobotSentinelEntity> state) {
-        state.setAnimation(COMMON);
-        return PlayState.CONTINUE;
     }
 
     public boolean canContinueAttacking() {
@@ -95,6 +129,7 @@ public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
     @Override
     public boolean tryAttack(Entity target) {
         this.attackCooldown = 100;   // reset attack cooldown
+        this.swingHand(this.getActiveHand(), true);
         return super.tryAttack(target);
     }
 
@@ -102,5 +137,20 @@ public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
     @Override
     protected SoundEvent getAmbientSound() {
         return SoundEventRegistry.ROBOT_SENTINEL_AMBIENT;
+    }
+
+    @Override
+    public boolean canSee(@NotNull Entity target) {
+        if (target.getWorld() != this.getWorld()) {
+            return false;
+        } else {
+            Vec3d myEye = new Vec3d(this.getX(), this.getEyeY(), this.getZ());
+            Vec3d targetEye = new Vec3d(target.getX(), target.getEyeY(), target.getZ());
+            if (targetEye.distanceTo(myEye) > 256.0D) {
+                return false;
+            } else {
+                return this.getWorld().raycast(new RaycastContext(myEye, targetEye, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, this)).getType() == HitResult.Type.MISS;
+            }
+        }
     }
 }

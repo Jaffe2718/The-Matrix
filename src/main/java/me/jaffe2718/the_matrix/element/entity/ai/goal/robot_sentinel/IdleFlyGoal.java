@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel;
 
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
+import me.jaffe2718.the_matrix.unit.MathUnit;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -66,7 +67,7 @@ public class IdleFlyGoal extends FlyMovementGoal {
                 this.circlingCenter.getY(),
                 this.circlingCenter.getZ()
         );
-        Vec3d relativeVec = this.mob.getPos().subtract(centerVec);
+        Vec3d relativeVec = MathUnit.relativePos(centerVec, this.mob.getPos());
         if (relativeVec.length() >= this.rotationVec.length()) {
             return this.rotationVec.crossProduct(relativeVec).normalize().multiply(1.2D);
         } else {

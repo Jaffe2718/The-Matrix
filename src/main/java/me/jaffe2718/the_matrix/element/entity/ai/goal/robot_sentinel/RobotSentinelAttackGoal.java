@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel;
 
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
+import me.jaffe2718.the_matrix.unit.MathUnit;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
@@ -30,13 +31,12 @@ public class RobotSentinelAttackGoal extends FlyMovementGoal {
             this.mob.getNavigation().stop();
             super.tick();
         }
-        System.out.println(this.mob.canContinueAttacking() + " " + this.mob.getVelocity().y);    // TODO: remove after debugging
         this.mob.setVelocity(this.calculateVelocity(Objects.requireNonNull(this.mob.getTarget()).getPos()));
         this.adjustFacing();
     }
 
     private Vec3d calculateVelocity(@NotNull Vec3d destination) {
-        Vec3d relativeVec = destination.subtract(this.mob.getPos());
+        Vec3d relativeVec = MathUnit.relativePos(this.mob.getPos(), destination);
         double hDist_2 = relativeVec.getX() * relativeVec.getX() + relativeVec.getZ() * relativeVec.getZ();
         int sign = this.mob.canContinueAttacking() ? 1 : -1;    // to make the sentinel retreat when it's not attacking
         if (hDist_2 < 100.0) {   // approach the target directly
