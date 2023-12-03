@@ -8,9 +8,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class RobotSentinelAttackGoal extends FlyMovementGoal {
+public class AttackGoal extends FlyMovementGoal {
 
-    public RobotSentinelAttackGoal(RobotSentinelEntity mob) {
+    public AttackGoal(RobotSentinelEntity mob) {
         super(mob);
     }
 

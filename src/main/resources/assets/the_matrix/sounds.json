@@ -1,8 +1,22 @@
 {
-    "robot_sentinel_ambient": {
-        "subtitle": "sound.the_matrix.robot_sentinel_ambient",
+    "robot_sentinel_hurt": {
+        "subtitle": "sound.the_matrix.robot_sentinel_hurt",
         "sounds": [
-            "the_matrix:robot_sentinel_ambient"
+            {
+                "name": "the_matrix:robot_sentinel_hurt",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
+    "robot_sentinel_radar_detection": {
+        "subtitle": "sound.the_matrix.robot_sentinel_radar_detection",
+        "sounds": [
+            {
+                "name": "the_matrix:robot_sentinel_radar_detection",
+                "pitch": 1.0,
+                "stream": true
+            }
         ]
     }
 }

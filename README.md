@@ -45,7 +45,6 @@
       - [ ] Translations
 3. Robot World
    - [ ] Robots
-      - [ ] Robot Sentinel
       - [ ] The Matrix (boss)
       - [ ] Other robots
 4. End Virtual World
@@ -55,6 +54,20 @@
       - [ ] Zion Humans
       - [ ] Virtual Humans
    - [ ] Robot Sentinel (Zion & Robot World, Octopus)
+      - [x] Define Robot Sentinel entity
+      - [x] Model & Textures
+      - [ ] Animations
+         - [x] basic define
+         - [ ] advanced
+      - [ ] AI Goals
+         - [x] basic define
+         - [ ] advanced define
+      - [ ] Sound events
+         - [x] Ambient
+         - [x] Hurt
+         - [ ] Death
+      - [ ] Loot table
+      - [ ] Spawn conditions
 
 
 ### Items
