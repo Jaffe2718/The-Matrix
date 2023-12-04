@@ -1,15 +1,16 @@
 package me.jaffe2718.the_matrix.element.entity.mob;
 
 
+import me.jaffe2718.the_matrix.element.item.VMaskItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
@@ -71,20 +72,15 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
         this.setAir(this.getMaxAir());
     }
 
+    /**
+     * AgentEntity is invulnerable to all damage except a player wearing a VMaskItem or a creative player.
+     * */
     @Override
     public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
-        Entity attacker = damageSource.getAttacker();
-        if (attacker == null) {
-            return super.isInvulnerableTo(damageSource);
-        } else if (damageSource.getAttacker() instanceof PlayerEntity player) {
-            if (player.isCreative()) {
-                return true;
-            }
-            return super.isInvulnerableTo(damageSource);  // TODO: modify this
-        } else if (damageSource.getAttacker() instanceof ProjectileEntity projectile) {
-            return super.isInvulnerableTo(damageSource);
+        if (damageSource.getAttacker() instanceof PlayerEntity player) {
+            return !(player.getEquippedStack(EquipmentSlot.HEAD).getItem() instanceof VMaskItem) && !player.isCreative();
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -109,7 +105,7 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
      * @param controllers The object to register your controller instances to
      */
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    public void registerControllers(AnimatableManager.@NotNull ControllerRegistrar controllers) {
         // controllers.add(new AnimationController<>(this, "controller", 20, this::predicate));
         controllers.add(
                 new AnimationController<>(this, "Attack", 5, this::handleAttack),

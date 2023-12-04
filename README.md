@@ -82,13 +82,13 @@
       - [ ] Realise function to make the space warship
    - [ ] Armors
       - [x] V Mask
-         - [ ] Ability to attack agents
+         - [x] Ability to attack agents
       - [x] Hacker Cloak
-         - [ ] Fly
+         - [x] Fly
       - [x] Hacker Pants
-         - [ ] Complete defense the attacks of agents
+         - [x] Complete defense the attacks from agents
       - [x] Hacker Shoes
-         - [ ] Complete defense fall damage
+         - [x] Complete defense fall damage
 
 2. Zion
    - [ ] Transmitter (to tp to Virtual World)

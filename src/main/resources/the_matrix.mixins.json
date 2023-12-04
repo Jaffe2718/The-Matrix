@@ -4,6 +4,7 @@
     "package": "me.jaffe2718.the_matrix.mixin",
     "compatibilityLevel": "JAVA_17",
     "mixins": [
+        "entity.PlayerEntityMixin"
     ],
     "client": [
         "ui.IntegratedServerLoaderMixin"
