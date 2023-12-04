@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.unit;
 
 import me.jaffe2718.the_matrix.element.item.HackerCloakItem;
+import me.jaffe2718.the_matrix.element.item.HackerPantsItem;
 import me.jaffe2718.the_matrix.element.item.VMaskItem;
 import me.jaffe2718.the_matrix.element.item.armor_material.VirtualArmorMaterial;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -21,6 +22,7 @@ public abstract class ItemRegistry {
     public static final ArmorMaterial VIRTUAL_ARMOR_MATERIAL = new VirtualArmorMaterial();
     public static final Item V_MASK = new VMaskItem(new FabricItemSettings().rarity(Rarity.EPIC));
     public static final Item HACKER_CLOAK = new HackerCloakItem(new FabricItemSettings().rarity(Rarity.EPIC));
+    public static final Item HACKER_PANTS = new HackerPantsItem(new FabricItemSettings().rarity(Rarity.EPIC));
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,
             0x404040, 0xE5E15A,
@@ -38,6 +40,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "item_group"), THE_MATRIX_Item_GROUP);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "v_mask"), V_MASK);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_cloak"), HACKER_CLOAK);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_pants"), HACKER_PANTS);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "agent_spawn_egg"), AGENT_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "robot_sentinel_spawn_egg"), ROBOT_SENTINEL_SPAWN_EGG);
 
@@ -46,6 +49,7 @@ public abstract class ItemRegistry {
         ItemGroupEvents.modifyEntriesEvent(groupRegistryKey).register(groupEntries -> {
             groupEntries.add(V_MASK);
             groupEntries.add(HACKER_CLOAK);
+            groupEntries.add(HACKER_PANTS);
             groupEntries.add(AGENT_SPAWN_EGG);
             groupEntries.add(ROBOT_SENTINEL_SPAWN_EGG);
         });
