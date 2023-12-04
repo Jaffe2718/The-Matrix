@@ -87,7 +87,7 @@
          - [ ] Fly
       - [x] Hacker Pants
          - [ ] Complete defense the attacks of agents
-      - [ ] Hacker Shoes
+      - [x] Hacker Shoes
          - [ ] Complete defense fall damage
 
 2. Zion
@@ -95,7 +95,6 @@
       - [ ] Define transmitter item
       - [ ] Define Block of transmitters
       - [ ] Realise function to tp to Virtual World
-
 
 3. Common
    - [ ] Machines parts (get it by killing robots, to make many things like space warship, mecha, etc)

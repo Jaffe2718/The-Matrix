@@ -4,6 +4,9 @@
     "item.the_matrix.agent_spawn_egg": "Agent Spawn Egg",
     "item.the_matrix.robot_sentinel_spawn_egg": "Robot Sentinel Spawn Egg",
     "item.the_matrix.v_mask": "V Mask",
+    "item.the_matrix.hacker_cloak": "Hacker Cloak",
+    "item.the_matrix.hacker_pants": "Hacker Pants",
+    "item.the_matrix.hacker_boots": "Hacker Boots",
     "itemGroup.the_matrix": "The Matrix",
     "sound.the_matrix.robot_sentinel_hurt": "Robot Sentinel hurt",
     "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detection"
