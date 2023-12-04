@@ -85,7 +85,7 @@
          - [ ] Ability to attack agents
       - [x] Hacker Cloak
          - [ ] Fly
-      - [ ] Hacker Pants
+      - [x] Hacker Pants
          - [ ] Complete defense the attacks of agents
       - [ ] Hacker Shoes
          - [ ] Complete defense fall damage
