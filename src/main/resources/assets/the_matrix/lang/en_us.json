@@ -8,6 +8,7 @@
     "item.the_matrix.hacker_pants": "Hacker Pants",
     "item.the_matrix.hacker_boots": "Hacker Boots",
     "itemGroup.the_matrix": "The Matrix",
+    "sound.the_matrix.robot_sentinel_death": "Robot Sentinel dies",
     "sound.the_matrix.robot_sentinel_hurt": "Robot Sentinel hurt",
     "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detection"
 }

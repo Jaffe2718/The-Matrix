@@ -140,4 +140,10 @@ public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEventRegistry.ROBOT_SENTINEL_HURT;
     }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEventRegistry.ROBOT_SENTINEL_DEATH;
+    }
+
 }

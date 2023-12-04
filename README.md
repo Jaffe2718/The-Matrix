@@ -42,7 +42,7 @@
       - [x] AI Goals
       - [ ] Loot table
       - [ ] Spawn conditions
-      - [ ] Translations
+      - [x] Translations
 3. Robot World
    - [ ] Robots
       - [ ] The Matrix (boss)
@@ -56,6 +56,7 @@
    - [ ] Robot Sentinel (Zion & Robot World, Octopus)
       - [x] Define Robot Sentinel entity
       - [x] Model & Textures
+      - [ ] Explode when die
       - [ ] Animations
          - [x] basic define
          - [ ] advanced
@@ -83,12 +84,16 @@
    - [ ] Armors
       - [x] V Mask
          - [x] Ability to attack agents
+         - [ ] Tooltip
       - [x] Hacker Cloak
          - [x] Fly
+         - [ ] Tooltip
       - [x] Hacker Pants
          - [x] Complete defense the attacks from agents
+         - [ ] Tooltip
       - [x] Hacker Shoes
          - [x] Complete defense fall damage
+         - [ ] Tooltip
 
 2. Zion
    - [ ] Transmitter (to tp to Virtual World)
@@ -104,3 +109,10 @@
    - [ ] Raduim Ore (to make energy batteries, etc)
    - [ ] Raduim Ingot (to make energy batteries)
    - [ ] Raduim Block (to make energy batteries)
+
+### Particles
+   - [ ] Zion
+      - [ ] Mecha machine gun shoot
+      - [ ] Laser gun shoot
+   - [ ] Virtual World
+      - [ ] Zero One

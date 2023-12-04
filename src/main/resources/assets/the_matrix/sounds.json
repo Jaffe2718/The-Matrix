@@ -1,4 +1,14 @@
 {
+    "robot_sentinel_death": {
+        "subtitle": "sound.the_matrix.robot_sentinel_death",
+        "sounds": [
+            {
+                "name": "the_matrix:robot_sentinel_death",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
     "robot_sentinel_hurt": {
         "subtitle": "sound.the_matrix.robot_sentinel_hurt",
         "sounds": [
