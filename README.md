@@ -82,7 +82,7 @@
       - [ ] Realise function to make the space warship
    - [ ] Armors
       - [x] V Mask
-      - [ ] Hacker Cloak
+      - [x] Hacker Cloak
       - [ ] Hacker Pants
       - [ ] Hacker Shoes
 

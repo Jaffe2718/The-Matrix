@@ -9,6 +9,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
@@ -68,6 +69,23 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
         super.tick();
         this.fallDistance = 0.0F;
         this.setAir(this.getMaxAir());
+    }
+
+    @Override
+    public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
+        Entity attacker = damageSource.getAttacker();
+        if (attacker == null) {
+            return super.isInvulnerableTo(damageSource);
+        } else if (damageSource.getAttacker() instanceof PlayerEntity player) {
+            if (player.isCreative()) {
+                return true;
+            }
+            return super.isInvulnerableTo(damageSource);  // TODO: modify this
+        } else if (damageSource.getAttacker() instanceof ProjectileEntity projectile) {
+            return super.isInvulnerableTo(damageSource);
+        } else {
+            return false;
+        }
     }
 
     @Override

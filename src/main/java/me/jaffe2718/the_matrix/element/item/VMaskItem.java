@@ -1,14 +1,13 @@
 package me.jaffe2718.the_matrix.element.item;
 
 import me.jaffe2718.the_matrix.client.render.armor.VMaskRenderer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -50,7 +49,7 @@ public class VMaskItem extends ArmorItem implements GeoItem {
      * @param consumer The consumer to accept your anonymous class
      */
     @Override
-    public void createRenderer(Consumer<Object> consumer) {
+    public void createRenderer(@NotNull Consumer<Object> consumer) {
         consumer.accept(new RenderProvider() {
             private GeoArmorRenderer<?> renderer;
 
