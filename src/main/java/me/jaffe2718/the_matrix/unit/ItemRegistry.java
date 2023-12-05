@@ -20,6 +20,7 @@ import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class ItemRegistry {
 
+    public static final Item BULLET = new Item(new FabricItemSettings());
     public static final ArmorMaterial VIRTUAL_ARMOR_MATERIAL = new VirtualArmorMaterial();
     public static final Item V_MASK = new VMaskItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_CLOAK = new HackerCloakItem(new FabricItemSettings().rarity(Rarity.RARE));
@@ -40,6 +41,7 @@ public abstract class ItemRegistry {
 
     public static void register() {
         Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "item_group"), THE_MATRIX_Item_GROUP);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "v_mask"), V_MASK);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_cloak"), HACKER_CLOAK);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_pants"), HACKER_PANTS);
@@ -50,6 +52,7 @@ public abstract class ItemRegistry {
         // add items to item group
         var groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), new Identifier(MOD_ID, "item_group"));
         ItemGroupEvents.modifyEntriesEvent(groupRegistryKey).register(groupEntries -> {
+            groupEntries.add(BULLET);
             groupEntries.add(V_MASK);
             groupEntries.add(HACKER_CLOAK);
             groupEntries.add(HACKER_PANTS);

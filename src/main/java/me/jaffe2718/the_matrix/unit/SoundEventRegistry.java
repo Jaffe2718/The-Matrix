@@ -9,11 +9,15 @@ import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class SoundEventRegistry {
 
+    public static final SoundEvent ARMORED_PERSONNEL_UNIT_HURT = SoundEvent.of(new Identifier(MOD_ID, "armored_personnel_unit_hurt"));
+    public static final SoundEvent ARMORED_PERSONNEL_UNIT_STEP = SoundEvent.of(new Identifier(MOD_ID, "armored_personnel_unit_step"));
     public static final SoundEvent ROBOT_SENTINEL_DEATH = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_death"));
     public static final SoundEvent ROBOT_SENTINEL_HURT = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_hurt"));
     public static final SoundEvent ROBOT_SENTINEL_RADAR_DETECTION = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_radar_detection"));
 
     public static void register() {
+        Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "armored_personnel_unit_hurt"), ARMORED_PERSONNEL_UNIT_HURT);
+        Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "armored_personnel_unit_step"), ARMORED_PERSONNEL_UNIT_STEP);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_death"), ROBOT_SENTINEL_DEATH);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_hurt"), ROBOT_SENTINEL_HURT);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_radar_detection"), ROBOT_SENTINEL_RADAR_DETECTION);

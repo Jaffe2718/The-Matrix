@@ -7,6 +7,7 @@
         "entity.PlayerEntityMixin"
     ],
     "client": [
+        "render.GameRendererMixin",
         "ui.InGameHudMixin",
         "ui.IntegratedServerLoaderMixin"
     ],

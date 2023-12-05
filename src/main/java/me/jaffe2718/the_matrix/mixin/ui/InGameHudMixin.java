@@ -1,14 +1,23 @@
 package me.jaffe2718.the_matrix.mixin.ui;
 
+import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
+    @Unique
+    private static final Identifier BULLET_TEXTURE = new Identifier(MOD_ID, "hud/bullet");
     @Unique
     private static final Identifier VEHICLE_CONTAINER_HEART_TEXTURE = new Identifier("hud/heart/vehicle_container");
     @Unique
@@ -25,6 +34,10 @@ public abstract class InGameHudMixin {
     @Shadow @Final private MinecraftClient client;
 
     @Shadow protected abstract int getHeartCount(LivingEntity entity);
+
+    @Shadow @Final private static Identifier JUMP_BAR_BACKGROUND_TEXTURE;
+
+    @Shadow @Final private static Identifier JUMP_BAR_COOLDOWN_TEXTURE;
 
     /**
      * @author Jaffe2718
@@ -84,4 +97,25 @@ public abstract class InGameHudMixin {
         }
     }
 
+    @Inject(method = "render", at = @At("TAIL"))
+    private void registerCustomRenderers(DrawContext context, float tickDelta, CallbackInfo ci) {
+        if (this.getRiddenEntity() instanceof ArmoredPersonnelUnitEntity apu) {
+            this.renderAPUBulletNumBar(context, apu);
+        }
+    }
+
+    @Unique
+    private void renderAPUBulletNumBar(@NotNull DrawContext context, @NotNull ArmoredPersonnelUnitEntity mount) {
+        this.client.getProfiler().push("jumpBar");
+        int x = this.scaledWidth / 2 - 91;
+        int y = this.scaledHeight - 29;
+        float bulletPercentage = (float) mount.getBulletNum() / (float) ArmoredPersonnelUnitEntity.MAX_BULLET_NUM;
+        int bulletLength = (int) (bulletPercentage * 182.0F);
+        context.drawGuiTexture(BULLET_TEXTURE, x - 10, y - 2, 9, 9);
+        context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, x, y, 182, 5);
+        context.drawGuiTexture(JUMP_BAR_COOLDOWN_TEXTURE, x, y, 182, 5);
+        if (bulletPercentage > 0.0F) {
+            context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, 182, 5, 0, 0, x, y, bulletLength, 5);
+        }
+    }
 }

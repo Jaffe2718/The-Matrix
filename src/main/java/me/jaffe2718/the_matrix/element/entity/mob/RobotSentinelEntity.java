@@ -13,7 +13,6 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.sound.SoundEvent;
@@ -55,7 +54,6 @@ public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
         this.goalSelector.add(2, new IdleFlyGoal(this));
         this.targetSelector.add(1, new RevengeGoal(this));
         this.targetSelector.add(2, new SelectTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(3, new SelectTargetGoal<>(this, WardenEntity.class, true));  // TODO: remove after testing
         // TODO: add target selector for zion citizens
     }
 

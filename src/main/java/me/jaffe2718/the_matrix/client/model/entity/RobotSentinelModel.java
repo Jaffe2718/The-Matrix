@@ -8,7 +8,7 @@ import software.bernie.geckolib.model.GeoModel;
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class RobotSentinelModel extends GeoModel<RobotSentinelEntity> {
-    private static final String DEPRESSION = "variable.depression";
+    private static final String DEPRESSION = "variable.depression";   // MoLang variable for depression angle
     @Override
     public Identifier getModelResource(RobotSentinelEntity animatable) {
         return new Identifier(MOD_ID, "geo/entity/robot_sentinel.geo.json");
@@ -25,7 +25,7 @@ public class RobotSentinelModel extends GeoModel<RobotSentinelEntity> {
     }
 
     @Override
-    public void applyMolangQueries(RobotSentinelEntity animatable, double animTime) {  // TODO: check if this is actually working
+    public void applyMolangQueries(RobotSentinelEntity animatable, double animTime) {
         super.applyMolangQueries(animatable, animTime);
         MolangParser parser = MolangParser.INSTANCE;
         parser.setMemoizedValue(DEPRESSION, () -> {      // register depression variable to molang parser

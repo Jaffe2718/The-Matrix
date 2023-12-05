@@ -2,6 +2,7 @@ package me.jaffe2718.the_matrix.unit;
 
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -28,6 +29,16 @@ public abstract class EntityRegistry {
 //                    .dimensions(EntityDimensions.fixed(0.6F, 1.95F)).build()
     );
 
+    public static final EntityType<ArmoredPersonnelUnitEntity> ARMORED_PERSONAL_UNIT = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "armored_personnel_unit"),
+            EntityType.Builder.create(ArmoredPersonnelUnitEntity::new, SpawnGroup.CREATURE)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(3.5F, 5.5F)
+                    .build("armored_personnel_unit")
+    );
+
     public static final EntityType<RobotSentinelEntity> ROBOT_SENTINEL = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(MOD_ID, "robot_sentinel"),
@@ -40,6 +51,7 @@ public abstract class EntityRegistry {
 
     public static void register() {
         FabricDefaultAttributeRegistry.register(AGENT, AgentEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ROBOT_SENTINEL, RobotSentinelEntity.createAttributes());
     }
 }
