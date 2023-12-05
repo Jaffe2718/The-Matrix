@@ -33,7 +33,7 @@
 ### Entities
 
 1. Zion
-   - [ ] Mecha (rideable, can shoot laser guns to kill robots)
+   - [ ] APU Mecha (rideable, can shoot laser guns to kill robots)
    - [ ] Space Warship (rideable)
 2. Virtual World
    - [ ] Agent
@@ -102,8 +102,8 @@
       - [ ] Realise function to tp to Virtual World
 
 3. Common
-   - [ ] Machines parts (get it by killing robots, to make many things like space warship, mecha, etc)
-   - [ ] Energy batteries (to power the machines, mecha, etc)
+   - [ ] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
+   - [ ] Energy batteries (to power the machines, APU mecha, etc)
    - [ ] Laser guns (use Energy batteries to shoot)
    - [ ] Electromagnetic hand grenades (to kill robots)
    - [ ] Raduim Ore (to make energy batteries, etc)
@@ -112,7 +112,7 @@
 
 ### Particles
    - [ ] Zion
-      - [ ] Mecha machine gun shoot
+      - [ ] APU Mecha machine gun shoot
       - [ ] Laser gun shoot
    - [ ] Virtual World
       - [ ] Zero One

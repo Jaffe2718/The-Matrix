@@ -21,10 +21,10 @@ import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 public abstract class ItemRegistry {
 
     public static final ArmorMaterial VIRTUAL_ARMOR_MATERIAL = new VirtualArmorMaterial();
-    public static final Item V_MASK = new VMaskItem(new FabricItemSettings().rarity(Rarity.EPIC));
-    public static final Item HACKER_CLOAK = new HackerCloakItem(new FabricItemSettings().rarity(Rarity.EPIC));
-    public static final Item HACKER_PANTS = new HackerPantsItem(new FabricItemSettings().rarity(Rarity.EPIC));
-    public static final Item HACKER_BOOTS = new HackerBootsItem(new FabricItemSettings().rarity(Rarity.EPIC));
+    public static final Item V_MASK = new VMaskItem(new FabricItemSettings().rarity(Rarity.RARE));
+    public static final Item HACKER_CLOAK = new HackerCloakItem(new FabricItemSettings().rarity(Rarity.RARE));
+    public static final Item HACKER_PANTS = new HackerPantsItem(new FabricItemSettings().rarity(Rarity.RARE));
+    public static final Item HACKER_BOOTS = new HackerBootsItem(new FabricItemSettings().rarity(Rarity.RARE));
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,
             0x404040, 0xE5E15A,
