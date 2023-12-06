@@ -51,7 +51,7 @@ public abstract class InGameHudMixin {
         LivingEntity mount = this.getRiddenEntity();
         if (mount != null && mount.getMaxHealth() != 0) {  // not mine-cart or boat
             double health = mount.getHealth();
-            if (health > 40) {
+            if (mount.getMaxHealth() > 40) {
                 int rightX = this.scaledWidth / 2 + 90;
                 int upY = this.scaledHeight - 39;
                 int healthLength = (int) (health / mount.getMaxHealth() * 80.0D);

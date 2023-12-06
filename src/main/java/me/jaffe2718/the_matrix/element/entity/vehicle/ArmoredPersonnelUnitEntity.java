@@ -1,7 +1,9 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
+import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
+import me.jaffe2718.the_matrix.unit.KeyBindings;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -22,6 +24,7 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
@@ -36,6 +39,9 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEntity {
+
+    static final RawAnimation SHOOT = RawAnimation.begin().then("animation.armored_personnel_unit.shoot", Animation.LoopType.DEFAULT);
+    static final RawAnimation STATIC = RawAnimation.begin().then("animation.armored_personnel_unit.static", Animation.LoopType.DEFAULT);
     static final RawAnimation WALK = RawAnimation.begin().then("animation.armored_personnel_unit.walk", Animation.LoopType.DEFAULT);
     public static final int MAX_BULLET_NUM = 256;
     public static final String BULLET_NUM_KEY = "BulletNum";
@@ -46,6 +52,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         return PathAwareEntity.createLivingAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 600.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.4D)
+                .add(EntityAttributes.GENERIC_ARMOR, 2.5D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.8D)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0D);
     }
@@ -84,7 +91,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
-    protected boolean canAddPassenger(Entity passenger) {
+    protected boolean canAddPassenger(Entity passenger) {      // TODO: add zionists
         return passenger instanceof PlayerEntity && !this.hasPassengers();
     }
 
@@ -131,12 +138,12 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                 DamageTypes.FALL == damageSource.getTypeRegistryEntry().getKey().get()) {
             return true;    // The APUs are invulnerable to fall damage.
         }
-        return super.isInvulnerableTo(damageSource);
+        return super.isInvulnerableTo(damageSource) || this.equals(damageSource.getAttacker());
     }
 
     @Override
     public FallSounds getFallSounds() {
-        return new FallSounds(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, SoundEventRegistry.ARMORED_PERSONNEL_UNIT_LAND);
+        return new FallSounds(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_LAND, SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP);
     }
 
     @Override
@@ -187,6 +194,39 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         32, 1, 1, 1, 0.0);
             }
         }
+        if (this.getControllingPassenger() instanceof PlayerEntity player && this.age % 4 == 0) {
+            if (KeyBindings.FIRE_SAFETY_CATCH.isPressed()) {
+                if (MinecraftClient.getInstance().options.attackKey.isPressed()) {
+                    if (this.bulletNum > 0) {
+                        // step 1: calculate the velocity of the bullet and the position of the gun
+                        Vec3d velocity = player.getRotationVector().multiply(12);
+                        Vec3d gunPos = player.getEyePos().add(player.getRotationVector().multiply(2.4));
+                        BulletEntity.shoot(this, gunPos, velocity);
+                        // step 2: apply recoil (affect the player's head yaw and body pitch)
+                        player.setYaw(player.getYaw() + this.random.nextFloat() * 3 - 1.5F);
+                        player.setPitch(player.getPitch() - this.random.nextFloat() * 3);
+                        // step 3: play sound & spawn particles & consume a bullet
+                        if (this.age % 8 == 0) {
+                            this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
+                        }
+                        // TODO: spawn particles
+                        this.bulletNum--;
+                    } else {
+                        player.sendMessage(Text.translatable("message.the_matrix.apu_no_bullet"), true);
+                    }
+                } else {
+                    player.sendMessage(Text
+                            .translatable("message.the_matrix.press").append(" ")
+                            .append(Text.translatable(MinecraftClient.getInstance().options.attackKey.getBoundKeyTranslationKey())).append(" ")
+                            .append(Text.translatable("message.the_matrix.to_shoot")), true);
+                }
+            } else if (player.isMainPlayer()) {
+                player.sendMessage(Text
+                        .translatable("message.the_matrix.press").append(" ")
+                        .append(Text.translatable(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyTranslationKey())).append(" ")
+                        .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
+            }
+        }
         super.tick();
     }
 
@@ -218,11 +258,13 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     private PlayState handleWalk(@NotNull AnimationState<ArmoredPersonnelUnitEntity> state) {
-        if (state.isMoving() && this.getControllingPassenger() != null) {
-            state.setAnimation(WALK);
-            return PlayState.CONTINUE;
+        if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
+                KeyBindings.FIRE_SAFETY_CATCH.isPressed() && this.bulletNum > 0) {
+            return state.setAndContinue(SHOOT);
+        } else if (state.isMoving() && this.getControllingPassenger() != null) {
+            return state.setAndContinue(WALK);
         } else {
-            return PlayState.STOP;
+            return state.setAndContinue(STATIC);
         }
     }
 

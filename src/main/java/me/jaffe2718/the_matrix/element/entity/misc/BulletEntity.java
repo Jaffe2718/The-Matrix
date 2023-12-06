@@ -11,7 +11,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -22,12 +21,14 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class BulletEntity extends ArrowEntity implements GeoEntity {
 
-    public static boolean shoot(World world, Entity owner, Vec3d pos, Vec3d velocity) {
-        BulletEntity bullet = new BulletEntity(EntityRegistry.BULLET, world);
+    private static final float BULLET_DAMAGE = 20.0F;
+
+    public static void shoot(@NotNull Entity owner, Vec3d pos, Vec3d velocity) {
+        BulletEntity bullet = new BulletEntity(EntityRegistry.BULLET, owner.getWorld());
         bullet.setOwner(owner);
         bullet.setPosition(pos);
         bullet.setVelocity(velocity);
-        return world.spawnEntity(bullet);
+        owner.getWorld().spawnEntity(bullet);
     }
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -40,7 +41,7 @@ public class BulletEntity extends ArrowEntity implements GeoEntity {
     protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
         // super.onEntityHit(entityHitResult);
         Entity target = entityHitResult.getEntity();
-        target.damage(this.getDamageSources().arrow(this, this.getOwner()), MathHelper.clamp((float) this.getVelocity().length(), 8, 15));
+        target.damage(this.getDamageSources().arrow(this, this.getOwner()), BULLET_DAMAGE);
         this.playSound(SoundEventRegistry.BULLET_HITTING_ENTITY, 1.0F, 1.0F);
         this.discard();
     }

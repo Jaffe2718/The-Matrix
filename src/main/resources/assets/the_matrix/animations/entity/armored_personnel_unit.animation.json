@@ -64,6 +64,103 @@
 					"rotation": {
 						"vector": ["math.sin(query.anim_time * 180) * 15 - 30", 0, 0]
 					}
+				},
+				"l_fire": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"r_fire": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.armored_personnel_unit.shoot": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"l0": {
+					"rotation": {
+						"vector": ["variable.driver_pitch - 60", 0, 0]
+					}
+				},
+				"r0": {
+					"rotation": {
+						"vector": ["variable.driver_pitch - 60", 0, 0]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time * 180) * 24 * variable.is_walking", 0, 0]
+					}
+				},
+				"right1": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time * 180) * 24 * variable.is_walking", 0, 0]
+					}
+				},
+				"right_foot": {
+					"rotation": {
+						"vector": ["- math.sin(query.anim_time * 180) * 36 * variable.is_walking", 0, 0]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": ["- math.sin(query.anim_time * 180) * 24 * variable.is_walking", 0, 0]
+					}
+				},
+				"left1": {
+					"rotation": {
+						"vector": ["- math.sin(query.anim_time * 180) * 24 * variable.is_walking", 0, 0]
+					}
+				},
+				"left_foot": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time * 180) * 36 * variable.is_walking", 0, 0]
+					}
+				},
+				"l1": {
+					"rotation": {
+						"vector": ["60 + math.sin(query.anim_time * 1800)", 0, 0]
+					}
+				},
+				"r1": {
+					"rotation": {
+						"vector": ["60 + math.sin(query.anim_time * 1800)", 0, 0]
+					}
+				},
+				"l_fire": {
+					"scale": {
+						"vector": ["0.5 + math.sin(query.anim_time * 1800)", "0.5 + math.sin(query.anim_time * 1800)", "0.5 + math.sin(query.anim_time * 1800)"]
+					}
+				},
+				"r_fire": {
+					"scale": {
+						"vector": ["0.5 + math.sin(query.anim_time * 1800)", "0.5 + math.sin(query.anim_time * 1800)", "0.5 + math.sin(query.anim_time * 1800)"]
+					}
+				}
+			}
+		},
+		"animation.armored_personnel_unit.static": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.25,
+			"bones": {
+				"l_fire": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"r_fire": {
+					"scale": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, 0, 0]
+						}
+					}
 				}
 			}
 		}

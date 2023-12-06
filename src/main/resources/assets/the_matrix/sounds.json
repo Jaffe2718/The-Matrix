@@ -19,6 +19,16 @@
             }
         ]
     },
+    "armored_personnel_unit_shoot": {
+        "subtitle": "sound.the_matrix.armored_personnel_unit_shoot",
+        "sounds": [
+            {
+                "name": "the_matrix:armored_personnel_unit_shoot",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
     "armored_personnel_unit_step": {
         "subtitle": "sound.the_matrix.armored_personnel_unit_step",
         "sounds": [

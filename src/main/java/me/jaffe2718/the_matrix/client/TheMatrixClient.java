@@ -5,6 +5,7 @@ import me.jaffe2718.the_matrix.client.render.entity.BulletRenderer;
 import me.jaffe2718.the_matrix.client.render.entity.ArmoredPersonnelUnitRenderer;
 import me.jaffe2718.the_matrix.client.render.entity.RobotSentinelRenderer;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
+import me.jaffe2718.the_matrix.unit.KeyBindings;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
@@ -14,6 +15,7 @@ public class TheMatrixClient implements ClientModInitializer {
      */
     @Override
     public void onInitializeClient() {
+        KeyBindings.register();
         EntityRendererRegistry.register(EntityRegistry.AGENT, AgentRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.BULLET, BulletRenderer::new);
