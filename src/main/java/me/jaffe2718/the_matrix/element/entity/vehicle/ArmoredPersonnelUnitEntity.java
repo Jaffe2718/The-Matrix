@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
+import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -10,9 +11,16 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -30,8 +38,9 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEntity {
     static final RawAnimation WALK = RawAnimation.begin().then("animation.armored_personnel_unit.walk", Animation.LoopType.DEFAULT);
     public static final int MAX_BULLET_NUM = 256;
+    public static final String BULLET_NUM_KEY = "BulletNum";
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    protected int bulletNum = 0;
+    protected int bulletNum;
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createLivingAttributes()
@@ -46,20 +55,28 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
+    public void readCustomDataFromNbt(@NotNull NbtCompound nbt) {
+        this.bulletNum = nbt.getInt(BULLET_NUM_KEY);
         super.readCustomDataFromNbt(nbt);
-        this.bulletNum = nbt.getInt("BulletNum");
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {  // TODO: test if the nbt is saved in the archive
+    public void writeCustomDataToNbt(@NotNull NbtCompound nbt) {
+        nbt.putInt(BULLET_NUM_KEY, this.bulletNum);
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("BulletNum", this.bulletNum);
     }
 
     @Override
-    public boolean shouldSave() {
-        return super.shouldSave();
+    public void onSpawnPacket(EntitySpawnS2CPacket packet) {    // TODO: test if the packet is received by the client
+        if (packet instanceof APUEntitySpawnS2CPacket apuPacket) {
+            this.bulletNum = apuPacket.getBulletNum();
+        }
+        super.onSpawnPacket(packet);
+    }
+
+    @Override
+    public Packet<ClientPlayPacketListener> createSpawnPacket() {  // TODO: test if the packet is sent to the client
+        return new APUEntitySpawnS2CPacket(this);
     }
 
     public int getBulletNum() {
@@ -110,8 +127,16 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         if (damageSource.getAttacker() instanceof PlayerEntity player &&
             player.equals(this.getControllingPassenger())) {
             return true;    // The player can't hurt the APUs they're riding.
+        } else if (damageSource.getTypeRegistryEntry().getKey().isPresent() &&
+                DamageTypes.FALL == damageSource.getTypeRegistryEntry().getKey().get()) {
+            return true;    // The APUs are invulnerable to fall damage.
         }
         return super.isInvulnerableTo(damageSource);
+    }
+
+    @Override
+    public FallSounds getFallSounds() {
+        return new FallSounds(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, SoundEventRegistry.ARMORED_PERSONNEL_UNIT_LAND);
     }
 
     @Override
@@ -152,13 +177,22 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     @Override
     public void tick() {
         if (this.isOnGround() &&
-                this.getVelocity().length() > 0.1 &&
+                this.getVelocity().length() > 0.05 &&
                 this.getControllingPassenger() != null &&
         this.age % 20 == 0) {
-            this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 0.5F);
+            this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 1.0F);
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, serverWorld.getBlockState(this.getBlockPos().down())),
+                        this.getX(), this.getY(), this.getZ(),
+                        32, 1, 1, 1, 0.0);
+            }
         }
-        this.fallDistance = 0;
         super.tick();
+    }
+
+    @Override
+    public boolean canImmediatelyDespawn(double distanceSquared) {
+        return false;
     }
 
     @Override
@@ -168,7 +202,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     protected float getJumpVelocity() {
-        return 1F;
+        return 0.8F;
     }
 
     @Override

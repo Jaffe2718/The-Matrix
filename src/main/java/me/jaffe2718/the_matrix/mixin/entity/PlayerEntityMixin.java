@@ -5,13 +5,15 @@ import me.jaffe2718.the_matrix.element.item.HackerBootsItem;
 import me.jaffe2718.the_matrix.element.item.HackerCloakItem;
 import me.jaffe2718.the_matrix.element.item.HackerPantsItem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.stat.Stats;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
+
+    @Shadow public abstract void incrementStat(Identifier stat);
 
     /**
      * Invulnerable to AgentEntity with HackerPantsItem
@@ -42,8 +46,8 @@ public abstract class PlayerEntityMixin {
                 !player.checkFallFlying() && !player.isSwimming() && !player.isClimbing() &&
                 !player.isUsingRiptide()) {
             Vec3d currentVelocity = player.getVelocity();
+            this.incrementStat(Stats.JUMP);  // TODO: Add a new stat for this
             player.setVelocity(currentVelocity.x, 0.3, currentVelocity.z);
-            player.setPose(EntityPose.DYING);
             player.fallDistance = 0;
         }
     }

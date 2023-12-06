@@ -44,7 +44,7 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
     private boolean fistOrKick = true;  // true = fist, false = kick
     private int attackingTicks = 0;
 
-    public AgentEntity(EntityType<? extends HostileEntity> entityType, World world) {
+    public AgentEntity(EntityType<? extends AgentEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -68,7 +68,6 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        this.fallDistance = 0.0F;
         this.setAir(this.getMaxAir());
     }
 

@@ -36,7 +36,8 @@ public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 180.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 50.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2.0D)
+                .add(EntityAttributes.GENERIC_ARMOR, 2.5D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.2D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.5D)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 128.0D);
     }

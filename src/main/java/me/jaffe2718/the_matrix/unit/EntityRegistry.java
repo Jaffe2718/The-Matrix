@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.unit;
 
+import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
@@ -22,21 +23,26 @@ public abstract class EntityRegistry {
                     .maxTrackingRange(10)
                     .setDimensions(0.6F, 1.95F)
                     .build("agent")
-//            FabricEntityTypeBuilder
-//                    .create(SpawnGroup.MONSTER, AgentEntity::new)
-//                    .trackRangeBlocks(64)
-//                    .fireImmune()
-//                    .dimensions(EntityDimensions.fixed(0.6F, 1.95F)).build()
     );
 
     public static final EntityType<ArmoredPersonnelUnitEntity> ARMORED_PERSONAL_UNIT = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(MOD_ID, "armored_personnel_unit"),
-            EntityType.Builder.create(ArmoredPersonnelUnitEntity::new, SpawnGroup.CREATURE)
+            EntityType.Builder.create(ArmoredPersonnelUnitEntity::new, SpawnGroup.MISC)
                     .makeFireImmune()
                     .maxTrackingRange(10)
                     .setDimensions(3.5F, 5.5F)
                     .build("armored_personnel_unit")
+    );
+
+    public static final EntityType<BulletEntity> BULLET = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "bullet"),
+            EntityType.Builder.create(BulletEntity::new, SpawnGroup.MISC)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(0.125F, 0.125F)
+                    .build("bullet")
     );
 
     public static final EntityType<RobotSentinelEntity> ROBOT_SENTINEL = Registry.register(

@@ -1,6 +1,7 @@
 {
     "entity.the_matrix.agent": "Agent",
     "entity.the_matrix.armored_personnel_unit": "Armored Personnel Unit",
+    "entity.the_matrix.bullet": "Bullet",
     "entity.the_matrix.robot_sentinel": "Robot Sentinel",
     "item.the_matrix.agent_spawn_egg": "Agent Spawn Egg",
     "item.the_matrix.robot_sentinel_spawn_egg": "Robot Sentinel Spawn Egg",
@@ -10,7 +11,10 @@
     "item.the_matrix.hacker_boots": "Hacker Boots",
     "itemGroup.the_matrix": "The Matrix",
     "sound.the_matrix.armored_personnel_unit_hurt": "Armored Personnel Unit hurts",
+    "sound.the_matrix.armored_personnel_unit_land": "Armored Personnel Unit lands",
     "sound.the_matrix.armored_personnel_unit_step": "Armored Personnel Unit steps",
+    "sound.the_matrix.bullet_hitting_block": "Bullet hitting block",
+    "sound.the_matrix.bullet_hitting_entity": "Bullet hitting entity",
     "sound.the_matrix.robot_sentinel_death": "Robot Sentinel dies",
     "sound.the_matrix.robot_sentinel_hurt": "Robot Sentinel hurts",
     "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detecting"

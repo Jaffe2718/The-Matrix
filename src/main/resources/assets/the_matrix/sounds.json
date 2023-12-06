@@ -9,11 +9,41 @@
             }
         ]
     },
+    "armored_personnel_unit_land": {
+        "subtitle": "sound.the_matrix.armored_personnel_unit_land",
+        "sounds": [
+            {
+                "name": "the_matrix:armored_personnel_unit_land",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
     "armored_personnel_unit_step": {
         "subtitle": "sound.the_matrix.armored_personnel_unit_step",
         "sounds": [
             {
                 "name": "the_matrix:armored_personnel_unit_step",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
+    "bullet_hitting_block": {
+        "subtitle": "sound.the_matrix.bullet_hitting_block",
+        "sounds": [
+            {
+                "name": "the_matrix:bullet_hitting_block",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
+    "bullet_hitting_entity": {
+        "subtitle": "sound.the_matrix.bullet_hitting_entity",
+        "sounds": [
+            {
+                "name": "the_matrix:bullet_hitting_entity",
                 "pitch": 1.0,
                 "stream": true
             }
