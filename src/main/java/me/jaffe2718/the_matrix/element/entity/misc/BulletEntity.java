@@ -19,9 +19,11 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BulletEntity extends ArrowEntity implements GeoEntity {
+public class BulletEntity
+        extends ArrowEntity
+        implements GeoEntity {
 
-    private static final float BULLET_DAMAGE = 20.0F;
+    private static final float BULLET_DAMAGE = 18.0F;
 
     public static void shoot(@NotNull Entity owner, Vec3d pos, Vec3d velocity) {
         BulletEntity bullet = new BulletEntity(EntityRegistry.BULLET, owner.getWorld());
@@ -42,6 +44,8 @@ public class BulletEntity extends ArrowEntity implements GeoEntity {
         // super.onEntityHit(entityHitResult);
         Entity target = entityHitResult.getEntity();
         target.damage(this.getDamageSources().arrow(this, this.getOwner()), BULLET_DAMAGE);
+        Vec3d groundPunchVelocity = this.getVelocity().multiply(1, 0, 1).normalize().multiply(0.3);
+        target.addVelocity(groundPunchVelocity.x, 0.1, groundPunchVelocity.z);
         this.playSound(SoundEventRegistry.BULLET_HITTING_ENTITY, 1.0F, 1.0F);
         this.discard();
     }

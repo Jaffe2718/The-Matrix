@@ -38,6 +38,8 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
+
 public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEntity {
 
     static final RawAnimation SHOOT = RawAnimation.begin().then("animation.armored_personnel_unit.shoot", Animation.LoopType.DEFAULT);
@@ -51,8 +53,11 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createLivingAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 600.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.4D)
-                .add(EntityAttributes.GENERIC_ARMOR, 2.5D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
+                .add(EntityAttributes.GENERIC_ARMOR, 4.0D)
+                .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 2.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 3.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.8D)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0D);
     }
@@ -208,6 +213,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         // step 3: play sound & spawn particles & consume a bullet
                         if (this.age % 8 == 0) {
                             this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
+                            this.playSound(SoundEventRegistry.BULLET_SHELL_HITTING_THE_GROUND, 1.0F, 1.0F);
                         }
                         // TODO: spawn particles
                         this.bulletNum--;
@@ -225,6 +231,14 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         .translatable("message.the_matrix.press").append(" ")
                         .append(Text.translatable(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyTranslationKey())).append(" ")
                         .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
+            }
+        }
+        if (!this.isOnGround() && this.getVelocity().y < -2e-3) {
+            List<LivingEntity> steppedEntities = this.getSteppedEntities();
+            if (!steppedEntities.isEmpty()) {
+                for (LivingEntity steppedEntity : steppedEntities) {
+                    this.tryAttack(steppedEntity);
+                }
             }
         }
         super.tick();
@@ -271,5 +285,25 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
+    }
+
+    protected List<LivingEntity> getSteppedEntities() {
+        if (this.getPassengerList().isEmpty()) {
+            return List.of();
+        } else {
+            return this.getWorld().getEntitiesByClass(
+                    LivingEntity.class,
+                    this.getBoundingBox(),
+                    entity -> {
+                        List<Entity> passengers = this.getPassengerList();
+                        if (passengers.contains(entity)) {                     // cannot step on the passenger
+                            return false;
+                        } else if (entity instanceof PlayerEntity player) {    // cannot step on the creative or spectator player
+                            return !player.isSpectator() && !player.isCreative();
+                        } else {             // cannot step on the entity that is too high
+                            return entity.getHeight() <= this.getHeight() * 0.5 && entity.getY() <= this.getY() + 1;
+                        }
+                    });
+        }
     }
 }

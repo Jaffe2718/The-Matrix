@@ -59,6 +59,17 @@
             }
         ]
     },
+    "bullet_shell_hitting_the_ground":
+    {
+        "subtitle": "sound.the_matrix.bullet_shell_hitting_the_ground",
+        "sounds": [
+            {
+                "name": "the_matrix:bullet_shell_hitting_the_ground",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
     "robot_sentinel_death": {
         "subtitle": "sound.the_matrix.robot_sentinel_death",
         "sounds": [

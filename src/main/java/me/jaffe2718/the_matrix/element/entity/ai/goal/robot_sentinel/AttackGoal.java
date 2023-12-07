@@ -31,7 +31,7 @@ public class AttackGoal extends FlyMovementGoal {
             this.mob.getNavigation().stop();
             super.tick();
         }
-        this.mob.setVelocity(this.calculateVelocity(Objects.requireNonNull(this.mob.getTarget()).getPos()));
+        this.mob.addVelocity(this.calculateAcceleration(Objects.requireNonNull(this.mob.getTarget()).getPos()));
         this.adjustFacing();
     }
 
@@ -53,5 +53,17 @@ public class AttackGoal extends FlyMovementGoal {
                     v0.getZ()
             );
         }
+    }
+
+    /**
+     * Calculate the acceleration needed to reach the target velocity.<br>
+     * Use acceleration instead of velocity to avoid unable to be knocked back.
+     *
+     * @param destination the target velocity
+     * @return the acceleration needed to reach the target velocity
+     */
+    private Vec3d calculateAcceleration(@NotNull Vec3d destination) {
+        Vec3d newVelocity = this.calculateVelocity(destination);
+        return newVelocity.subtract(this.mob.getVelocity());
     }
 }
