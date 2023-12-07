@@ -1,0 +1,33 @@
+{
+    "temperature": 0,
+    "downfall": 0,
+    "has_precipitation": false,
+    "effects": {
+        "sky_color": 12124154,
+        "fog_color": 16777215,
+        "water_color": 9742079,
+        "water_fog_color": 11007,
+        "grass_color": 10020096
+    },
+    "spawners": {},
+    "spawn_costs": {},
+    "carvers": {},
+    "features": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [
+            "minecraft:cave_vines",
+            "minecraft:lush_caves_ceiling_vegetation",
+            "minecraft:lush_caves_vegetation"
+        ],
+        [],
+        [],
+        []
+    ]
+}

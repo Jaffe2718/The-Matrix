@@ -1,11 +1,24 @@
 {
-    "type": "minecraft:overworld",
+    "type": "the_matrix:zion",
     "generator": {
         "type": "minecraft:noise",
         "settings": "the_matrix:zion",
         "biome_source": {
-            "type": "minecraft:fixed",
-            "biome": "minecraft:plains"
+            "type": "minecraft:multi_noise",
+            "biomes": [
+                {
+                    "biome": "the_matrix:zion_cave",
+                    "parameters": {
+                        "temperature": 0,
+                        "humidity": 0,
+                        "continentalness": 0,
+                        "erosion": 0,
+                        "weirdness": 0,
+                        "depth": 0,
+                        "offset": 0
+                    }
+                }
+            ]
         }
     }
 }
