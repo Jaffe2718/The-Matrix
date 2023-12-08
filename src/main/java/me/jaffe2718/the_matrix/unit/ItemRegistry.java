@@ -63,7 +63,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "robot_sentinel_spawn_egg"), ROBOT_SENTINEL_SPAWN_EGG);
 
         // add items to item group
-        var groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), new Identifier(MOD_ID, "item_group"));
+        RegistryKey<ItemGroup> groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), new Identifier(MOD_ID, "item_group"));
         ItemGroupEvents.modifyEntriesEvent(groupRegistryKey).register(groupEntries -> {
             groupEntries.add(V_MASK);
             groupEntries.add(HACKER_CLOAK);

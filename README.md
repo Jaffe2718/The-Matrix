@@ -27,20 +27,37 @@
 ### Biomes
 
 - [ ] Zion
+   - [ ] Zion cave
 - [ ] Virtual World
+   - [ ] Virtual city
 - [ ] Robot World
 
 ### Entities
 
 1. Zion
-   - [ ] APU Mecha (rideable, can shoot laser guns to kill robots)
+   - [ ] Armored Personnel Unit (APU) Mecha (rideable)
+      - [x] Define APU Mecha entity
+      - [x] Model & Textures
+      - [x] Animations
+      - [ ] AI Goals
+      - [ ] Sound events
+         - [x] Ambient
+         - [x] Hurt
+         - [ ] Death
+      - [ ] Loot table
+         - [ ] Machine parts
+         - [ ] CPU
+      - [ ] Spawn conditions
+      - [x] Translations
    - [ ] Space Warship (rideable)
 2. Virtual World
    - [ ] Agent
       - [x] Define Agent entity
       - [x] Animations
       - [x] AI Goals
-      - [ ] Loot table
+      - [x] Loot table
+         - [ ] Mobile phone
+         - [ ] Coins
       - [ ] Spawn conditions
       - [x] Translations
 3. Robot World
@@ -51,49 +68,55 @@
    - [ ] Agent Smith (boss)
 5. Common
    - [ ] Humans
-      - [ ] Zion Humans
-      - [ ] Virtual Humans
+      - [ ] Zion People
+         - [ ] Define Zion People entity
+         - [ ] Model & Textures
+         - [ ] Animations
+         - [ ] AI Goals
+         - [ ] Sound events
+            - [ ] Ambient
+            - [ ] Hurt
+            - [ ] Death
+            - [ ] Attack
+         - [ ] Trading
+         - [ ] Translations
+      - [ ] Virtual People
    - [ ] Robot Sentinel (Zion & Robot World, Octopus)
       - [x] Define Robot Sentinel entity
       - [x] Model & Textures
-      - [ ] Explode when die
-      - [ ] Animations
-         - [x] basic define
-         - [ ] advanced
+      - [x] Animations
       - [ ] AI Goals
          - [x] basic define
          - [ ] advanced define
-      - [ ] Sound events
+      - [x] Sound events
          - [x] Ambient
          - [x] Hurt
-         - [ ] Death
-      - [ ] Loot table
+         - [x] Death
+      - [x] Loot table
+          - [x] Machine parts
+          - [x] CPU
       - [ ] Spawn conditions
 
 
 ### Items
 
 1. Virtual World
-   - [ ] Telephones (to tp to Zion by calling)
-      - [ ] Define telephone item
+   - [ ] Mobile Phone (to tp to Zion by calling)
+      - [x] Define telephone item
       - [ ] Realise function to tp to Zion
-   - [ ] CPUs (to make the space warship)
-      - [ ] Define CPU item
-      - [ ] Define Block of CPUs
-      - [ ] Realise function to make the space warship
-   - [ ] Armors
+   - [x] Armors
       - [x] V Mask
          - [x] Ability to attack agents
-         - [ ] Tooltip
+         - [x] Tooltip
       - [x] Hacker Cloak
          - [x] Fly
-         - [ ] Tooltip
+         - [x] Tooltip
       - [x] Hacker Pants
          - [x] Complete defense the attacks from agents
-         - [ ] Tooltip
+         - [x] Tooltip
       - [x] Hacker Shoes
          - [x] Complete defense fall damage
-         - [ ] Tooltip
+         - [x] Tooltip
 
 2. Zion
    - [ ] Transmitter (to tp to Virtual World)
@@ -102,8 +125,13 @@
       - [ ] Realise function to tp to Virtual World
 
 3. Common
-   - [ ] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
-   - [ ] Energy batteries (to power the machines, APU mecha, etc)
+   - [ ] CPUs (to make the space warship)
+      - [x] Define CPU item
+      - [ ] Realise function to make the space warship
+   - [x] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
+   - [ ] Energy batteries (to power the space warship)
+      - [ ] Define energy battery item
+      - [ ] Realise function to power the space warship
    - [ ] Laser guns (use Energy batteries to shoot)
    - [ ] Electromagnetic hand grenades (to kill robots)
    - [ ] Raduim Ore (to make energy batteries, etc)
