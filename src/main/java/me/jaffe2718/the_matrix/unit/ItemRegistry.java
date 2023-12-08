@@ -20,12 +20,17 @@ import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class ItemRegistry {
 
-    public static final Item BULLET = new Item(new FabricItemSettings());
     public static final ArmorMaterial VIRTUAL_ARMOR_MATERIAL = new VirtualArmorMaterial();
     public static final Item V_MASK = new VMaskItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_CLOAK = new HackerCloakItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_PANTS = new HackerPantsItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_BOOTS = new HackerBootsItem(new FabricItemSettings().rarity(Rarity.RARE));
+
+    public static final Item BULLET = new Item(new FabricItemSettings());
+    public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
+    public static final Item CPU = new Item(new FabricItemSettings());
+    public static final Item MACHINE_PART = new Item(new FabricItemSettings());
+    public static final Item MOBILE_PHONE = new Item(new FabricItemSettings());
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,
             0x404040, 0xE5E15A,
@@ -34,6 +39,7 @@ public abstract class ItemRegistry {
             0x303030, 0xFF0000,
             new FabricItemSettings());
 
+
     public static final ItemGroup THE_MATRIX_Item_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(V_MASK))
             .displayName(Text.translatable("itemGroup." + MOD_ID))
@@ -41,22 +47,35 @@ public abstract class ItemRegistry {
 
     public static void register() {
         Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "item_group"), THE_MATRIX_Item_GROUP);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
+
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "v_mask"), V_MASK);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_cloak"), HACKER_CLOAK);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_pants"), HACKER_PANTS);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_boots"), HACKER_BOOTS);
+
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
+
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "agent_spawn_egg"), AGENT_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "robot_sentinel_spawn_egg"), ROBOT_SENTINEL_SPAWN_EGG);
 
         // add items to item group
         var groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), new Identifier(MOD_ID, "item_group"));
         ItemGroupEvents.modifyEntriesEvent(groupRegistryKey).register(groupEntries -> {
-            groupEntries.add(BULLET);
             groupEntries.add(V_MASK);
             groupEntries.add(HACKER_CLOAK);
             groupEntries.add(HACKER_PANTS);
             groupEntries.add(HACKER_BOOTS);
+
+            groupEntries.add(BULLET);
+            groupEntries.add(COIN);
+            groupEntries.add(CPU);
+            groupEntries.add(MACHINE_PART);
+            groupEntries.add(MOBILE_PHONE);
+
             groupEntries.add(AGENT_SPAWN_EGG);
             groupEntries.add(ROBOT_SENTINEL_SPAWN_EGG);
         });
