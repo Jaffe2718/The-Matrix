@@ -101,6 +101,12 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
+    protected void removePassenger(Entity passenger) {
+        super.removePassenger(passenger);
+        passenger.fallDistance = -3.0F;
+    }
+
+    @Override
     protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
         if (player.getStackInHand(hand).getItem() == ItemRegistry.BULLET) {
             if (this.bulletNum < MAX_BULLET_NUM) {
