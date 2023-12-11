@@ -7,7 +7,7 @@
 			"bones": {
 				"power": {
 					"scale": {
-						"vector": [1, 1, "1 * variable.energy"]
+						"vector": [1, 1, "variable.energy / 6"]
 					}
 				},
 				"muzzle": {

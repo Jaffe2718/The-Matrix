@@ -23,6 +23,7 @@ public abstract class ItemRegistry {
     public static final Item HACKER_PANTS = new HackerPantsItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_BOOTS = new HackerBootsItem(new FabricItemSettings().rarity(Rarity.RARE));
 
+    public static final Item BATTERY = new Item(new FabricItemSettings());
     public static final Item BULLET = new Item(new FabricItemSettings());
     public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
     public static final Item CPU = new Item(new FabricItemSettings());
@@ -54,6 +55,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_pants"), HACKER_PANTS);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_boots"), HACKER_BOOTS);
 
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "battery"), BATTERY);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
@@ -72,6 +74,7 @@ public abstract class ItemRegistry {
             groupEntries.add(HACKER_PANTS);
             groupEntries.add(HACKER_BOOTS);
 
+            groupEntries.add(BATTERY);
             groupEntries.add(BULLET);
             groupEntries.add(COIN);
             groupEntries.add(CPU);

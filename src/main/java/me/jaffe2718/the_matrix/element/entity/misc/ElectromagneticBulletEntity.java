@@ -3,15 +3,19 @@ package me.jaffe2718.the_matrix.element.entity.misc;
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ElectromagneticBulletEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
+import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -32,7 +36,7 @@ import static me.jaffe2718.the_matrix.client.model.entity.ElectromagneticBulletM
 import static me.jaffe2718.the_matrix.client.model.entity.ElectromagneticBulletModel.EXPLOSION;
 
 public class ElectromagneticBulletEntity
-        extends ProjectileEntity
+        extends ArrowEntity
         implements GeoEntity {
 
     /**
@@ -41,7 +45,7 @@ public class ElectromagneticBulletEntity
     private static final List<Class<? extends LivingEntity>> ROBOT_CLASSES = List.of(  // TODO: add more robot classes
             RobotSentinelEntity.class);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private int explosionDuration = 5;   // max = 5, min = 0, destroy when 0
+    private int explosionDuration = 80;   // max = 80, min = 0, destroy when 0
     private boolean isExploding = false;
 
     public static void shoot(@NotNull Entity owner, Vec3d pos, Vec3d velocity) {
@@ -54,16 +58,17 @@ public class ElectromagneticBulletEntity
 
     public ElectromagneticBulletEntity(EntityType<? extends ElectromagneticBulletEntity> entityType, World world) {
         super(entityType, world);
+        this.setNoGravity(true);
     }
 
     @Override
-    protected void readCustomDataFromNbt(NbtCompound nbt) {
+    public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.explosionDuration = nbt.getInt("ExplosionDuration");
     }
 
     @Override
-    protected void writeCustomDataToNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("ExplosionDuration", this.explosionDuration);
     }
@@ -83,8 +88,8 @@ public class ElectromagneticBulletEntity
     }
 
     @Override
-    protected void initDataTracker() {
-
+    protected boolean canHit(Entity entity) {
+        return super.canHit(entity) && !this.isExploding && !this.isOwner(entity);
     }
 
     @Override
@@ -94,22 +99,40 @@ public class ElectromagneticBulletEntity
             this.explosionDuration--;
             if (this.explosionDuration == 0) {
                 this.destroy();
+            } else if (this.explosionDuration % 16 == 0) {
+                this.applyExplosion();
             }
         }
     }
 
     @Override
     protected void onCollision(@NotNull HitResult hitResult) {
+        if (hitResult instanceof BlockHitResult blockHitResult) {
+            BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
+            if (!blockState.isSolidBlock(this.getWorld(), blockHitResult.getBlockPos()) || blockState.isAir()) {
+                return;
+            }
+        }
         super.onCollision(hitResult);
         this.setVelocity(0, 0, 0);  // stop moving when hit & explode
-        if (!this.isExploding) {   // start exploding
-            Box box = this.getBoundingBox().expand(4);
-            DamageSource explosion = this.getDamageSources().explosion(this, this.getOwner());
-            for (LivingEntity entity : this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> ROBOT_CLASSES.contains(entity.getClass()))) {
-                entity.damage(explosion, 80.0F);
-            }
-            this.isExploding = true;
-        }
+        this.setPosition(hitResult.getPos());
+        this.isExploding = true;
+        this.applyExplosion();
+    }
+
+    @Override
+    protected void onEntityHit(EntityHitResult entityHitResult) {
+    }
+
+    @Override
+    protected void onBlockHit(@NotNull BlockHitResult blockHitResult) {
+        BlockState blockState = this.getWorld().getBlockState(blockHitResult.getBlockPos());
+        blockState.onProjectileHit(this.getWorld(), blockState, blockHitResult, this);
+    }
+
+    @Override
+    public boolean shouldRender(double distanceSquared) {
+        return distanceSquared < 65536;
     }
 
     private void destroy() {
@@ -123,6 +146,20 @@ public class ElectromagneticBulletEntity
 
     public boolean isExploding() {
         return this.isExploding;
+    }
+
+    /**
+     * Explode and damage all robots in a 4-block radius.
+     * */
+    private void applyExplosion() {
+        Box box = this.getBoundingBox().expand(4);
+        DamageSource explosion = this.getDamageSources().explosion(this, this.getOwner());
+        for (LivingEntity entity : this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> ROBOT_CLASSES.contains(entity.getClass()))) {
+            entity.damage(explosion, 80.0F);
+        }
+        if (!this.getWorld().isClient) {
+            this.playSound(SoundEventRegistry.ELECTROMAGNETIC_EXPLOSION, 1, 1);
+        }
     }
 
     @Override
