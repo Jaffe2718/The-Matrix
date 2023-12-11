@@ -21,6 +21,8 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import static me.jaffe2718.the_matrix.client.model.entity.AgentModel.*;
+
 public class AgentEntity extends HostileEntity implements GeoEntity {
 
     // public static final TrackedData<Integer> ATTACKING_TICKS = DataTracker.registerData(AgentEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -35,10 +37,6 @@ public class AgentEntity extends HostileEntity implements GeoEntity {
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0D);
     }
 
-    static final RawAnimation IDLE = RawAnimation.begin().then("animation.agent.idle", Animation.LoopType.DEFAULT);
-    static final RawAnimation KICK = RawAnimation.begin().then("animation.agent.kick", Animation.LoopType.DEFAULT);
-    static final RawAnimation WALK = RawAnimation.begin().then("animation.agent.walk", Animation.LoopType.DEFAULT);
-    static final RawAnimation WAVE_FIST = RawAnimation.begin().then("animation.agent.wave_fist", Animation.LoopType.DEFAULT);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private boolean fistOrKick = true;  // true = fist, false = kick

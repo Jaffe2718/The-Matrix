@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
+import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
 import me.jaffe2718.the_matrix.unit.KeyBindings;
@@ -40,13 +41,12 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
+import static me.jaffe2718.the_matrix.client.model.entity.ArmoredPersonnelUnitModel.*;
+
 public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEntity {
 
-    static final RawAnimation SHOOT = RawAnimation.begin().then("animation.armored_personnel_unit.shoot", Animation.LoopType.DEFAULT);
-    static final RawAnimation STATIC = RawAnimation.begin().then("animation.armored_personnel_unit.static", Animation.LoopType.DEFAULT);
-    static final RawAnimation WALK = RawAnimation.begin().then("animation.armored_personnel_unit.walk", Animation.LoopType.DEFAULT);
     public static final int MAX_BULLET_NUM = 256;
-    public static final String BULLET_NUM_KEY = "BulletNum";
+    private static final String BULLET_NUM_KEY = "BulletNum";
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected int bulletNum;
 
@@ -79,7 +79,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
-    public void onSpawnPacket(EntitySpawnS2CPacket packet) {    // TODO: test if the packet is received by the client
+    public void onSpawnPacket(EntitySpawnS2CPacket packet) {
         if (packet instanceof APUEntitySpawnS2CPacket apuPacket) {
             this.bulletNum = apuPacket.getBulletNum();
         }
@@ -96,8 +96,8 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
-    protected boolean canAddPassenger(Entity passenger) {      // TODO: add zionists
-        return passenger instanceof PlayerEntity && !this.hasPassengers();
+    protected boolean canAddPassenger(Entity passenger) {
+        return (passenger instanceof PlayerEntity || passenger instanceof ZionPeopleEntity) && !this.hasPassengers();
     }
 
     @Override

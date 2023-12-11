@@ -1,0 +1,27 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.electromagnetic_gun.power_indicator": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"power": {
+					"scale": {
+						"vector": [1, 1, "1 * variable.energy"]
+					}
+				},
+				"muzzle": {
+					"rotation": {
+						"vector": [0, 0, "query.anim_time * 180"]
+					}
+				},
+				"laser": {
+					"rotation": {
+						"vector": [0, 0, "- query.anim_time * 180"]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

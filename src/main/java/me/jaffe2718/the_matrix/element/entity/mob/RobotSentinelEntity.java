@@ -24,11 +24,9 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
+import static me.jaffe2718.the_matrix.client.model.entity.RobotSentinelModel.*;
 
-    // TODO: add more animations
-    static final RawAnimation ATTACK_0 = RawAnimation.begin().then("animation.robot_sentinel.attack_0", Animation.LoopType.DEFAULT);
-    static final RawAnimation COMMON = RawAnimation.begin().then("animation.robot_sentinel.common", Animation.LoopType.DEFAULT);
+public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
 
     private int attackCooldown = 0;
 

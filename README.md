@@ -49,17 +49,40 @@
          - [ ] CPU
       - [ ] Spawn conditions
       - [x] Translations
+   - [ ] Machine Gun (rideable, no living entity like boat)
    - [ ] Space Warship (rideable)
+   - [ ] Zion People
+       - [ ] Define Zion People entity
+       - [ ] Model & Textures
+       - [ ] Animations
+       - [ ] AI Goals
+       - [ ] Sound events
+          - [ ] Ambient
+          - [ ] Hurt
+          - [ ] Death
+          - [ ] Attack
+       - [ ] Trading
 2. Virtual World
    - [ ] Agent
       - [x] Define Agent entity
       - [x] Animations
       - [x] AI Goals
       - [x] Loot table
-         - [ ] Mobile phone
-         - [ ] Coins
+         - [x] Mobile phone
+         - [x] Coins
       - [ ] Spawn conditions
       - [x] Translations
+   - [ ] Virtual People
+      - [ ] Define Virtual People entity
+      - [ ] Model & Textures
+      - [ ] Animations
+      - [ ] AI Goals
+      - [ ] Sound events
+         - [ ] Ambient
+         - [ ] Hurt
+         - [ ] Death
+         - [ ] Attack
+      - [ ] Trading
 3. Robot World
    - [ ] Robots
       - [ ] The Matrix (boss)
@@ -67,20 +90,6 @@
 4. End Virtual World
    - [ ] Agent Smith (boss)
 5. Common
-   - [ ] Humans
-      - [ ] Zion People
-         - [ ] Define Zion People entity
-         - [ ] Model & Textures
-         - [ ] Animations
-         - [ ] AI Goals
-         - [ ] Sound events
-            - [ ] Ambient
-            - [ ] Hurt
-            - [ ] Death
-            - [ ] Attack
-         - [ ] Trading
-         - [ ] Translations
-      - [ ] Virtual People
    - [ ] Robot Sentinel (Zion & Robot World, Octopus)
       - [x] Define Robot Sentinel entity
       - [x] Model & Textures
@@ -132,7 +141,10 @@
    - [ ] Energy batteries (to power the space warship)
       - [ ] Define energy battery item
       - [ ] Realise function to power the space warship
-   - [ ] Laser guns (use Energy batteries to shoot)
+   - [ ] Electromagnetic guns (use Energy batteries to shoot)
+      - [x] Define electromagnetic gun item
+      - [x] Animations & Models & Textures
+      - [ ] Realise function to shoot
    - [ ] Electromagnetic hand grenades (to kill robots)
    - [ ] Raduim Ore (to make energy batteries, etc)
    - [ ] Raduim Ingot (to make energy batteries)
@@ -140,7 +152,7 @@
 
 ### Particles
    - [ ] Zion
-      - [ ] APU Mecha machine gun shoot
-      - [ ] Laser gun shoot
+      - [ ] APU machine gun shoot
+      - [ ] Electromagnetic gun shoot
    - [ ] Virtual World
       - [ ] Zero One

@@ -2,12 +2,18 @@ package me.jaffe2718.the_matrix.client.model.entity;
 
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import net.minecraft.util.Identifier;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class RobotSentinelModel extends GeoModel<RobotSentinelEntity> {
+
+    // TODO: add more animations
+    public static final RawAnimation ATTACK_0 = RawAnimation.begin().then("animation.robot_sentinel.attack_0", Animation.LoopType.DEFAULT);
+    public static final RawAnimation COMMON = RawAnimation.begin().then("animation.robot_sentinel.common", Animation.LoopType.DEFAULT);
     private static final String DEPRESSION = "variable.depression";   // MoLang variable for depression angle
     @Override
     public Identifier getModelResource(RobotSentinelEntity animatable) {

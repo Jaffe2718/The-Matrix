@@ -3,12 +3,18 @@ package me.jaffe2718.the_matrix.client.model.entity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class ArmoredPersonnelUnitModel extends GeoModel<ArmoredPersonnelUnitEntity> {
+
+    public static final RawAnimation SHOOT = RawAnimation.begin().then("animation.armored_personnel_unit.shoot", Animation.LoopType.DEFAULT);
+    public static final RawAnimation STATIC = RawAnimation.begin().then("animation.armored_personnel_unit.static", Animation.LoopType.DEFAULT);
+    public static final RawAnimation WALK = RawAnimation.begin().then("animation.armored_personnel_unit.walk", Animation.LoopType.DEFAULT);
 
     private static final String DRIVER_PITCH = "variable.driver_pitch"; // MoLang variable for driver pitch
     private static final String IS_WALKING = "variable.is_walking";   // MoLang variable for walking animation
