@@ -1,8 +1,10 @@
 package me.jaffe2718.the_matrix.unit;
 
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
+import me.jaffe2718.the_matrix.element.entity.misc.ElectromagneticBulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
+import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
@@ -45,6 +47,16 @@ public abstract class EntityRegistry {
                     .build("bullet")
     );
 
+    public static final EntityType<ElectromagneticBulletEntity> ELECTROMAGNETIC_BULLET = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "electromagnetic_bullet"),
+            EntityType.Builder.create(ElectromagneticBulletEntity::new, SpawnGroup.MISC)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(0.125F, 0.125F)
+                    .build("electromagnetic_bullet")
+    );
+
     public static final EntityType<RobotSentinelEntity> ROBOT_SENTINEL = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(MOD_ID, "robot_sentinel"),
@@ -55,9 +67,20 @@ public abstract class EntityRegistry {
                     .build("robot_sentinel")
     );
 
+    public static final EntityType<ZionPeopleEntity> ZION_PEOPLE = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "zion_people"),
+            EntityType.Builder.create(ZionPeopleEntity::new, SpawnGroup.CREATURE)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(0.6F, 1.95F)
+                    .build("zion_people")
+    );
+
     public static void register() {
         FabricDefaultAttributeRegistry.register(AGENT, AgentEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ROBOT_SENTINEL, RobotSentinelEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(ZION_PEOPLE, ZionPeopleEntity.createAttributes());
     }
 }
