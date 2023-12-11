@@ -1,9 +1,6 @@
 package me.jaffe2718.the_matrix.unit;
 
-import me.jaffe2718.the_matrix.element.item.HackerBootsItem;
-import me.jaffe2718.the_matrix.element.item.HackerCloakItem;
-import me.jaffe2718.the_matrix.element.item.HackerPantsItem;
-import me.jaffe2718.the_matrix.element.item.VMaskItem;
+import me.jaffe2718.the_matrix.element.item.*;
 import me.jaffe2718.the_matrix.element.item.armor_material.VirtualArmorMaterial;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -29,6 +26,10 @@ public abstract class ItemRegistry {
     public static final Item BULLET = new Item(new FabricItemSettings());
     public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
     public static final Item CPU = new Item(new FabricItemSettings());
+    public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(
+            new FabricItemSettings()
+                    .maxCount(1)
+                    .maxDamage(100));
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MOBILE_PHONE = new Item(new FabricItemSettings());
 
@@ -56,6 +57,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "electromagnetic_gun"), ELECTROMAGNETIC_GUN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
 
@@ -73,6 +75,7 @@ public abstract class ItemRegistry {
             groupEntries.add(BULLET);
             groupEntries.add(COIN);
             groupEntries.add(CPU);
+            groupEntries.add(ELECTROMAGNETIC_GUN);
             groupEntries.add(MACHINE_PART);
             groupEntries.add(MOBILE_PHONE);
 

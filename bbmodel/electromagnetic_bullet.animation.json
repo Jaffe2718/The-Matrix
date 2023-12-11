@@ -1,0 +1,62 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.electromagnetic_bullet.common": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"outer_nuclear": {
+					"rotation": {
+						"vector": ["270 * math.sin(query.anim_time * 180)", "180 * math.sin(query.anim_time * 270)", "- 120 * math.sin(query.anim_time * 120)"]
+					},
+					"scale": {
+						"vector": [0.5, 0.5, 0.5]
+					}
+				},
+				"c0": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.electromagnetic_bullet.explosion": {
+			"loop": true,
+			"animation_length": 4,
+			"bones": {
+				"outer_nuclear": {
+					"rotation": {
+						"vector": ["- 270 * math.sin(query.anim_time * 180)", "- 180 * math.sin(query.anim_time * 270)", "- 120 * math.sin(query.anim_time * 120)"]
+					},
+					"scale": {
+						"vector": [3, 3, 3]
+					}
+				},
+				"c0": {
+					"rotation": {
+						"vector": ["360 * math.sin(query.anim_time * 90)", "270 * math.sin(query.anim_time * 135)", "180 * math.sin(query.anim_time * 180)"]
+					},
+					"scale": {
+						"vector": [4, 4, 4]
+					}
+				},
+				"c1": {
+					"rotation": {
+						"vector": ["- 270 * math.sin(query.anim_time * 180)", "- 180 * math.sin(query.anim_time * 180 + 90)", "- 360 * math.sin(query.anim_time * 1700)"]
+					},
+					"scale": {
+						"vector": [1.1, 1.1, 1.1]
+					}
+				},
+				"c2": {
+					"rotation": {
+						"vector": ["180 * math.cos(query.anim_time * 180)", "180 * math.cos(query.anim_time * 180 + 90)", "180 * math.cos(query.anim_time * 180 + 180)"]
+					},
+					"scale": {
+						"vector": [1.1, 1.1, 1.1]
+					}
+				}
+			}
+		}
+	}
+}
