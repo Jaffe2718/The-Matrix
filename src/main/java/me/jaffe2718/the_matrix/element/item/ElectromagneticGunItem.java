@@ -45,7 +45,7 @@ public class ElectromagneticGunItem extends Item implements GeoItem {
         this.energy = stack.getOrCreateNbt().getInt("Energy");
         if (this.energy == 0 &&
                 entity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(this) &&
-                player.getInventory().contains(ItemRegistry.BATTERY.getDefaultStack())) {
+                (player.getInventory().contains(ItemRegistry.BATTERY.getDefaultStack()) || player.isCreative())) {
             player.sendMessage(Text.translatable("message.the_matrix.electromagnetic_gun.should_charge"), true);
         }
     }

@@ -22,7 +22,7 @@ public class ZionPeopleEntitySpawnS2CPacket extends EntitySpawnS2CPacket {
         put(6, "infantry");
         put(7, "machinist");
         put(8, "miner");
-        put(9, "riflemen");
+        put(9, "rifleman");
     }};
 
     private final int jobID;

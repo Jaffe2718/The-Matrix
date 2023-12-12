@@ -11,6 +11,11 @@ import software.bernie.geckolib.model.GeoModel;
 public class ZionPeopleModel extends GeoModel<ZionPeopleEntity> {
 
     /**
+     * For apu_pilot, when driving Armored Personnel Unit (APU)
+     * */
+    public static final RawAnimation APU_PILOT_DRIVE = RawAnimation.begin().then("animation.zion_people.apu_pilot.drive", Animation.LoopType.DEFAULT);
+
+    /**
      * For infantry, walk or stand still with weapon on hand
      * */
     public static final RawAnimation INFANTRY_COMBAT = RawAnimation.begin().then("animation.zion_people.infantry.combat", Animation.LoopType.DEFAULT);
@@ -21,7 +26,7 @@ public class ZionPeopleModel extends GeoModel<ZionPeopleEntity> {
     public static final RawAnimation INFANTRY_IDLE = RawAnimation.begin().then("animation.zion_people.infantry.idle", Animation.LoopType.DEFAULT);
 
     /**
-     * For carpenter, farmer, farm_keeper, grocer, machinist, miner, riflemen, walk or stand still
+     * For carpenter, farmer, farm_keeper, grocer, machinist, miner, rifleman, walk or stand still
      * */
     public static final RawAnimation COMMON = RawAnimation.begin().then("animation.zion_people.common", Animation.LoopType.DEFAULT);
 

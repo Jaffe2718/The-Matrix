@@ -39,6 +39,11 @@ public class ZionPeopleEntity
     protected TradeOfferList offers;
     public int jobId;   // 0 -> (random), 1 -> AUP Pilot, 2 -> Carpenter, ...
 
+    /**
+     * For the job which requires riding a mount, like apu_pilot & rifleman (drive machine gun, etc.)
+     * */
+    protected final GoalSelector mountedGoalSelector;
+
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
@@ -49,6 +54,7 @@ public class ZionPeopleEntity
 
     public ZionPeopleEntity(EntityType<? extends ZionPeopleEntity> entityType, World world) {
         super(entityType, world);
+        this.mountedGoalSelector = new GoalSelector(world.getProfilerSupplier());
     }
 
     @Override
@@ -88,8 +94,9 @@ public class ZionPeopleEntity
         // universal goals for all jobs
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(1, new FleeEntityGoal<>(this, RobotSentinelEntity.class, 16, 0.2, 0.35F));
+        this.goalSelector.add(1, new EscapeDangerGoal(this, 0.35D));
+        this.goalSelector.add(2, new WanderAroundGoal(this, 1.0D));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(4, new WanderAroundGoal(this, 0.15D));
         this.goalSelector.add(4, new LookAroundGoal(this));
         this.goalSelector.add(5, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
         switch (this.jobId) {  // TODO: Add job-specific goals
@@ -112,7 +119,7 @@ public class ZionPeopleEntity
             }
             case 8 -> {    // Miner
             }
-            case 9 -> {    // Riflemen
+            case 9 -> {    // Rifleman
             }
         }
     }
