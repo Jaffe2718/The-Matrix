@@ -52,8 +52,18 @@
    - [ ] Machine Gun (rideable, no living entity like boat)
    - [ ] Space Warship (rideable)
    - [ ] Zion People
-       - [ ] Define Zion People entity
+       - [x] Define Zion People entity
        - [ ] Model & Textures
+          - [ ] Jobs (0 -> random)
+             - [x] 1 -> apu_pilot
+             - [x] 2 -> carpenter
+             - [x] 3 -> farm_breeder
+             - [x] 4 -> farmer
+             - [ ] 5 -> grocer
+             - [x] 6 -> infantry
+             - [ ] 7 -> machinist
+             - [ ] 8 -> miner
+             - [ ] 9 -> rifleman
        - [ ] Animations
        - [ ] AI Goals
        - [ ] Sound events
