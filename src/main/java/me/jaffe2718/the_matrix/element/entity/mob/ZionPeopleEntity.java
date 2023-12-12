@@ -1,8 +1,10 @@
 package me.jaffe2718.the_matrix.element.entity.mob;
 
-import me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel.SelectTargetGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
+import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -39,11 +41,6 @@ public class ZionPeopleEntity
     protected TradeOfferList offers;
     public int jobId;   // 0 -> (random), 1 -> AUP Pilot, 2 -> Carpenter, ...
 
-    /**
-     * For the job which requires riding a mount, like apu_pilot & rifleman (drive machine gun, etc.)
-     * */
-    protected final GoalSelector mountedGoalSelector;
-
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
@@ -54,7 +51,6 @@ public class ZionPeopleEntity
 
     public ZionPeopleEntity(EntityType<? extends ZionPeopleEntity> entityType, World world) {
         super(entityType, world);
-        this.mountedGoalSelector = new GoalSelector(world.getProfilerSupplier());
     }
 
     @Override
@@ -92,34 +88,36 @@ public class ZionPeopleEntity
     @Override
     protected void initGoals() {
         // universal goals for all jobs
-        this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(1, new FleeEntityGoal<>(this, RobotSentinelEntity.class, 16, 0.2, 0.35F));
-        this.goalSelector.add(1, new EscapeDangerGoal(this, 0.35D));
-        this.goalSelector.add(2, new WanderAroundGoal(this, 1.0D));
+        this.goalSelector.add(2, new SwimGoal(this));
+        this.goalSelector.add(2, new FleeEntityGoal<>(this, LivingEntity.class, 32, 0.25, 0.35F,
+                livingEntity -> EntityRegistry.ROBOT_CLASSES.contains(livingEntity.getClass())));
+        this.goalSelector.add(2, new EscapeDangerGoal(this, 0.35D));
+        this.goalSelector.add(3, new WanderAroundGoal(this, 1.0D));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(4, new LookAroundGoal(this));
         this.goalSelector.add(5, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
         switch (this.jobId) {  // TODO: Add job-specific goals
             case 1 -> {    // APU Pilot
-                // this.goalSelector.add(2);
+                this.targetSelector.add(1, new SelectEnemyGoal(this, true));
             }
             case 2 -> {    // Carpenter
             }
-            case 3 -> {    // Farm Keeper
+            case 3 -> {    // Farm Breeder
             }
             case 4 -> {    // Farmer
             }
             case 5 -> {    // Grocer
             }
             case 6 -> {    // Infantry
-                // TODO: Add other robot types
-                this.targetSelector.add(1, new SelectTargetGoal<>(this, RobotSentinelEntity.class, true));
+                this.targetSelector.add(1, new SelectEnemyGoal(this, true));
             }
             case 7 -> {    // Machinist
             }
             case 8 -> {    // Miner
             }
             case 9 -> {    // Rifleman
+                this.targetSelector.add(1, new SelectEnemyGoal(this, true));
+                // use the machine gun
             }
         }
     }
@@ -192,6 +190,26 @@ public class ZionPeopleEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         // TODO: Register controllers
+        switch (this.jobId) {
+            case 1 -> {    // APU Pilot
+            }
+            case 2 -> {    // Carpenter
+            }
+            case 3 -> {    // Farm Breeder
+            }
+            case 4 -> {    // Farmer
+            }
+            case 5 -> {    // Grocer
+            }
+            case 6 -> {    // Infantry
+            }
+            case 7 -> {    // Machinist
+            }
+            case 8 -> {    // Miner
+            }
+            case 9 -> {    // Rifleman
+            }
+        }
     }
 
     @Override

@@ -8,6 +8,8 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
 
+import java.util.Objects;
+
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class ArmoredPersonnelUnitModel extends GeoModel<ArmoredPersonnelUnitEntity> {
@@ -45,11 +47,7 @@ public class ArmoredPersonnelUnitModel extends GeoModel<ArmoredPersonnelUnitEnti
         });
         parser.setMemoizedValue(DRIVER_PITCH, () -> {      // register driver_pitch variable to molang parser
             Entity driver = animatable.getControllingPassenger();
-            if (driver == null) {
-                return 0.0;
-            } else {
-                return driver.getPitch();
-            }
+            return Objects.requireNonNullElse(driver, animatable).getPitch();
         });
     }
 }

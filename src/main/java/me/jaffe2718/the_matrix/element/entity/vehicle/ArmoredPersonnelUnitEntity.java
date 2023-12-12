@@ -87,7 +87,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {  // TODO: test if the packet is sent to the client
+    public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new APUEntitySpawnS2CPacket(this);
     }
 
@@ -124,6 +124,10 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         }
     }
 
+    /**
+     * Only the player can control the APUs.
+     * If the driver is Zion people, the APU will be controlled by the AI.
+     * */
     @Nullable
     @Override
     public LivingEntity getControllingPassenger() {
@@ -131,7 +135,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         if (passenger instanceof PlayerEntity player) {
             return player;
         } else {
-            return super.getControllingPassenger();
+            return null;
         }
     }
 
@@ -197,7 +201,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         if (this.isOnGround() &&
                 this.getVelocity().length() > 0.05 &&
                 this.getControllingPassenger() != null &&
-        this.age % 20 == 0) {
+            this.age % 20 == 0) {
             this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 1.0F);
             if (this.getWorld() instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, serverWorld.getBlockState(this.getBlockPos().down())),
@@ -246,6 +250,9 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                     this.tryAttack(steppedEntity);
                 }
             }
+        }
+        if (this.age % 10 == 0) {
+            this.setAiDisabled(!(this.getFirstPassenger() instanceof ZionPeopleEntity));
         }
         super.tick();
     }

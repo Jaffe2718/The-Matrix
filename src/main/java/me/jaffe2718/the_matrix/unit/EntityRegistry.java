@@ -8,14 +8,23 @@ import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
+
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class EntityRegistry {
+
+    /**
+     * Only robots will be affected by the electromagnetic pulse.
+     * */
+    public static final List<Class<? extends LivingEntity>> ROBOT_CLASSES = List.of(  // TODO: add more robot classes
+            RobotSentinelEntity.class);
 
     public static final EntityType<AgentEntity> AGENT = Registry.register(
             Registries.ENTITY_TYPE,

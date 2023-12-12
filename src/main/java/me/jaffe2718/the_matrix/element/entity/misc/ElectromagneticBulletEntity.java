@@ -1,6 +1,5 @@
 package me.jaffe2718.the_matrix.element.entity.misc;
 
-import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ElectromagneticBulletEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
@@ -30,8 +29,6 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.List;
-
 import static me.jaffe2718.the_matrix.client.model.entity.ElectromagneticBulletModel.COMMON;
 import static me.jaffe2718.the_matrix.client.model.entity.ElectromagneticBulletModel.EXPLOSION;
 
@@ -39,11 +36,7 @@ public class ElectromagneticBulletEntity
         extends ArrowEntity
         implements GeoEntity {
 
-    /**
-     * Only robots will be affected by the electromagnetic pulse.
-     * */
-    private static final List<Class<? extends LivingEntity>> ROBOT_CLASSES = List.of(  // TODO: add more robot classes
-            RobotSentinelEntity.class);
+
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int explosionDuration = 80;   // max = 80, min = 0, destroy when 0
     private boolean isExploding = false;
@@ -154,7 +147,7 @@ public class ElectromagneticBulletEntity
     private void applyExplosion() {
         Box box = this.getBoundingBox().expand(4);
         DamageSource explosion = this.getDamageSources().explosion(this, this.getOwner());
-        for (LivingEntity entity : this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> ROBOT_CLASSES.contains(entity.getClass()))) {
+        for (LivingEntity entity : this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> EntityRegistry.ROBOT_CLASSES.contains(entity.getClass()))) {
             entity.damage(explosion, 80.0F);
         }
         if (!this.getWorld().isClient) {

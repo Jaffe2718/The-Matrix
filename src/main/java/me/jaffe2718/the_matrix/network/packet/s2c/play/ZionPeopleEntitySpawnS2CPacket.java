@@ -16,7 +16,7 @@ public class ZionPeopleEntitySpawnS2CPacket extends EntitySpawnS2CPacket {
         // 0 -> "random";
         put(1, "apu_pilot");
         put(2, "carpenter");
-        put(3, "farm_keeper");
+        put(3, "farm_breeder");
         put(4, "farmer");
         put(5, "grocer");
         put(6, "infantry");

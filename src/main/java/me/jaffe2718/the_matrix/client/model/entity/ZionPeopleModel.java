@@ -26,7 +26,7 @@ public class ZionPeopleModel extends GeoModel<ZionPeopleEntity> {
     public static final RawAnimation INFANTRY_IDLE = RawAnimation.begin().then("animation.zion_people.infantry.idle", Animation.LoopType.DEFAULT);
 
     /**
-     * For carpenter, farmer, farm_keeper, grocer, machinist, miner, rifleman, walk or stand still
+     * For carpenter, farmer, farm_breeder, grocer, machinist, miner, rifleman, walk or stand still
      * */
     public static final RawAnimation COMMON = RawAnimation.begin().then("animation.zion_people.common", Animation.LoopType.DEFAULT);
 
