@@ -80,6 +80,16 @@
             }
         ]
     },
+    "electromagnetic_gun_charging": {
+        "subtitle": "sound.the_matrix.electromagnetic_gun_charging",
+        "sounds": [
+            {
+                "name": "the_matrix:electromagnetic_gun_charging",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
     "electromagnetic_gun_shoot": {
         "subtitle": "sound.the_matrix.electromagnetic_gun_shoot",
         "sounds": [

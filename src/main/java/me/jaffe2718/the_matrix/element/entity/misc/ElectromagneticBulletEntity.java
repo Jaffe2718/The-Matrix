@@ -148,7 +148,7 @@ public class ElectromagneticBulletEntity
         Box box = this.getBoundingBox().expand(4);
         DamageSource explosion = this.getDamageSources().explosion(this, this.getOwner());
         for (LivingEntity entity : this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> EntityRegistry.ROBOT_CLASSES.contains(entity.getClass()))) {
-            entity.damage(explosion, 80.0F);
+            entity.damage(explosion, 64.0F);
         }
         if (!this.getWorld().isClient) {
             this.playSound(SoundEventRegistry.ELECTROMAGNETIC_EXPLOSION, 1, 1);

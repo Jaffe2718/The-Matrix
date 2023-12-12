@@ -44,6 +44,7 @@ public class ZionPeopleEntity
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
+                .add(EntityAttributes.GENERIC_ARMOR, 10.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0D);
@@ -83,6 +84,11 @@ public class ZionPeopleEntity
     @Override
     public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new ZionPeopleEntitySpawnS2CPacket(this);
+    }
+
+    @Override
+    public boolean canImmediatelyDespawn(double distanceSquared) {
+        return false;
     }
 
     @Override

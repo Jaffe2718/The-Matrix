@@ -70,6 +70,7 @@ public class ElectromagneticGunItem extends Item implements GeoItem {
                 user.getItemCooldownManager().set(this, 100);
             }
             user.getInventory().remove(stack -> stack.getItem() == ItemRegistry.BATTERY, 1, user.getInventory());
+            user.playSound(SoundEventRegistry.ELECTROMAGNETIC_GUN_CHARGING, 1, 1);
             return TypedActionResult.success(user.getStackInHand(hand), true);
         } else {
             return TypedActionResult.fail(user.getStackInHand(hand));
