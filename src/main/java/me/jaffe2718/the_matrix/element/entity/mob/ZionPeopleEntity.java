@@ -2,7 +2,6 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
-import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
@@ -27,7 +26,13 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import static me.jaffe2718.the_matrix.client.model.entity.ZionPeopleModel.*;
+import static me.jaffe2718.the_matrix.unit.EntityRegistry.ROBOT_CLASSES;
 
 public class ZionPeopleEntity
         extends PathAwareEntity
@@ -73,10 +78,10 @@ public class ZionPeopleEntity
             if (tempJobID != 0 && tempJobID <= 9) {
                 this.jobId = tempJobID;
             } else {
-                this.jobId = this.getRandom().nextInt(8) + 1;
+                this.jobId = this.getRandom().nextInt(9) + 1;
             }
         } else {
-            this.jobId = this.getRandom().nextInt(8) + 1;
+            this.jobId = this.getRandom().nextInt(9) + 1;
         }
         super.onSpawnPacket(packet);
     }
@@ -96,7 +101,7 @@ public class ZionPeopleEntity
         // universal goals for all jobs
         this.goalSelector.add(2, new SwimGoal(this));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, LivingEntity.class, 32, 0.25, 0.35F,
-                livingEntity -> EntityRegistry.ROBOT_CLASSES.contains(livingEntity.getClass())));
+                livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 0.35D));
         this.goalSelector.add(3, new WanderAroundGoal(this, 1.0D));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
@@ -198,23 +203,57 @@ public class ZionPeopleEntity
         // TODO: Register controllers
         switch (this.jobId) {
             case 1 -> {    // APU Pilot
+                controllers.add(new AnimationController<>(this, "controller", 0, this::apuPilotPredicate));
             }
             case 2 -> {    // Carpenter
+                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
             }
             case 3 -> {    // Farm Breeder
+                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
             }
             case 4 -> {    // Farmer
+                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
             }
             case 5 -> {    // Grocer
+                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
             }
             case 6 -> {    // Infantry
+                controllers.add(new AnimationController<>(this, "controller", 0, this::infantryPredicate));
             }
-            case 7 -> {    // Machinist
+            case 7 -> {    // Machinist   // TODO: Add machinist fix animation
+                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
             }
             case 8 -> {    // Miner
+                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(MINER_COMMON)));
             }
             case 9 -> {    // Rifleman
+                controllers.add(new AnimationController<>(this, "controller", 0, this::riflemanPredicate));
             }
+        }
+    }
+
+    private PlayState apuPilotPredicate(AnimationState<ZionPeopleEntity> state) {
+        if (this.hasVehicle()) {
+            return state.setAndContinue(APU_PILOT_DRIVE);
+        } else {
+            return state.setAndContinue(COMMON);
+        }
+    }
+
+    private PlayState infantryPredicate(AnimationState<ZionPeopleEntity> state) {
+        LivingEntity target = this.getTarget();
+        if (target != null && target.isAlive() && ROBOT_CLASSES.contains(target.getClass())) {
+            return state.setAndContinue(INFANTRY_COMBAT);
+        } else {
+            return state.setAndContinue(INFANTRY_IDLE);
+        }
+    }
+
+    private PlayState riflemanPredicate(AnimationState<ZionPeopleEntity>state) {
+        if (this.hasVehicle()) {
+            return state.setAndContinue(RIFLEMAN_SHOOT);
+        } else {
+            return state.setAndContinue(COMMON);
         }
     }
 

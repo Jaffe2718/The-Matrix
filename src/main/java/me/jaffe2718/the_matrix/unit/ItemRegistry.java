@@ -40,6 +40,9 @@ public abstract class ItemRegistry {
     public static final Item ROBOT_SENTINEL_SPAWN_EGG = new SpawnEggItem(EntityRegistry.ROBOT_SENTINEL,
             0x303030, 0xFF0000,
             new FabricItemSettings());
+    public static final Item ZION_PEOPLE_SPAWN_EGG = new SpawnEggItem(EntityRegistry.ZION_PEOPLE,
+            0x9F7A71, 0x60D6FF,
+            new FabricItemSettings());
 
 
     public static final ItemGroup THE_MATRIX_Item_GROUP = FabricItemGroup.builder()
@@ -65,6 +68,7 @@ public abstract class ItemRegistry {
 
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "agent_spawn_egg"), AGENT_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "robot_sentinel_spawn_egg"), ROBOT_SENTINEL_SPAWN_EGG);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "zion_people_spawn_egg"), ZION_PEOPLE_SPAWN_EGG);
 
         // add items to item group
         RegistryKey<ItemGroup> groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), new Identifier(MOD_ID, "item_group"));
@@ -84,6 +88,7 @@ public abstract class ItemRegistry {
 
             groupEntries.add(AGENT_SPAWN_EGG);
             groupEntries.add(ROBOT_SENTINEL_SPAWN_EGG);
+            groupEntries.add(ZION_PEOPLE_SPAWN_EGG);
         });
 
     }
