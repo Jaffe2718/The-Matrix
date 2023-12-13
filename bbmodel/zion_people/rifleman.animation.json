@@ -1,0 +1,65 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.zion_people.common": {
+			"animation_length": 1,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": ["variable.head_pitch", 0, 0]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": ["- 30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": ["30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": ["- 30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": ["30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				}
+			}
+		},
+		"animation.zion_people.rifleman.shoot": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": ["variable.head_pitch", 0, 0]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": [-90, 0, 0]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": [30, 0, 0]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": [-30, 0, 0]
+					}
+				}
+			}
+		}
+	}
+}

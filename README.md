@@ -59,11 +59,11 @@
              - [x] 2 -> carpenter
              - [x] 3 -> farm_breeder
              - [x] 4 -> farmer
-             - [ ] 5 -> grocer
+             - [x] 5 -> grocer
              - [x] 6 -> infantry
              - [ ] 7 -> machinist
              - [ ] 8 -> miner
-             - [ ] 9 -> rifleman
+             - [x] 9 -> rifleman
        - [ ] Animations
        - [ ] AI Goals
        - [ ] Sound events
