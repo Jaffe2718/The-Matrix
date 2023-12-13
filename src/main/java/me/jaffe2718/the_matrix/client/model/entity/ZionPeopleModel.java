@@ -26,10 +26,19 @@ public class ZionPeopleModel extends GeoModel<ZionPeopleEntity> {
     public static final RawAnimation INFANTRY_IDLE = RawAnimation.begin().then("animation.zion_people.infantry.idle", Animation.LoopType.DEFAULT);
 
     /**
-     * For carpenter, farmer, farm_breeder, grocer, machinist, miner, rifleman, walk or stand still
+     * For carpenter, farmer, farm_breeder, grocer, machinist, rifleman, walk or stand still
      * */
     public static final RawAnimation COMMON = RawAnimation.begin().then("animation.zion_people.common", Animation.LoopType.DEFAULT);
 
+    /**
+     * For miner, walk or stand still
+     * */
+    public static final RawAnimation MINER_COMMON = RawAnimation.begin().then("animation.zion_people.miner.common", Animation.LoopType.DEFAULT);
+
+    /**
+     * For rifleman, shoot
+     * */
+    public static final RawAnimation RIFLEMAN_SHOOT = RawAnimation.begin().then("animation.zion_people.rifleman.shoot", Animation.LoopType.DEFAULT);
 
     private static final String HEAD_PITCH = "variable.head_pitch";  // register head_pitch variable to molang parser
     private static final String IS_WALKING = "variable.is_walking";

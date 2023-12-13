@@ -1,0 +1,52 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.zion_people.miner.common": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": ["variable.head_pitch", 0, 0]
+					}
+				},
+				"right_arm": {
+					"rotation": {
+						"vector": ["- 30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				},
+				"left_arm": {
+					"rotation": {
+						"vector": ["30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				},
+				"left_leg": {
+					"rotation": {
+						"vector": ["- 30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				},
+				"right_leg": {
+					"rotation": {
+						"vector": ["30 * variable.is_walking * math.sin(query.anim_time * 360)", 0, 0]
+					}
+				},
+				"d0": {
+					"rotation": {
+						"vector": [0, "query.anim_time * 180", 0]
+					}
+				},
+				"d1": {
+					"rotation": {
+						"vector": [0, "- query.anim_time * 180", 0]
+					}
+				},
+				"d2": {
+					"rotation": {
+						"vector": [0, "query.anim_time * 360", 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}
