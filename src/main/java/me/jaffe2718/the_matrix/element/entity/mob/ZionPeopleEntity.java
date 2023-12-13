@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.entity.mob;
 
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
 import net.minecraft.entity.EntityType;
@@ -100,9 +101,9 @@ public class ZionPeopleEntity
     protected void initGoals() {
         // universal goals for all jobs
         this.goalSelector.add(2, new SwimGoal(this));
-        this.goalSelector.add(2, new FleeEntityGoal<>(this, LivingEntity.class, 32, 1.4f, 2.0F,
+        this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                 livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 1.7D));
+        this.goalSelector.add(2, new EscapeDangerGoal(this, 1.5D));
         this.goalSelector.add(3, new WanderAroundGoal(this, 1.0D));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(4, new LookAroundGoal(this));

@@ -243,12 +243,10 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
             }
         }
-        if (!this.isOnGround() && this.getVelocity().y < -2e-3) {
+        if (this.getVelocity().y < -0.1) {
             List<LivingEntity> steppedEntities = this.getSteppedEntities();
-            if (!steppedEntities.isEmpty()) {
-                for (LivingEntity steppedEntity : steppedEntities) {
-                    this.tryAttack(steppedEntity);
-                }
+            for (LivingEntity steppedEntity : steppedEntities) {
+                this.tryAttack(steppedEntity);
             }
         }
         if (this.age % 10 == 0) {
