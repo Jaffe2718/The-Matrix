@@ -61,7 +61,7 @@
              - [x] 4 -> farmer
              - [x] 5 -> grocer
              - [x] 6 -> infantry
-             - [ ] 7 -> machinist
+             - [x] 7 -> machinist
              - [x] 8 -> miner
              - [x] 9 -> rifleman
        - [ ] Animations

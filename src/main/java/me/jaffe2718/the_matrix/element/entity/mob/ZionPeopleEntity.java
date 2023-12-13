@@ -70,7 +70,7 @@ public class ZionPeopleEntity
     public void onSpawnPacket(EntitySpawnS2CPacket packet) {
         if (packet instanceof ZionPeopleEntitySpawnS2CPacket zionPacket) {
             int tempJobID = zionPacket.getJobID();
-            if (tempJobID != 0) {
+            if (tempJobID != 0 && tempJobID <= 9) {
                 this.jobId = tempJobID;
             } else {
                 this.jobId = this.getRandom().nextInt(8) + 1;
