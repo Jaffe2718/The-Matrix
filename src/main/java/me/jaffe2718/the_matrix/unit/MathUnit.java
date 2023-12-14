@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.unit;
 
 import net.minecraft.util.math.Vec3d;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class MathUnit {
@@ -19,5 +20,16 @@ public abstract class MathUnit {
 
     public static Vec3d relativePos(@NotNull Vec3d from, @NotNull Vec3d to) {
         return to.subtract(from);
+    }
+
+    @Contract("_, _ -> new")
+    public static @NotNull Vec3d getRotationVector(double pitch, double yaw) {
+        double f = pitch * Math.PI / 180;
+        double g = -yaw * Math.PI / 180;
+        double h = Math.cos(g);
+        double i = Math.sin(g);
+        double j = Math.cos(f);
+        double k = Math.sin(f);
+        return new Vec3d(i * j, -k, h * j);
     }
 }

@@ -19,6 +19,7 @@
     "item.the_matrix.robot_sentinel_spawn_egg": "Robot Sentinel Spawn Egg",
     "item.the_matrix.v_mask": "V Mask",
     "item.the_matrix.v_mask.tooltip": "Gain the ability to fight back against agents",
+    "item.the_matrix.zion_people_spawn_egg": "Zion People Spawn Egg",
     "itemGroup.the_matrix": "The Matrix",
     "key.categories.the_matrix": "Key Bindings of The Matrix",
     "key.keyboard.0": "0",
@@ -74,6 +75,7 @@
     "sound.the_matrix.electromagnetic_explosion": "Electromagnetic explosion",
     "sound.the_matrix.electromagnetic_gun_charging": "Electromagnetic gun charging",
     "sound.the_matrix.electromagnetic_gun_shoot": "Electromagnetic gun shooting",
+    "sound.the_matrix.machine_gun_shoot": "Machine gun shooting",
     "sound.the_matrix.robot_sentinel_death": "Robot Sentinel dies",
     "sound.the_matrix.robot_sentinel_hurt": "Robot Sentinel hurts",
     "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detecting"

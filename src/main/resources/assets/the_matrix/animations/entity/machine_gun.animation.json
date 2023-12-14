@@ -1,0 +1,25 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.machine_gun.common": {
+			"loop": true,
+			"bones": {
+				"gun": {
+					"rotation": {
+						"vector": ["variable.gun_pitch", 0, 0]
+					}
+				},
+				"fire": {
+					"scale": {
+						"vector": [
+							"variable.is_shooting * (0.5 + 0.5 * math.sin(2400 * query.anim_time))",
+							"variable.is_shooting * (0.5 + 0.5 * math.sin(2400 * query.anim_time))",
+							"variable.is_shooting * (0.5 + 0.5 * math.sin(2400 * query.anim_time))"
+						]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

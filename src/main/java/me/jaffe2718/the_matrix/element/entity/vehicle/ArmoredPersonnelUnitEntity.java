@@ -54,7 +54,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         return PathAwareEntity.createLivingAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 600.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
-                .add(EntityAttributes.GENERIC_ARMOR, 4.0D)
+                .add(EntityAttributes.GENERIC_ARMOR, 10.0D)
                 .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 2.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 3.0D)
@@ -108,7 +108,8 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
-        if (player.getStackInHand(hand).getItem() == ItemRegistry.BULLET) {
+        if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET)
+                && this.hasPassenger(player)) {   // the player can only reload the APU when they're riding it
             if (this.bulletNum < MAX_BULLET_NUM) {
                 this.bulletNum++;
                 player.getStackInHand(hand).decrement(1);
@@ -250,6 +251,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             }
         }
         if (this.age % 10 == 0) {
+            this.setAir(this.getMaxAir());
             this.setAiDisabled(!(this.getFirstPassenger() instanceof ZionPeopleEntity));
         }
         super.tick();
@@ -284,7 +286,8 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     private PlayState handleWalk(@NotNull AnimationState<ArmoredPersonnelUnitEntity> state) {
         if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
-                KeyBindings.FIRE_SAFETY_CATCH.isPressed() && this.bulletNum > 0) {
+                KeyBindings.FIRE_SAFETY_CATCH.isPressed() && this.bulletNum > 0 &&
+                this.hasPassenger(MinecraftClient.getInstance().player)) {
             return state.setAndContinue(SHOOT);
         } else if (state.isMoving() && this.getControllingPassenger() != null) {
             return state.setAndContinue(WALK);

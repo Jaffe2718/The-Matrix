@@ -45,6 +45,13 @@ public class ZionPeopleEntity
     private PlayerEntity customer;
     @Nullable
     protected TradeOfferList offers;
+
+    /**
+     * The vehicle that this entity wants to get into, for apu pilots and rifleman
+     */
+    @Nullable
+    protected PathAwareEntity targetVehicle;
+
     public int jobId;   // 0 -> (random), 1 -> AUP Pilot, 2 -> Carpenter, ...
 
     public static DefaultAttributeContainer.Builder createAttributes() {

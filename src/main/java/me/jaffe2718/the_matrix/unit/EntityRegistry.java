@@ -6,6 +6,7 @@ import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -66,6 +67,16 @@ public abstract class EntityRegistry {
                     .build("electromagnetic_bullet")
     );
 
+    public static final EntityType<MachineGunEntity> MACHINE_GUN = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "machine_gun"),
+            EntityType.Builder.create(MachineGunEntity::new, SpawnGroup.MISC)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(1.2F, 0.5F)
+                    .build("machine_gun")
+    );
+
     public static final EntityType<RobotSentinelEntity> ROBOT_SENTINEL = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(MOD_ID, "robot_sentinel"),
@@ -89,6 +100,7 @@ public abstract class EntityRegistry {
     public static void register() {
         FabricDefaultAttributeRegistry.register(AGENT, AgentEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(MACHINE_GUN, MachineGunEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ROBOT_SENTINEL, RobotSentinelEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ZION_PEOPLE, ZionPeopleEntity.createAttributes());
     }

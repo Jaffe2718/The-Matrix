@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.mixin.ui;
 
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -101,6 +102,8 @@ public abstract class InGameHudMixin {
     private void registerCustomRenderers(DrawContext context, float tickDelta, CallbackInfo ci) {
         if (this.getRiddenEntity() instanceof ArmoredPersonnelUnitEntity apu) {
             this.renderAPUBulletNumBar(context, apu);
+        } else if (this.getRiddenEntity() instanceof MachineGunEntity machineGun) {
+            this.renderMachineGunBulletNumBar(context, machineGun);
         }
     }
 
@@ -110,6 +113,21 @@ public abstract class InGameHudMixin {
         int x = this.scaledWidth / 2 - 91;
         int y = this.scaledHeight - 29;
         float bulletPercentage = (float) mount.getBulletNum() / (float) ArmoredPersonnelUnitEntity.MAX_BULLET_NUM;
+        int bulletLength = (int) (bulletPercentage * 182.0F);
+        context.drawGuiTexture(BULLET_TEXTURE, x - 10, y - 2, 9, 9);
+        context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, x, y, 182, 5);
+        context.drawGuiTexture(JUMP_BAR_COOLDOWN_TEXTURE, x, y, 182, 5);
+        if (bulletPercentage > 0.0F) {
+            context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, 182, 5, 0, 0, x, y, bulletLength, 5);
+        }
+    }
+
+    @Unique
+    private void renderMachineGunBulletNumBar(@NotNull DrawContext context, @NotNull MachineGunEntity mount) {
+        this.client.getProfiler().push("jumpBar");
+        int x = this.scaledWidth / 2 - 91;
+        int y = this.scaledHeight - 29;
+        float bulletPercentage = (float) mount.getBulletNum() / (float) MachineGunEntity.MAX_BULLET_NUM;
         int bulletLength = (int) (bulletPercentage * 182.0F);
         context.drawGuiTexture(BULLET_TEXTURE, x - 10, y - 2, 9, 9);
         context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, x, y, 182, 5);
