@@ -2,32 +2,36 @@
 
 ## Plan
 
+This mod is still in development, and the plan is as follows:
+
 ### Dimensions
 
 1. Zion
    - [x] Define Zion Dimension Type
    - [ ] Define noise function to generate terrain
-   - [ ] Define biomes
+   - [ ] Define biomes (Zion cave)
 
 2. Virtual World
    - [ ] Define Virtual World Dimension Type
    - [ ] Define noise function to generate terrain
-   - [ ] Define biomes
+   - [ ] Define biomes (city)
 
 3. Robot World
    - [x] Define Robot World Dimension Type
    - [x] Define noise function to generate terrain
-   - [ ] Define biomes
+   - [ ] Define biomes (robot world)
 
 4. End Virtual World
    - [ ] Define End Virtual World Dimension Type
-   - [ ] Define noise function to generate terrain
-   - [ ] Define biomes
+   - [ ] Define noise function to generate terrain (floating islands)
+   - [ ] Define biomes (city in the sky)
 
 ### Biomes
 
 - [ ] Zion
    - [ ] Zion cave
+      - [x] Define Zion cave biome
+      - [ ] Creatures generation
 - [ ] Virtual World
    - [ ] Virtual city
 - [ ] Robot World
@@ -50,6 +54,19 @@
       - [ ] Spawn conditions
       - [x] Translations
    - [ ] Machine Gun (rideable, no living entity like boat)
+      - [x] Define Machine Gun entity
+      - [x] Model & Textures
+      - [x] Animations
+      - [ ] AI Goals
+      - [ ] Sound events
+         - [x] Ambient
+         - [ ] Hurt
+         - [ ] Death
+      - [ ] Loot table
+         - [ ] Machine parts
+         - [ ] CPU
+      - [ ] Spawn conditions
+      - [x] Translations
    - [ ] Space Warship (rideable)
    - [ ] Zion People
        - [x] Define Zion People entity
