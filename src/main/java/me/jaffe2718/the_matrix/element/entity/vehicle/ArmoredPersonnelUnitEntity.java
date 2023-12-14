@@ -58,7 +58,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                 .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 2.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 3.0D)
-                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 0.8D)
+                .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0D);
     }
 

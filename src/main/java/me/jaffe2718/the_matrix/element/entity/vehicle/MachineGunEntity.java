@@ -55,6 +55,11 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     }
 
     @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.bulletNum = nbt.getInt("BulletNum");

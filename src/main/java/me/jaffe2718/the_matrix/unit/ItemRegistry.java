@@ -31,6 +31,7 @@ public abstract class ItemRegistry {
             new FabricItemSettings()
                     .maxCount(1)
                     .maxDamage(100));
+    public static final Item MACHINE_GUN = new MachineGunItem(new FabricItemSettings());
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MOBILE_PHONE = new Item(new FabricItemSettings());
 
@@ -63,6 +64,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "electromagnetic_gun"), ELECTROMAGNETIC_GUN);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_gun"), MACHINE_GUN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
 
@@ -83,6 +85,7 @@ public abstract class ItemRegistry {
             groupEntries.add(COIN);
             groupEntries.add(CPU);
             groupEntries.add(ELECTROMAGNETIC_GUN);
+            groupEntries.add(MACHINE_GUN);
             groupEntries.add(MACHINE_PART);
             groupEntries.add(MOBILE_PHONE);
 

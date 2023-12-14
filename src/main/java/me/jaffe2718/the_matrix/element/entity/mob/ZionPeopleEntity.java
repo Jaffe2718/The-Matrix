@@ -3,6 +3,7 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
+import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
@@ -18,6 +19,9 @@ import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
@@ -69,7 +73,12 @@ public class ZionPeopleEntity
 
     @Override
     public void readCustomDataFromNbt(@NotNull NbtCompound nbt) {
-        this.jobId = nbt.getInt(JOB_ID_KEY);
+        int jobId = nbt.getInt(JOB_ID_KEY);
+        if (jobId != 0 && jobId <= 9) {
+            this.jobId = jobId;
+        } else {
+            this.jobId = this.getRandom().nextInt(9) + 1;
+        }
         super.readCustomDataFromNbt(nbt);
     }
 
@@ -109,8 +118,28 @@ public class ZionPeopleEntity
     }
 
     @Override
+    public Text getDisplayName() {
+        return Text.translatable("job.the_matrix.zion_people." + this.getJobName());
+    }
+
+    @Override
     public boolean canImmediatelyDespawn(double distanceSquared) {
         return false;
+    }
+
+    @Override
+    protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+        if (this.isAlive()) {
+            if (!this.getWorld().isClient) {
+                this.prepareOffers();
+                this.setCustomer(player);
+                this.sendOffers(player, this.getDisplayName(), 1);
+                return ActionResult.success(this.getWorld().isClient);
+            }
+            return ActionResult.success(this.getWorld().isClient);
+        } else {
+            return super.interactMob(player, hand);
+        }
     }
 
     @Override
@@ -167,33 +196,31 @@ public class ZionPeopleEntity
     @Override
     public TradeOfferList getOffers() {
         if (this.offers == null) {
-            this.offers = new TradeOfferList();
-            this.fillRecipes();
+            this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.jobId);
         }
         return this.offers;
     }
 
-    protected void fillRecipes() {    // TODO: Fill this in
+    private void prepareOffers() {
+        this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.jobId);
     }
 
     @Override
-    public void setOffersFromServer(TradeOfferList offers) {
+    public void setOffersFromServer(@NotNull TradeOfferList offers) {
         this.offers = offers;
     }
 
     @Override
     public void trade(TradeOffer offer) {
-
     }
 
     @Override
     public void onSellingItem(ItemStack stack) {
-
     }
 
     @Override
     public int getExperience() {
-        return 0;
+        return 1;
     }
 
     @Override
