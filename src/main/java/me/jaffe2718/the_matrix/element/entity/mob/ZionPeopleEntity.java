@@ -79,6 +79,11 @@ public class ZionPeopleEntity
         super.writeCustomDataToNbt(nbt);
     }
 
+    /**
+     * Called when this entity is spawned from a packet. This is where we set the job ID.
+     * @see ZionPeopleEntitySpawnS2CPacket
+     * @param packet The packet that spawned this entity
+     */
     @Override
     public void onSpawnPacket(EntitySpawnS2CPacket packet) {
         if (packet instanceof ZionPeopleEntitySpawnS2CPacket zionPacket) {
@@ -94,6 +99,10 @@ public class ZionPeopleEntity
         super.onSpawnPacket(packet);
     }
 
+    /**
+     * Called when this entity is spawned from a packet. This is where we set the job ID.
+     * @see ZionPeopleEntitySpawnS2CPacket
+     */
     @Override
     public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new ZionPeopleEntitySpawnS2CPacket(this);

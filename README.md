@@ -40,8 +40,8 @@ This mod is still in development, and the plan is as follows:
 
 1. Zion
    - [ ] Armored Personnel Unit (APU) Mecha (rideable)
-      - [x] Define APU Mecha entity
-      - [x] Model & Textures
+      - [x] Define APU entity: see [ArmoredPersonnelUnitEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/vehicle/ArmoredPersonnelUnitEntity.java)
+      - [x] Model & Textures: see [ArmoredPersonnelUnitModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/ArmoredPersonnelUnitModel.java)
       - [x] Animations
       - [ ] AI Goals
       - [ ] Sound events
@@ -54,8 +54,8 @@ This mod is still in development, and the plan is as follows:
       - [ ] Spawn conditions
       - [x] Translations
    - [ ] Machine Gun (rideable, no living entity like boat)
-      - [x] Define Machine Gun entity
-      - [x] Model & Textures
+      - [x] Define Machine Gun entity: see [MachineGunEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/vehicle/MachineGunEntity.java)
+      - [x] Model & Textures: see [MachineGunModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/MachineGunModel.java)
       - [x] Animations
       - [ ] AI Goals
       - [ ] Sound events
@@ -69,9 +69,9 @@ This mod is still in development, and the plan is as follows:
       - [x] Translations
    - [ ] Space Warship (rideable)
    - [ ] Zion People
-       - [x] Define Zion People entity
-       - [ ] Model & Textures
-          - [ ] Jobs (0 -> random)
+       - [x] Define Zion People entity: see [ZionPeopleEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/ZionPeopleEntity.java)
+       - [x] Model & Textures: see [ZionPeopleModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/ZionPeopleModel.java)
+          - [x] Jobs (0 -> random)
              - [x] 1 -> apu_pilot
              - [x] 2 -> carpenter
              - [x] 3 -> farm_breeder
@@ -91,11 +91,11 @@ This mod is still in development, and the plan is as follows:
        - [ ] Trading
 2. Virtual World
    - [ ] Agent
-      - [x] Define Agent entity
+      - [x] Define Agent entity: see [AgentEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/AgentEntity.java)
       - [x] Animations
       - [x] AI Goals
       - [x] Loot table
-         - [x] Mobile phone
+         - [x] Mobile phone: see [ItemRegistry.java](src/main/java/me/jaffe2718/the_matrix/unit/ItemRegistry.java)
          - [x] Coins
       - [ ] Spawn conditions
       - [x] Translations
@@ -118,8 +118,8 @@ This mod is still in development, and the plan is as follows:
    - [ ] Agent Smith (boss)
 5. Common
    - [ ] Robot Sentinel (Zion & Robot World, Octopus)
-      - [x] Define Robot Sentinel entity
-      - [x] Model & Textures
+      - [x] Define Robot Sentinel entity: see [RobotSentinelEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/RobotSentinelEntity.java)
+      - [x] Model & Textures: see [RobotSentinelModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/RobotSentinelModel.java)
       - [x] Animations
       - [ ] AI Goals
          - [x] basic define
@@ -141,16 +141,16 @@ This mod is still in development, and the plan is as follows:
       - [x] Define telephone item
       - [ ] Realise function to tp to Zion
    - [x] Armors
-      - [x] V Mask
+      - [x] V Mask: see [VMaskItem.java](src/main/java/me/jaffe2718/the_matrix/element/item/VMaskItem.java)
          - [x] Ability to attack agents
          - [x] Tooltip
-      - [x] Hacker Cloak
+      - [x] Hacker Cloak: see [HackerCloakItem.java](src/main/java/me/jaffe2718/the_matrix/element/item/HackerCloakItem.java)
          - [x] Fly
          - [x] Tooltip
-      - [x] Hacker Pants
+      - [x] Hacker Pants: see [HackerPantsItem.java](src/main/java/me/jaffe2718/the_matrix/element/item/HackerPantsItem.java)
          - [x] Complete defense the attacks from agents
          - [x] Tooltip
-      - [x] Hacker Shoes
+      - [x] Hacker Boots: see [HackerBootsItem.java](src/main/java/me/jaffe2718/the_matrix/element/item/HackerBootsItem.java)
          - [x] Complete defense fall damage
          - [x] Tooltip
 
