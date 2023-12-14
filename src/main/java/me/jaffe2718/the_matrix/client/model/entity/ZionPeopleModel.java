@@ -49,17 +49,17 @@ public class ZionPeopleModel extends GeoModel<ZionPeopleEntity> {
     private static final String IS_WALKING = "variable.is_walking";
 
     @Override
-    public Identifier getModelResource(@NotNull ZionPeopleEntity animatable) {    // TODO: add model support
+    public Identifier getModelResource(@NotNull ZionPeopleEntity animatable) {
         return new Identifier("the_matrix", "geo/entity/zion_people/" + animatable.getJobName() + ".geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(@NotNull ZionPeopleEntity animatable) {  // TODO: add texture support
+    public Identifier getTextureResource(@NotNull ZionPeopleEntity animatable) {
         return new Identifier("the_matrix", "textures/entity/zion_people/" + animatable.getJobName() + ".png");
     }
 
     @Override
-    public Identifier getAnimationResource(@NotNull ZionPeopleEntity animatable) {  // TODO: add animation support
+    public Identifier getAnimationResource(@NotNull ZionPeopleEntity animatable) {
         return new Identifier("the_matrix", "animations/entity/zion_people/" + animatable.getJobName() + ".animation.json");
     }
     @Override

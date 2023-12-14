@@ -46,7 +46,7 @@ public abstract class PlayerEntityMixin {
                 !player.checkFallFlying() && !player.isSwimming() && !player.isClimbing() &&
                 !player.isUsingRiptide()) {
             Vec3d currentVelocity = player.getVelocity();
-            this.incrementStat(Stats.JUMP);  // TODO: Add a new stat for this
+            this.incrementStat(Stats.JUMP);
             player.setVelocity(currentVelocity.x, 0.3, currentVelocity.z);
             player.fallDistance = 0;
         }
