@@ -159,19 +159,21 @@ This mod is still in development, and the plan is as follows:
       - [ ] Define transmitter item
       - [ ] Define Block of transmitters
       - [ ] Realise function to tp to Virtual World
-
+   
 3. Common
    - [ ] CPUs (to make the space warship)
       - [x] Define CPU item
       - [ ] Realise function to make the space warship
    - [x] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
-   - [ ] Energy batteries (to power the space warship)
-      - [ ] Define energy battery item
-      - [ ] Realise function to power the space warship
-   - [ ] Electromagnetic guns (use Energy batteries to shoot)
+   - [x] Mechanical Armors
+   - [ ] Drill (to mine)
+   - [x] Batteries (to power the electromagnetic guns)
+      - [x] Define battery item
+      - [x] Realise function to power the electromagnetic guns
+   - [x] Electromagnetic guns (use batteries to shoot)
       - [x] Define electromagnetic gun item
       - [x] Animations & Models & Textures
-      - [ ] Realise function to shoot
+      - [x] Realise function to shoot
    - [ ] Electromagnetic hand grenades (to kill robots)
    - [ ] Raduim Ore (to make energy batteries, etc)
    - [ ] Raduim Ingot (to make energy batteries)

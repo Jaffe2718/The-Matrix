@@ -16,6 +16,8 @@ public abstract class TradeOfferListFactory {
         TradeOfferList tradeOfferList = new TradeOfferList();
         switch (jobID) {
             case 1 -> {    // APU Pilot
+                tradeOfferList.add(coinForItem(1, ItemRegistry.BULLET));
+                tradeOfferList.add(coinForItem(8, ItemRegistry.BOXED_BULLETS));
             }
             case 2 -> {    // Carpenter
                 tradeOfferList.add(itemForCoin(1, Items.OAK_LOG));
@@ -51,6 +53,7 @@ public abstract class TradeOfferListFactory {
                 tradeOfferList.add(coinForItem(64, Items.AXOLOTL_SPAWN_EGG));
                 tradeOfferList.add(itemForCoin(1, Items.CARROT));
                 tradeOfferList.add(itemForCoin(1, Items.WHEAT));
+                tradeOfferList.add(itemForCoin(1, Items.EGG));
                 tradeOfferList.add(itemForCoin(1, Items.COD));
                 tradeOfferList.add(itemForCoin(1, Items.SALMON));
                 tradeOfferList.add(itemForCoin(1, Items.TROPICAL_FISH));
@@ -81,6 +84,29 @@ public abstract class TradeOfferListFactory {
                 tradeOfferList.add(itemForCoin(2, Items.BAKED_POTATO));
             }
             case 5 -> {    // Grocer
+                tradeOfferList.add(coinForItem(1, Items.APPLE));
+                tradeOfferList.add(coinForItem(1, Items.BONE));
+                tradeOfferList.add(coinForItem(1, Items.LEATHER));
+                tradeOfferList.add(coinForItem(1, Items.STRING));
+                tradeOfferList.add(coinForItem(1, Items.SLIME_BALL));
+                tradeOfferList.add(coinForItem(1, Items.SNOWBALL));
+                tradeOfferList.add(coinForItem(1, Items.ENDER_PEARL));
+                tradeOfferList.add(coinForItem(1, Items.WHITE_DYE));
+                tradeOfferList.add(coinForItem(1, Items.LIGHT_GRAY_DYE));
+                tradeOfferList.add(coinForItem(1, Items.GRAY_DYE));
+                tradeOfferList.add(coinForItem(1, Items.BLACK_DYE));
+                tradeOfferList.add(coinForItem(1, Items.RED_DYE));
+                tradeOfferList.add(coinForItem(1, Items.ORANGE_DYE));
+                tradeOfferList.add(coinForItem(1, Items.YELLOW_DYE));
+                tradeOfferList.add(coinForItem(1, Items.LIME_DYE));
+                tradeOfferList.add(coinForItem(1, Items.GREEN_DYE));
+                tradeOfferList.add(coinForItem(1, Items.CYAN_DYE));
+                tradeOfferList.add(coinForItem(1, Items.LIGHT_BLUE_DYE));
+                tradeOfferList.add(coinForItem(1, Items.BLUE_DYE));
+                tradeOfferList.add(coinForItem(1, Items.PURPLE_DYE));
+                tradeOfferList.add(coinForItem(1, Items.MAGENTA_DYE));
+                tradeOfferList.add(coinForItem(1, Items.PINK_DYE));
+                tradeOfferList.add(coinForItem(1, Items.GUNPOWDER));
             }
             case 6 -> {    // Infantry
                 tradeOfferList.add(new TradeOffer(costCoin(64), ItemRegistry.MACHINE_PART.getDefaultStack().copyWithCount(8), ItemRegistry.ELECTROMAGNETIC_GUN.getDefaultStack(), Integer.MAX_VALUE, 1, 1F));
@@ -119,6 +145,8 @@ public abstract class TradeOfferListFactory {
                 tradeOfferList.add(coinForItem(1, Items.MAGMA_BLOCK));
             }
             case 9 -> {    // Rifleman
+                tradeOfferList.add(coinForItem(1, ItemRegistry.BULLET));
+                tradeOfferList.add(coinForItem(8, ItemRegistry.BOXED_BULLETS));
                 tradeOfferList.add(new TradeOffer(costCoin(64), ItemRegistry.MACHINE_PART.getDefaultStack().copyWithCount(32), ItemRegistry.MACHINE_GUN.getDefaultStack(), Integer.MAX_VALUE, 1, 1F));
             }
         }

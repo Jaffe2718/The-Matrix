@@ -37,25 +37,26 @@ public class ElectromagneticGunItem extends Item implements GeoItem {
 
     public ElectromagneticGunItem(Settings settings) {
         super(settings);
-        // get the energy from the NBT tag
     }
 
     @Override
-    public void inventoryTick(@NotNull ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        this.energy = stack.getOrCreateNbt().getInt("Energy");
-        if (this.energy == 0 &&
-                entity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(this) &&
-                (player.getInventory().contains(ItemRegistry.BATTERY.getDefaultStack()) || player.isCreative())) {
-            player.sendMessage(Text.translatable("message.the_matrix.electromagnetic_gun.should_charge"), true);
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull World world, Entity entity, int slot, boolean selected) {
+        if (selected) {
+            this.energy = stack.getOrCreateNbt().getInt("Energy");
+            if (stack.getOrCreateNbt().getInt("Energy") == 0 &&
+                    entity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(this) &&
+                    (player.getInventory().contains(ItemRegistry.BATTERY.getDefaultStack()) || player.isCreative())) {
+                player.sendMessage(Text.translatable("message.the_matrix.electromagnetic_gun.should_charge"), true);
+            }
         }
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (this.energy > 0) {   // shoot
+    public TypedActionResult<ItemStack> use(World world, @NotNull PlayerEntity user, Hand hand) {
+        ItemStack stack = user.getStackInHand(hand);
+        if (stack.getOrCreateNbt().getInt("Energy") > 0) {   // shoot
             if (!world.isClient) {
-                ItemStack stack = user.getStackInHand(hand);
-                stack.getOrCreateNbt().putInt("Energy", this.energy - 1);
+                stack.getOrCreateNbt().putInt("Energy", stack.getOrCreateNbt().getInt("Energy") - 1);  // consume energy
                 ElectromagneticBulletEntity.shoot(user, user.getEyePos(), user.getRotationVector().multiply(5));
                 user.getItemCooldownManager().set(this, 100);
                 if (!user.isCreative()) {
@@ -69,7 +70,7 @@ public class ElectromagneticGunItem extends Item implements GeoItem {
                 user.getStackInHand(hand).getOrCreateNbt().putInt("Energy", 6);
                 user.getItemCooldownManager().set(this, 100);
             }
-            user.getInventory().remove(stack -> stack.getItem() == ItemRegistry.BATTERY, 1, user.getInventory());
+            user.getInventory().remove(stack_ -> stack_.getItem() == ItemRegistry.BATTERY, 1, user.getInventory());
             user.playSound(SoundEventRegistry.ELECTROMAGNETIC_GUN_CHARGING, 1, 1);
             return TypedActionResult.success(user.getStackInHand(hand), true);
         } else {

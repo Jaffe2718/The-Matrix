@@ -61,14 +61,16 @@ public class ZionPeopleEntity
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
-                .add(EntityAttributes.GENERIC_ARMOR, 10.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2.0D)
+                .add(EntityAttributes.GENERIC_ARMOR, 20.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0D);
     }
 
     public ZionPeopleEntity(EntityType<? extends ZionPeopleEntity> entityType, World world) {
         super(entityType, world);
+        if (this.jobId == 0) {
+            this.jobId = this.getRandom().nextInt(9) + 1;
+        }
     }
 
     @Override

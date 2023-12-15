@@ -35,7 +35,9 @@ import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -108,11 +110,28 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
-        if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET)
-                && this.hasPassenger(player)) {   // the player can only reload the APU when they're riding it
-            if (this.bulletNum < MAX_BULLET_NUM) {
+        if (this.hasPassenger(player)) {   // the player can only reload the APU when they're riding it
+            if (player.getItemCooldownManager().isCoolingDown(player.getStackInHand(hand).getItem())) {
+                return ActionResult.PASS;
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET) && this.bulletNum < MAX_BULLET_NUM) {
                 this.bulletNum++;
                 player.getStackInHand(hand).decrement(1);
+                player.getItemCooldownManager().set(ItemRegistry.BULLET, 25);
+                this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
+                return ActionResult.success(this.getWorld().isClient);
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BOXED_BULLETS)
+                    && this.bulletNum <= MAX_BULLET_NUM - 10) {
+                this.bulletNum += 10;
+                player.getStackInHand(hand).decrement(1);
+                player.getItemCooldownManager().set(ItemRegistry.BOXED_BULLETS, 25);
+                this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
+                return ActionResult.success(this.getWorld().isClient);
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET_FILLING_BOX)
+                    && this.bulletNum <= MAX_BULLET_NUM - 10) {
+                this.bulletNum += 10;
+                player.getStackInHand(hand).damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
+                player.getItemCooldownManager().set(ItemRegistry.BULLET_FILLING_BOX, 10);
+                this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
             } else {
                 return ActionResult.PASS;

@@ -88,10 +88,24 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
 
     @Override
     protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
-        if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET)) {
-            if (this.bulletNum < MAX_BULLET_NUM) {
+        if (!player.getItemCooldownManager().isCoolingDown(player.getStackInHand(hand).getItem())) {
+            if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET) && this.bulletNum < MAX_BULLET_NUM) {
                 this.bulletNum++;
                 player.getStackInHand(hand).decrement(1);
+                player.getItemCooldownManager().set(player.getStackInHand(hand).getItem(), 25);
+                this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
+                return ActionResult.success(this.getWorld().isClient);
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BOXED_BULLETS) && this.bulletNum <= MAX_BULLET_NUM - 10) {
+                this.bulletNum += 10;
+                player.getStackInHand(hand).decrement(1);
+                player.getItemCooldownManager().set(player.getStackInHand(hand).getItem(), 25);
+                this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
+                return ActionResult.success(this.getWorld().isClient);
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET_FILLING_BOX) && this.bulletNum <= MAX_BULLET_NUM - 10) {
+                this.bulletNum += 10;
+                player.getItemCooldownManager().set(player.getStackInHand(hand).getItem(), 10);
+                player.getStackInHand(hand).damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
+                this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
             } else {
                 return ActionResult.PASS;

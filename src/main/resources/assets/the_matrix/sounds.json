@@ -100,6 +100,16 @@
             }
         ]
     },
+    "loading_bullet": {
+        "subtitle": "sound.the_matrix.loading_bullet",
+        "sounds": [
+            {
+                "name": "the_matrix:loading_bullet",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
     "machine_gun_shoot": {
         "subtitle": "sound.the_matrix.machine_gun_shoot",
         "sounds": [

@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+        "BBB",
+        "BBB",
+        "BBB"
+    ],
+    "key": {
+        "B": {
+            "item": "the_matrix:boxed_bullets"
+        }
+    },
+    "result": {
+        "item": "the_matrix:bullet_filling_box",
+        "count": 1
+    },
+    "show_notification": true
+}

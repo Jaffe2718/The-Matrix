@@ -31,7 +31,9 @@ public abstract class ItemRegistry {
     public static final Item MECHANICAL_BOOTS = new MechanicalArmorItem(ArmorItem.Type.BOOTS, new FabricItemSettings().fireproof());
 
     public static final Item BATTERY = new Item(new FabricItemSettings());
+    public static final Item BOXED_BULLETS = new Item(new FabricItemSettings());
     public static final Item BULLET = new Item(new FabricItemSettings());
+    public static final Item BULLET_FILLING_BOX = new Item(new FabricItemSettings().maxCount(1).maxDamage(10));
     public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
     public static final Item CPU = new Item(new FabricItemSettings());
     public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(
@@ -49,7 +51,7 @@ public abstract class ItemRegistry {
             0x303030, 0xFF0000,
             new FabricItemSettings());
     public static final Item ZION_PEOPLE_SPAWN_EGG = new SpawnEggItem(EntityRegistry.ZION_PEOPLE,
-            0x9F7A71, 0x60D6FF,
+            0xF0CCAF, 0x60D6FF,
             new FabricItemSettings());
 
 
@@ -72,7 +74,9 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_boots"), MECHANICAL_BOOTS);
 
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "battery"), BATTERY);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "boxed_bullets"), BOXED_BULLETS);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet_filling_box"), BULLET_FILLING_BOX);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "electromagnetic_gun"), ELECTROMAGNETIC_GUN);
@@ -86,28 +90,30 @@ public abstract class ItemRegistry {
 
         // add items to item group
         RegistryKey<ItemGroup> groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), new Identifier(MOD_ID, "item_group"));
-        ItemGroupEvents.modifyEntriesEvent(groupRegistryKey).register(groupEntries -> {
-            groupEntries.add(V_MASK);
-            groupEntries.add(HACKER_CLOAK);
-            groupEntries.add(HACKER_PANTS);
-            groupEntries.add(HACKER_BOOTS);
-            groupEntries.add(MECHANICAL_HELMET);
-            groupEntries.add(MECHANICAL_CHESTPLATE);
-            groupEntries.add(MECHANICAL_LEGGINGS);
-            groupEntries.add(MECHANICAL_BOOTS);
+        ItemGroupEvents.modifyEntriesEvent(groupRegistryKey).register(group -> {
+            group.add(V_MASK);
+            group.add(HACKER_CLOAK);
+            group.add(HACKER_PANTS);
+            group.add(HACKER_BOOTS);
+            group.add(MECHANICAL_HELMET);
+            group.add(MECHANICAL_CHESTPLATE);
+            group.add(MECHANICAL_LEGGINGS);
+            group.add(MECHANICAL_BOOTS);
 
-            groupEntries.add(BATTERY);
-            groupEntries.add(BULLET);
-            groupEntries.add(COIN);
-            groupEntries.add(CPU);
-            groupEntries.add(ELECTROMAGNETIC_GUN);
-            groupEntries.add(MACHINE_GUN);
-            groupEntries.add(MACHINE_PART);
-            groupEntries.add(MOBILE_PHONE);
+            group.add(BATTERY);
+            group.add(BOXED_BULLETS);
+            group.add(BULLET);
+            group.add(BULLET_FILLING_BOX);
+            group.add(COIN);
+            group.add(CPU);
+            group.add(ELECTROMAGNETIC_GUN);
+            group.add(MACHINE_GUN);
+            group.add(MACHINE_PART);
+            group.add(MOBILE_PHONE);
 
-            groupEntries.add(AGENT_SPAWN_EGG);
-            groupEntries.add(ROBOT_SENTINEL_SPAWN_EGG);
-            groupEntries.add(ZION_PEOPLE_SPAWN_EGG);
+            group.add(AGENT_SPAWN_EGG);
+            group.add(ROBOT_SENTINEL_SPAWN_EGG);
+            group.add(ZION_PEOPLE_SPAWN_EGG);
         });
 
     }
