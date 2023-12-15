@@ -37,7 +37,7 @@ import static me.jaffe2718.the_matrix.client.model.entity.MachineGunModel.COMMON
 
 public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
 
-    public static final int MAX_BULLET_NUM = 192;
+    public static final int MAX_BULLET_NUM = 128;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private int bulletNum;
     public static DefaultAttributeContainer.Builder createAttributes() {

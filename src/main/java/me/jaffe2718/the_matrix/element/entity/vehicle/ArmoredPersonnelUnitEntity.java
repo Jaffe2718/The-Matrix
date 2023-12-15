@@ -45,7 +45,7 @@ import static me.jaffe2718.the_matrix.client.model.entity.ArmoredPersonnelUnitMo
 
 public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEntity {
 
-    public static final int MAX_BULLET_NUM = 256;
+    public static final int MAX_BULLET_NUM = 512;
     private static final String BULLET_NUM_KEY = "BulletNum";
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     protected int bulletNum;

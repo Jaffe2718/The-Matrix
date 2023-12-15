@@ -1,7 +1,9 @@
 package me.jaffe2718.the_matrix.element.item;
 
+import me.jaffe2718.the_matrix.client.render.item.MachineGunRenderer;
 import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
+import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.Item;
@@ -17,10 +19,20 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class MachineGunItem extends Item {  // TODO: implement GeoItem and add model & texture
+public class MachineGunItem extends Item implements GeoItem {
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+
     public MachineGunItem(Settings settings) {
         super(settings);
     }
@@ -51,5 +63,31 @@ public class MachineGunItem extends Item {  // TODO: implement GeoItem and add m
         }
         itemStack.decrement(1);
         return ActionResult.success(world.isClient);
+    }
+
+    @Override
+    public void createRenderer(@NotNull Consumer<Object> consumer) {
+        consumer.accept(new RenderProvider() {
+            private final MachineGunRenderer renderer = new MachineGunRenderer();
+            @Override
+            public BuiltinModelItemRenderer getCustomRenderer() {
+                return renderer;
+            }
+        });
+    }
+
+    @Override
+    public Supplier<Object> getRenderProvider() {
+        return this.renderProvider;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
     }
 }
