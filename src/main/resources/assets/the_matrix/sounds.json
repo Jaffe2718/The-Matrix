@@ -110,6 +110,16 @@
             }
         ]
     },
+    "mechanical_armor_equips": {
+        "subtitle": "sound.the_matrix.mechanical_armor_equips",
+        "sounds": [
+            {
+                "name": "the_matrix:mechanical_armor_equips",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
     "robot_sentinel_death": {
         "subtitle": "sound.the_matrix.robot_sentinel_death",
         "sounds": [

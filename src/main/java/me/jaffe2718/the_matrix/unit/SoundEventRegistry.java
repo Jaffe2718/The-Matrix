@@ -20,6 +20,7 @@ public abstract class SoundEventRegistry {
     public static final SoundEvent ELECTROMAGNETIC_GUN_CHARGING = SoundEvent.of(new Identifier(MOD_ID, "electromagnetic_gun_charging"));
     public static final SoundEvent ELECTROMAGNETIC_GUN_SHOOT = SoundEvent.of(new Identifier(MOD_ID, "electromagnetic_gun_shoot"));
     public static final SoundEvent MACHINE_GUN_SHOOT = SoundEvent.of(new Identifier(MOD_ID, "machine_gun_shoot"));
+    public static final SoundEvent MECHANICAL_ARMOR_EQUIPS = SoundEvent.of(new Identifier(MOD_ID, "mechanical_armor_equips"));
     public static final SoundEvent ROBOT_SENTINEL_DEATH = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_death"));
     public static final SoundEvent ROBOT_SENTINEL_HURT = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_hurt"));
     public static final SoundEvent ROBOT_SENTINEL_RADAR_DETECTION = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_radar_detection"));
@@ -36,6 +37,7 @@ public abstract class SoundEventRegistry {
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "electromagnetic_gun_charging"), ELECTROMAGNETIC_GUN_CHARGING);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "electromagnetic_gun_shoot"), ELECTROMAGNETIC_GUN_SHOOT);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "machine_gun_shoot"), MACHINE_GUN_SHOOT);
+        Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "mechanical_armor_equips"), MECHANICAL_ARMOR_EQUIPS);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_death"), ROBOT_SENTINEL_DEATH);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_hurt"), ROBOT_SENTINEL_HURT);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_radar_detection"), ROBOT_SENTINEL_RADAR_DETECTION);

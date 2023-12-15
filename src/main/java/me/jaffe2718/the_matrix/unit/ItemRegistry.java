@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.unit;
 
 import me.jaffe2718.the_matrix.element.item.*;
+import me.jaffe2718.the_matrix.element.item.armor_material.MechanicalMaterial;
 import me.jaffe2718.the_matrix.element.item.armor_material.VirtualArmorMaterial;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -17,11 +18,17 @@ import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class ItemRegistry {
 
+    public static final ArmorMaterial MECHANICAL_ARMOR_MATERIAL = new MechanicalMaterial();
     public static final ArmorMaterial VIRTUAL_ARMOR_MATERIAL = new VirtualArmorMaterial();
     public static final Item V_MASK = new VMaskItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_CLOAK = new HackerCloakItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_PANTS = new HackerPantsItem(new FabricItemSettings().rarity(Rarity.RARE));
     public static final Item HACKER_BOOTS = new HackerBootsItem(new FabricItemSettings().rarity(Rarity.RARE));
+
+    public static final Item MECHANICAL_HELMET = new MechanicalArmorItem(ArmorItem.Type.HELMET, new FabricItemSettings().fireproof());
+    public static final Item MECHANICAL_CHESTPLATE = new MechanicalArmorItem(ArmorItem.Type.CHESTPLATE, new FabricItemSettings().fireproof());
+    public static final Item MECHANICAL_LEGGINGS = new MechanicalArmorItem(ArmorItem.Type.LEGGINGS, new FabricItemSettings().fireproof());
+    public static final Item MECHANICAL_BOOTS = new MechanicalArmorItem(ArmorItem.Type.BOOTS, new FabricItemSettings().fireproof());
 
     public static final Item BATTERY = new Item(new FabricItemSettings());
     public static final Item BULLET = new Item(new FabricItemSettings());
@@ -59,6 +66,11 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_pants"), HACKER_PANTS);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_boots"), HACKER_BOOTS);
 
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_helmet"), MECHANICAL_HELMET);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_chestplate"), MECHANICAL_CHESTPLATE);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_leggings"), MECHANICAL_LEGGINGS);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_boots"), MECHANICAL_BOOTS);
+
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "battery"), BATTERY);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
@@ -79,6 +91,10 @@ public abstract class ItemRegistry {
             groupEntries.add(HACKER_CLOAK);
             groupEntries.add(HACKER_PANTS);
             groupEntries.add(HACKER_BOOTS);
+            groupEntries.add(MECHANICAL_HELMET);
+            groupEntries.add(MECHANICAL_CHESTPLATE);
+            groupEntries.add(MECHANICAL_LEGGINGS);
+            groupEntries.add(MECHANICAL_BOOTS);
 
             groupEntries.add(BATTERY);
             groupEntries.add(BULLET);
