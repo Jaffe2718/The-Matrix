@@ -2,6 +2,7 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.StartDrivingAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
@@ -87,6 +88,7 @@ public class ZionPeopleEntity
             this.jobId = this.getRandom().nextInt(9) + 1;
         }
         super.readCustomDataFromNbt(nbt);
+        System.out.println("Setting goals in readCustomDataFromNbt");
         this.setGoals();
     }
 
@@ -161,14 +163,14 @@ public class ZionPeopleEntity
                 && !this.targetVehicle.hasPassenger(this)) {
             this.targetVehicle = null;   // if the vehicle is full, don't get into it
         }
-        if (!this.getWorld().isClient && this.jobId==1 && this.targetVehicle != null && this.age % 20 == 0) {
-            System.out.println(this.targetVehicle);   // TODO: Remove After Debug
-        }
+//        if (!this.getWorld().isClient && this.jobId==1 && this.targetVehicle != null && this.age % 20 == 0) {
+//            // System.out.println(this.targetVehicle);   // TODO: Remove After Debug
+//        }
     }
 
     /**
      * Set the goals for this entity, do not call {@link MobEntity#initGoals()}.
-     * instead, call this method in the end of {@link ZionPeopleEntity#readCustomDataFromNbt(NbtCompound)}
+     * instead, call this method in the end of {@link ZionPeopleEntity#ZionPeopleEntity(EntityType, World)}
      */
     protected void setGoals() {
         // universal goals for all jobs
@@ -181,37 +183,40 @@ public class ZionPeopleEntity
         switch (this.jobId) {  // TODO: Add job-specific goals
             case 1 -> {    // APU Pilot
                 this.targetSelector.add(1, new SelectAPUGoal(this));
-                this.targetSelector.add(1, new SelectEnemyGoal(this, true));
+                this.targetSelector.add(1, new SelectEnemyGoal(this));
+                this.goalSelector.add(1, new StartDrivingAPUGoal(this));
+                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                        livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 2 -> {    // Carpenter
-                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 3 -> {    // Farm Breeder
-                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 4 -> {    // Farmer
-                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 5 -> {    // Grocer
-                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 6 -> {    // Infantry
-                this.targetSelector.add(1, new SelectEnemyGoal(this, true));
+                this.targetSelector.add(1, new SelectEnemyGoal(this));
             }
             case 7 -> {    // Machinist
-                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 8 -> {    // Miner
-                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 9 -> {    // Rifleman
-                this.targetSelector.add(1, new SelectEnemyGoal(this, true));
+                this.targetSelector.add(1, new SelectEnemyGoal(this));
                 // use the machine gun
             }
         }
@@ -225,6 +230,14 @@ public class ZionPeopleEntity
         } else {
             return super.getArmor();
         }
+    }
+
+    @Override
+    protected int computeFallDamage(float fallDistance, float damageMultiplier) {
+        if (this.jobId == 1) {
+            return super.computeFallDamage(0, damageMultiplier) - 5;
+        }
+        return super.computeFallDamage(fallDistance, damageMultiplier);
     }
 
     /**

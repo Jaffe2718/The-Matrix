@@ -11,11 +11,11 @@ import net.minecraft.entity.mob.PathAwareEntity;
 /**
  * For apu_pilot -> approach an apu and start driving it
  * */
-public class DriveAPUGoal extends Goal {
+public class StartDrivingAPUGoal extends Goal {
     protected final ZionPeopleEntity mob;
     private Path path;
 
-    public DriveAPUGoal(ZionPeopleEntity mob) {
+    public StartDrivingAPUGoal(ZionPeopleEntity mob) {
         this.mob = mob;
     }
     @Override
@@ -28,8 +28,15 @@ public class DriveAPUGoal extends Goal {
         if (!checkAPU) return false;     // if no apu, don't select an apu
         if (!this.mob.hasVehicle()) {
             this.path = this.mob.getNavigation().findPathTo(targetAPU, 0);
+        } else {
+            this.path = null;
         }
-        return false;
+        return this.path != null;
+    }
+
+    @Override
+    public boolean shouldContinue() {
+        return !this.canStop();
     }
 
     @Override
@@ -52,14 +59,26 @@ public class DriveAPUGoal extends Goal {
                 noAPU = this.mob.distanceTo(vehicle) < this.mob.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE);
             }
         }
+        // System.out.println("StartDrivingAPUGoalStartDrivingAPUGoal canStop: " + noEnemy + " " + noAPU);
         return noEnemy || noAPU;
     }
 
     @Override
-    public void stop() {
-        if (this.mob.hasVehicle()) {
-            this.mob.stopRiding();
+    public void tick() {
+        if (!this.mob.hasVehicle()) {
+            this.mob.getNavigation().startMovingAlong(this.path, 1.3);
+            if (this.mob.distanceTo(this.mob.getTargetVehicle()) < 2.0) {
+                this.mob.startRiding(this.mob.getTargetVehicle());
+            }
         }
+    }
+
+    @Override
+    public void stop() {
+//         System.out.println("StartDrivingAPUGoalStartDrivingAPUGoal stop");
+//        if (this.mob.hasVehicle()) {
+//            this.mob.stopRiding();
+//        }
         this.mob.getNavigation().stop();
     }
 }

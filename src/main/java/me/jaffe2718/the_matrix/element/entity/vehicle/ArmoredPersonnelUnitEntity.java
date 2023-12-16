@@ -1,5 +1,7 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu.SelectRobotGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu.ZionAPUDrivingGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
@@ -91,6 +93,13 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     @Override
     public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new APUEntitySpawnS2CPacket(this);
+    }
+
+    @Override
+    protected void initGoals() {
+        this.targetSelector.add(1, new SelectRobotGoal(this));
+        this.goalSelector.add(1, new ZionAPUDrivingGoal(this));
+
     }
 
     public int getBulletNum() {
@@ -273,6 +282,9 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             this.setAir(this.getMaxAir());
             this.setAiDisabled(!(this.getFirstPassenger() instanceof ZionPeopleEntity));
         }
+//        if (this.getFirstPassenger() instanceof ZionPeopleEntity) {
+//            System.out.println("APU is controlled by AI -> isAiDisabled: " + this.isAiDisabled());
+//        }
         super.tick();
     }
 

@@ -1,17 +1,14 @@
-package me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people;
+package me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu;
 
-import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.util.math.Box;
 
-/**
- * Select enemy goal for apu_pilot/infantry/rifleman of {@link ZionPeopleEntity}
- * */
-public class SelectEnemyGoal extends ActiveTargetGoal<LivingEntity> {
-    public SelectEnemyGoal(ZionPeopleEntity mob) {
-        super(mob, LivingEntity.class, true,
+public class SelectRobotGoal extends ActiveTargetGoal<LivingEntity> {
+    public SelectRobotGoal(ArmoredPersonnelUnitEntity apu) {
+        super(apu, LivingEntity.class, true,
                 livingEntity -> livingEntity.isAlive() && EntityRegistry.ROBOT_CLASSES.contains(livingEntity.getClass()));
     }
 
