@@ -2,6 +2,7 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
 import net.minecraft.entity.EntityType;
@@ -36,6 +37,8 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
+
 import static me.jaffe2718.the_matrix.client.model.entity.ZionPeopleModel.*;
 import static me.jaffe2718.the_matrix.unit.EntityRegistry.ROBOT_CLASSES;
 
@@ -52,6 +55,7 @@ public class ZionPeopleEntity
 
     /**
      * The vehicle that this entity wants to get into, for apu pilots and rifleman
+     * only armored personnel units and machine guns are valid.
      */
     @Nullable
     protected PathAwareEntity targetVehicle;
@@ -62,6 +66,7 @@ public class ZionPeopleEntity
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
                 .add(EntityAttributes.GENERIC_ARMOR, 20.0D)
+                .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 1.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0D);
     }
@@ -82,6 +87,7 @@ public class ZionPeopleEntity
             this.jobId = this.getRandom().nextInt(9) + 1;
         }
         super.readCustomDataFromNbt(nbt);
+        this.setGoals();
     }
 
     @Override
@@ -145,11 +151,28 @@ public class ZionPeopleEntity
     }
 
     @Override
-    protected void initGoals() {
+    public void tick() {
+        super.tick();
+        if (this.targetVehicle != null && !this.targetVehicle.isAlive()) {
+            this.targetVehicle.remove(RemovalReason.KILLED);
+            this.targetVehicle = null;
+        } else if (this.targetVehicle != null
+                && this.targetVehicle.hasPassengers()
+                && !this.targetVehicle.hasPassenger(this)) {
+            this.targetVehicle = null;   // if the vehicle is full, don't get into it
+        }
+        if (!this.getWorld().isClient && this.jobId==1 && this.targetVehicle != null && this.age % 20 == 0) {
+            System.out.println(this.targetVehicle);   // TODO: Remove After Debug
+        }
+    }
+
+    /**
+     * Set the goals for this entity, do not call {@link MobEntity#initGoals()}.
+     * instead, call this method in the end of {@link ZionPeopleEntity#readCustomDataFromNbt(NbtCompound)}
+     */
+    protected void setGoals() {
         // universal goals for all jobs
-        this.goalSelector.add(2, new SwimGoal(this));
-        this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
-                livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
+        this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.5D));
         this.goalSelector.add(3, new WanderAroundGoal(this, 1.0D));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
@@ -157,28 +180,67 @@ public class ZionPeopleEntity
         this.goalSelector.add(5, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
         switch (this.jobId) {  // TODO: Add job-specific goals
             case 1 -> {    // APU Pilot
+                this.targetSelector.add(1, new SelectAPUGoal(this));
                 this.targetSelector.add(1, new SelectEnemyGoal(this, true));
             }
             case 2 -> {    // Carpenter
+                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                        livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 3 -> {    // Farm Breeder
+                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                        livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 4 -> {    // Farmer
+                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                        livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 5 -> {    // Grocer
+                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                        livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 6 -> {    // Infantry
                 this.targetSelector.add(1, new SelectEnemyGoal(this, true));
             }
             case 7 -> {    // Machinist
+                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                        livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 8 -> {    // Miner
+                this.goalSelector.add(2, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
+                        livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 9 -> {    // Rifleman
                 this.targetSelector.add(1, new SelectEnemyGoal(this, true));
                 // use the machine gun
             }
         }
+    }
+
+    @Override
+    public int getArmor() {
+        List<Integer> soldierID = List.of(1, 6, 9);
+        if (soldierID.contains(this.jobId)) {
+            return super.getArmor() * 2;
+        } else {
+            return super.getArmor();
+        }
+    }
+
+    /**
+     * Set the vehicle that this entity wants to get into, for apu pilots and rifleman
+     * @param targetVehicle The vehicle that this entity wants to get into
+     */
+    public void setTargetVehicle(@Nullable PathAwareEntity targetVehicle) {
+        this.targetVehicle = targetVehicle;
+    }
+
+    /**
+     * Get the vehicle that this entity wants to get into, for apu pilots and rifleman
+     * @return The vehicle that this entity wants to get into
+     */
+    public @Nullable PathAwareEntity getTargetVehicle() {
+        return this.targetVehicle;
     }
 
     @Override
@@ -266,8 +328,8 @@ public class ZionPeopleEntity
             case 6 -> {    // Infantry
                 controllers.add(new AnimationController<>(this, "controller", 0, this::infantryPredicate));
             }
-            case 7 -> {    // Machinist   // TODO: Add machinist fix animation
-                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
+            case 7 -> {    // Machinist
+                controllers.add(new AnimationController<>(this, "controller", 0, this::machinistPredicate));
             }
             case 8 -> {    // Miner
                 controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(MINER_COMMON)));
@@ -276,6 +338,11 @@ public class ZionPeopleEntity
                 controllers.add(new AnimationController<>(this, "controller", 0, this::riflemanPredicate));
             }
         }
+    }
+
+    private PlayState machinistPredicate(@NotNull AnimationState<ZionPeopleEntity> state) {
+        // TODO: Add machinist fix animation
+        return state.setAndContinue(COMMON);
     }
 
     private PlayState apuPilotPredicate(AnimationState<ZionPeopleEntity> state) {
