@@ -157,15 +157,12 @@ public class ZionPeopleEntity
         super.tick();
         if (this.targetVehicle != null && !this.targetVehicle.isAlive()) {
             this.targetVehicle.remove(RemovalReason.KILLED);
-            this.targetVehicle = null;
+            this.targetVehicle = null;    // if the vehicle is dead, don't get into it
         } else if (this.targetVehicle != null
                 && this.targetVehicle.hasPassengers()
                 && !this.targetVehicle.hasPassenger(this)) {
             this.targetVehicle = null;   // if the vehicle is full, don't get into it
         }
-//        if (!this.getWorld().isClient && this.jobId==1 && this.targetVehicle != null && this.age % 20 == 0) {
-//            // System.out.println(this.targetVehicle);   // TODO: Remove After Debug
-//        }
     }
 
     /**

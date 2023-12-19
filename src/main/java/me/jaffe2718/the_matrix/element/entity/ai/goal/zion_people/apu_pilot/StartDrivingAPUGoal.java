@@ -76,7 +76,7 @@ public class StartDrivingAPUGoal extends Goal {
                 this.mob.startRiding(this.mob.getTargetVehicle());
             }
         } else if (this.mob.getTarget() != null
-                && this.mob.getVehicle() instanceof ArmoredPersonnelUnitEntity apu
+                && this.mob.getVehicle() instanceof ArmoredPersonnelUnitEntity
                 && this.mob.getTarget().isAlive()
                 && EntityRegistry.ROBOT_CLASSES.contains(this.mob.getTarget().getClass())) {
             this.mob.getLookControl().lookAt(this.mob.getTarget(), 180.0F, 60.0F);
@@ -91,10 +91,6 @@ public class StartDrivingAPUGoal extends Goal {
 
     @Override
     public void stop() {
-//         System.out.println("StartDrivingAPUGoalStartDrivingAPUGoal stop");
-//        if (this.mob.hasVehicle()) {
-//            this.mob.stopRiding();
-//        }
         this.mob.getNavigation().stop();
     }
 }

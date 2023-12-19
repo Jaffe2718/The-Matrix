@@ -1,6 +1,6 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
-import me.jaffe2718.the_matrix.element.entity.ai.goal.apu.ApproachRobotGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.apu.ShootRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
@@ -113,8 +113,8 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     protected void initGoals() {
-        // this.goalSelector.add(0, new ApproachRobotGoal(this));
-        this.goalSelector.add(0, new ApproachRobotGoal(this));
+        // this.goalSelector.add(0, new ShootRobotGoal(this));
+        this.goalSelector.add(0, new ShootRobotGoal(this));
     }
 
     @Override
@@ -191,7 +191,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     public void travel(Vec3d relativeVelocity) {
-        if (this.isAlive() && this.getControllingPassenger() instanceof PlayerEntity player) {
+        if (this.getControllingPassenger() instanceof PlayerEntity player) {
             this.prevYaw = getYaw();
             this.prevPitch = getPitch();
             this.setRotation(player.getYaw(), player.getPitch());
@@ -207,6 +207,12 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             }
             super.travel(new Vec3d(x, relativeVelocity.y, z));
             return;
+        } else if (this.getTarget() != null) {
+            this.lookAtEntity(this.getTarget(), 30.0F, 90.0F);
+            float pitch = MathUnit.getPitchDeg(MathUnit.relativePos(this.getPos(), this.getTarget().getPos()));
+            this.prevPitch = this.getPitch();
+            this.setPitch(pitch);
+            this.setMovementSpeed(0.2F);
         }
         super.travel(relativeVelocity);
     }
@@ -258,17 +264,11 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         .append(Text.translatable(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyTranslationKey())).append(" ")
                         .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
             }
-        } else if (this.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {  // TODO: test
+        } else if (this.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {
             this.setTarget(zionPeople.getTarget());
             this.updatePassengerPosition(zionPeople);
         } else {
             this.setTarget(null);     // forget the target if no one is controlling the APU
-        }
-        if (this.getTarget() != null) {
-            this.setPitch(MathUnit.getPitchDeg(MathUnit.relativePos(this.getEyePos(), this.getTarget().getEyePos())));
-            this.serverPitch = this.getPitch();
-        } else {
-            this.setPitch((float) this.serverPitch);
         }
         if (this.getVelocity().y < -0.1) {
             List<LivingEntity> steppedEntities = this.getSteppedEntities();
@@ -278,10 +278,10 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         }
         if (this.age % 10 == 0) {
             this.setAir(this.getMaxAir());
+            // System.out.println("Tick side: " + (this.getWorld().isClient ? "client" : "server") + ", yaw: " + this.getYaw() + ", pitch: " + this.getPitch());
         }
         super.tick();
-        // TODO test
-        // System.out.println("side: " + (this.getWorld().isClient ? "client" : "server") + ", yaw: " + this.getYaw() + ", pitch: " + this.getPitch());
+
     }
 
     @Override

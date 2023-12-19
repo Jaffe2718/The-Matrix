@@ -39,21 +39,25 @@ public class SelectAPUGoal extends TrackTargetGoal {
     }
 
     protected void selectClosestAPU() {
-        List<ArmoredPersonnelUnitEntity> allAPUs = this.mob.getWorld().getEntitiesByClass(
-                ArmoredPersonnelUnitEntity.class,
-                this.getSearchBox(this.mob.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)),
-                apu -> apu.isAlive() && !apu.hasPassengers()
-        );
-        ArmoredPersonnelUnitEntity closestAPU = null;
-        double minD2 = Double.MAX_VALUE;
-        for (ArmoredPersonnelUnitEntity apu : allAPUs) {
-            double d2 = this.mob.squaredDistanceTo(apu);
-            if (d2 < minD2) {
-                closestAPU = apu;
-                minD2 = d2;
+        if (this.mob.getVehicle() instanceof ArmoredPersonnelUnitEntity apu) {
+            this.targetAPU = apu;
+        } else {
+            List<ArmoredPersonnelUnitEntity> allAPUs = this.mob.getWorld().getEntitiesByClass(
+                    ArmoredPersonnelUnitEntity.class,
+                    this.getSearchBox(this.mob.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)),
+                    apu -> apu.isAlive() && !apu.hasPassengers()
+            );
+            ArmoredPersonnelUnitEntity closestAPU = null;
+            double minD2 = Double.MAX_VALUE;
+            for (ArmoredPersonnelUnitEntity apu : allAPUs) {
+                double d2 = this.mob.squaredDistanceTo(apu);
+                if (d2 < minD2) {
+                    closestAPU = apu;
+                    minD2 = d2;
+                }
             }
+            this.targetAPU = closestAPU;
         }
-        this.targetAPU = closestAPU;
     }
 
     protected Box getSearchBox(double distance) {
