@@ -3,7 +3,6 @@ package me.jaffe2718.the_matrix.element.entity.ai.goal.apu;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
-import me.jaffe2718.the_matrix.unit.MathUnit;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
@@ -39,6 +38,7 @@ public class ApproachRobotGoal extends Goal {
 
     @Override
     public void start() {
+        System.out.println("Start approaching");
         this.apu.getNavigation().startMovingAlong(this.path, 1.0);
         this.apu.setAttacking(true);
     }
@@ -49,9 +49,8 @@ public class ApproachRobotGoal extends Goal {
         LivingEntity enemy = this.apu.getTarget();
         if (enemy != null && enemy.isAlive() && EntityRegistry.ROBOT_CLASSES.contains(enemy.getClass())) {
             this.apu.getLookControl().lookAt(enemy.getPos());
-            this.apu.setPitch(MathUnit.getPitchDeg(MathUnit.relativePos(this.apu.getPos(), enemy.getPos()).normalize()));
+            // this.apu.setPitch(MathUnit.getPitchDeg(MathUnit.relativePos(this.apu.getPos(), enemy.getPos()).normalize()));
         }
-        System.out.println("Yaw: " + this.apu.getYaw() + ", Pitch: " + this.apu.getPitch());
     }
 
     @Override

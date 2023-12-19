@@ -6,6 +6,7 @@ import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
 import me.jaffe2718.the_matrix.unit.KeyBindings;
+import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -216,7 +217,22 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                 }
 
                 super.travel(new Vec3d(x, pos.y, z));
+            } else if (this.hasPassengers() && this.getTarget() !=null && this.getTarget().isAlive()) {  // Zion people driving the APU
+                // these code is only working on the server side
+                this.prevYaw = this.getYaw();
+                this.prevPitch = this.getPitch();
+                this.setYaw(MathUnit.getYawDeg(MathUnit.relativePos(this.getPos(), this.getTarget().getPos()).normalize()));
+                this.setHeadYaw(this.getYaw());
+                this.setBodyYaw(this.getYaw());
+                this.setPitch(MathUnit.getPitchDeg(MathUnit.relativePos(this.getPos(), this.getTarget().getPos()).normalize()));
+                this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 10);
+                super.travel(pos);
             } else {
+                if (this.getWorld().isClient && this.hasPassengers()) {   // Sync the yaw and pitch between the server and the client
+                    this.setYaw(this.getLerpTargetYaw());
+                    this.setPitch(this.getLerpTargetPitch());
+                    this.setPos(this.getLerpTargetX(), this.getLerpTargetY(), this.getLerpTargetZ());
+                }
                 super.travel(pos);
             }
         }
@@ -235,9 +251,10 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         32, 1, 1, 1, 0.0);
             }
         }
-        if (this.getControllingPassenger() instanceof PlayerEntity player && player.isMainPlayer() && this.age % 4 == 0) {
+        if (this.getControllingPassenger() instanceof PlayerEntity player && this.age % 4 == 0) {
             if (KeyBindings.FIRE_SAFETY_CATCH.isPressed()) {
-                if (MinecraftClient.getInstance().options.attackKey.isPressed()) {
+                if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
+                        this.hasPassenger(MinecraftClient.getInstance().player)) {
                     if (this.bulletNum > 0) {
                         // step 1: calculate the velocity of the bullet and the position of the gun
                         Vec3d velocity = player.getRotationVector().multiply(12);
@@ -270,6 +287,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             }
         } else if (this.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {  // TODO: test
             this.setTarget(zionPeople.getTarget());
+            this.updatePassengerPosition(zionPeople);
         } else {
             this.setTarget(null);     // forget the target if no one is controlling the APU
         }
