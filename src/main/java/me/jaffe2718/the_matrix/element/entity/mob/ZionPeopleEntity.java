@@ -2,8 +2,8 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
-import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.StartDrivingAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.StartDrivingAPUGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
 import net.minecraft.entity.EntityType;
@@ -88,7 +88,7 @@ public class ZionPeopleEntity
             this.jobId = this.getRandom().nextInt(9) + 1;
         }
         super.readCustomDataFromNbt(nbt);
-        System.out.println("Setting goals in readCustomDataFromNbt");
+        // System.out.println("Setting goals in readCustomDataFromNbt");
         this.setGoals();
     }
 

@@ -16,5 +16,10 @@ public abstract class FlyMovementGoal extends Goal {
     protected void adjustFacing() {
         this.mob.setYaw((float) Math.toDegrees(
                 MathHelper.atan2(this.mob.getVelocity().getZ(), this.mob.getVelocity().getX())) - 90.0F);
+        this.mob.setPitch((float) Math.toDegrees(
+                MathHelper.atan2(this.mob.getVelocity().getY(), Math.sqrt(
+                        this.mob.getVelocity().getX() * this.mob.getVelocity().getX()
+                                + this.mob.getVelocity().getZ() * this.mob.getVelocity().getZ()
+                ))));
     }
 }

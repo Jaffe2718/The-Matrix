@@ -1,7 +1,11 @@
 package me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot;
 
+import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
+import me.jaffe2718.the_matrix.unit.MathUnit;
+import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.Path;
@@ -27,7 +31,7 @@ public class StartDrivingAPUGoal extends Goal {
         boolean checkAPU = targetAPU != null && targetAPU.isAlive() && (!targetAPU.hasPassengers() || targetAPU.hasPassenger(this.mob));
         if (!checkAPU) return false;     // if no apu, don't select an apu
         if (!this.mob.hasVehicle()) {
-            this.path = this.mob.getNavigation().findPathTo(targetAPU, 0);
+            this.path = this.mob.getNavigation().findPathTo(targetAPU, 2);
         } else {
             this.path = null;
         }
@@ -66,9 +70,21 @@ public class StartDrivingAPUGoal extends Goal {
     @Override
     public void tick() {
         if (!this.mob.hasVehicle()) {
+            if (this.mob.age % 20 == 0) this.path = this.mob.getNavigation().findPathTo(this.mob.getTargetVehicle(), 2);
             this.mob.getNavigation().startMovingAlong(this.path, 1.3);
             if (this.mob.distanceTo(this.mob.getTargetVehicle()) < 2.0) {
                 this.mob.startRiding(this.mob.getTargetVehicle());
+            }
+        } else if (this.mob.getTarget() != null
+                && this.mob.getVehicle() instanceof ArmoredPersonnelUnitEntity apu
+                && this.mob.getTarget().isAlive()
+                && EntityRegistry.ROBOT_CLASSES.contains(this.mob.getTarget().getClass())) {
+            this.mob.getLookControl().lookAt(this.mob.getTarget(), 180.0F, 60.0F);
+            if (this.mob.age % 4 == 0) {
+                BulletEntity.shoot(this.mob.getVehicle(),
+                        this.mob.getEyePos().add(this.mob.getRotationVector().multiply(2.4)),
+                        MathUnit.relativePos(this.mob.getEyePos(), this.mob.getTarget().getEyePos()).normalize().multiply(12.0));
+                this.mob.getVehicle().playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
             }
         }
     }

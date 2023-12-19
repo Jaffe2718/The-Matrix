@@ -32,4 +32,12 @@ public abstract class MathUnit {
         double k = Math.sin(f);
         return new Vec3d(i * j, -k, h * j);
     }
+
+    public static float getPitchDeg(@NotNull Vec3d rotationVector) {
+        return (float) Math.asin(-rotationVector.y) * 57.295776F;
+    }
+
+    public static float getYawDeg(@NotNull Vec3d rotationVector) {
+        return (float) Math.atan2(rotationVector.x, rotationVector.z) * 57.295776F;
+    }
 }

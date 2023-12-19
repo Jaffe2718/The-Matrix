@@ -1,7 +1,6 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
-import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu.SelectRobotGoal;
-import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu.ZionAPUDrivingGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.apu.ApproachRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
@@ -60,6 +59,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_ARMOR, 10.0D)
                 .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 2.0D)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 1.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 10.0D)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 3.0D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
@@ -95,13 +95,6 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         return new APUEntitySpawnS2CPacket(this);
     }
 
-    @Override
-    protected void initGoals() {
-        this.targetSelector.add(1, new SelectRobotGoal(this));
-        this.goalSelector.add(1, new ZionAPUDrivingGoal(this));
-
-    }
-
     public int getBulletNum() {
         return this.bulletNum;
     }
@@ -115,6 +108,12 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     protected void removePassenger(Entity passenger) {
         super.removePassenger(passenger);
         passenger.fallDistance = -3.0F;
+    }
+
+    @Override
+    protected void initGoals() {
+        // this.goalSelector.add(0, new ApproachRobotGoal(this));
+        this.goalSelector.add(0, new ApproachRobotGoal(this));
     }
 
     @Override
@@ -154,8 +153,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     /**
-     * Only the player can control the APUs.
-     * If the driver is Zion people, the APU will be controlled by the AI.
+     * Only the player or the Zion people can control the APU.
      * */
     @Nullable
     @Override
@@ -198,26 +196,25 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     @Override
     public void travel(Vec3d pos) {
         if (this.isAlive()) {
-            if (this.getControllingPassenger() instanceof PlayerEntity passenger) {
-                this.prevYaw = getYaw();
-                this.prevPitch = getPitch();
+            this.prevYaw = getYaw();
+            this.prevPitch = getPitch();
+            if (this.getControllingPassenger() instanceof PlayerEntity player) {
 
-                setYaw(passenger.getYaw());
-                setPitch(passenger.getPitch() * 0.5f);
-                setRotation(getYaw(), getPitch());
+//                setYaw(passenger.getYaw());
+//                setPitch(passenger.getPitch() * 0.5f);
+                setRotation(player.getYaw(), player.getPitch());
 
                 this.bodyYaw = this.getYaw();
                 this.headYaw = this.bodyYaw;
-                float x = passenger.sidewaysSpeed * 0.5F;
-                float z = passenger.forwardSpeed;
+                float x = player.sidewaysSpeed * 0.5F;
+                float z = player.forwardSpeed;
                 if (z <= 0)
                     z *= 0.25f;
                 this.setMovementSpeed(0.2F);
-                if (passenger instanceof PlayerEntity) {
-                    if (MinecraftClient.getInstance().options.jumpKey.isPressed() && this.isOnGround()) {
-                        this.jump();
-                    }
+                if (MinecraftClient.getInstance().options.jumpKey.isPressed() && this.isOnGround()) {
+                    this.jump();
                 }
+
                 super.travel(new Vec3d(x, pos.y, z));
             } else {
                 super.travel(pos);
@@ -238,7 +235,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         32, 1, 1, 1, 0.0);
             }
         }
-        if (this.getControllingPassenger() instanceof PlayerEntity player && this.age % 4 == 0) {
+        if (this.getControllingPassenger() instanceof PlayerEntity player && player.isMainPlayer() && this.age % 4 == 0) {
             if (KeyBindings.FIRE_SAFETY_CATCH.isPressed()) {
                 if (MinecraftClient.getInstance().options.attackKey.isPressed()) {
                     if (this.bulletNum > 0) {
@@ -271,6 +268,10 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                         .append(Text.translatable(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyTranslationKey())).append(" ")
                         .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
             }
+        } else if (this.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {  // TODO: test
+            this.setTarget(zionPeople.getTarget());
+        } else {
+            this.setTarget(null);     // forget the target if no one is controlling the APU
         }
         if (this.getVelocity().y < -0.1) {
             List<LivingEntity> steppedEntities = this.getSteppedEntities();
@@ -280,11 +281,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         }
         if (this.age % 10 == 0) {
             this.setAir(this.getMaxAir());
-            this.setAiDisabled(!(this.getFirstPassenger() instanceof ZionPeopleEntity));
         }
-//        if (this.getFirstPassenger() instanceof ZionPeopleEntity) {
-//            System.out.println("APU is controlled by AI -> isAiDisabled: " + this.isAiDisabled());
-//        }
         super.tick();
     }
 
@@ -318,9 +315,9 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     private PlayState handleWalk(@NotNull AnimationState<ArmoredPersonnelUnitEntity> state) {
         if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
                 KeyBindings.FIRE_SAFETY_CATCH.isPressed() && this.bulletNum > 0 &&
-                this.hasPassenger(MinecraftClient.getInstance().player)) {
+                this.hasPassenger(MinecraftClient.getInstance().player) || this.isAttacking()) {
             return state.setAndContinue(SHOOT);
-        } else if (state.isMoving() && this.getControllingPassenger() != null) {
+        } else if (state.isMoving() && this.getFirstPassenger() != null) {
             return state.setAndContinue(WALK);
         } else {
             return state.setAndContinue(STATIC);

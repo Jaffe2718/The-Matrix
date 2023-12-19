@@ -2,13 +2,12 @@ package me.jaffe2718.the_matrix.client.model.entity;
 
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
-
-import java.util.Objects;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
@@ -47,7 +46,12 @@ public class ArmoredPersonnelUnitModel extends GeoModel<ArmoredPersonnelUnitEnti
         });
         parser.setMemoizedValue(DRIVER_PITCH, () -> {      // register driver_pitch variable to molang parser
             Entity driver = animatable.getControllingPassenger();
-            return Objects.requireNonNullElse(driver, animatable).getPitch();
+            if (driver instanceof PlayerEntity player) {
+                return player.getPitch();
+            } else {
+                return animatable.getPitch();
+            }
+            //return Objects.requireNonNullElse(driver, animatable).getPitch();
         });
     }
 }

@@ -11,7 +11,7 @@ import net.minecraft.util.math.Box;
  * */
 public class SelectEnemyGoal extends ActiveTargetGoal<LivingEntity> {
     public SelectEnemyGoal(ZionPeopleEntity mob) {
-        super(mob, LivingEntity.class, true,
+        super(mob, LivingEntity.class, false,
                 livingEntity -> livingEntity.isAlive() && EntityRegistry.ROBOT_CLASSES.contains(livingEntity.getClass()));
     }
 
