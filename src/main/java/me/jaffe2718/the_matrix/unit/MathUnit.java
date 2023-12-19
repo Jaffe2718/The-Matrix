@@ -34,7 +34,7 @@ public abstract class MathUnit {
     }
 
     public static float getPitchDeg(@NotNull Vec3d rotationVector) {
-        return (float) Math.asin(-rotationVector.y) * 57.295776F;
+        return (float) Math.asin(-rotationVector.y / rotationVector.length()) * 57.295776F;
     }
 
     public static float getYawDeg(@NotNull Vec3d rotationVector) {

@@ -168,11 +168,6 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
-    public boolean isLogicalSideForUpdatingMovement() {
-        return true;
-    }
-
-    @Override
     public boolean isInvulnerableTo(@NotNull DamageSource damageSource) {
         if (damageSource.getAttacker() instanceof PlayerEntity player &&
             player.equals(this.getControllingPassenger())) {
@@ -195,47 +190,25 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
-    public void travel(Vec3d pos) {
-        if (this.isAlive()) {
+    public void travel(Vec3d relativeVelocity) {
+        if (this.isAlive() && this.getControllingPassenger() instanceof PlayerEntity player) {
             this.prevYaw = getYaw();
             this.prevPitch = getPitch();
-            if (this.getControllingPassenger() instanceof PlayerEntity player) {
-
-//                setYaw(passenger.getYaw());
-//                setPitch(passenger.getPitch() * 0.5f);
-                setRotation(player.getYaw(), player.getPitch());
-
-                this.bodyYaw = this.getYaw();
-                this.headYaw = this.bodyYaw;
-                float x = player.sidewaysSpeed * 0.5F;
-                float z = player.forwardSpeed;
-                if (z <= 0)
-                    z *= 0.25f;
-                this.setMovementSpeed(0.2F);
-                if (MinecraftClient.getInstance().options.jumpKey.isPressed() && this.isOnGround()) {
-                    this.jump();
-                }
-
-                super.travel(new Vec3d(x, pos.y, z));
-            } else if (this.hasPassengers() && this.getTarget() !=null && this.getTarget().isAlive()) {  // Zion people driving the APU
-                // these code is only working on the server side
-                this.prevYaw = this.getYaw();
-                this.prevPitch = this.getPitch();
-                this.setYaw(MathUnit.getYawDeg(MathUnit.relativePos(this.getPos(), this.getTarget().getPos()).normalize()));
-                this.setHeadYaw(this.getYaw());
-                this.setBodyYaw(this.getYaw());
-                this.setPitch(MathUnit.getPitchDeg(MathUnit.relativePos(this.getPos(), this.getTarget().getPos()).normalize()));
-                this.updateTrackedPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch(), 10);
-                super.travel(pos);
-            } else {
-                if (this.getWorld().isClient && this.hasPassengers()) {   // Sync the yaw and pitch between the server and the client
-                    this.setYaw(this.getLerpTargetYaw());
-                    this.setPitch(this.getLerpTargetPitch());
-                    this.setPos(this.getLerpTargetX(), this.getLerpTargetY(), this.getLerpTargetZ());
-                }
-                super.travel(pos);
+            this.setRotation(player.getYaw(), player.getPitch());
+            this.bodyYaw = this.getYaw();
+            this.headYaw = this.bodyYaw;
+            float x = player.sidewaysSpeed * 0.5F;
+            float z = player.forwardSpeed;
+            if (z <= 0)
+                z *= 0.25f;
+            this.setMovementSpeed(0.2F);
+            if (MinecraftClient.getInstance().options.jumpKey.isPressed() && this.isOnGround()) {
+                this.jump();
             }
+            super.travel(new Vec3d(x, relativeVelocity.y, z));
+            return;
         }
+        super.travel(relativeVelocity);
     }
 
     @Override
@@ -243,7 +216,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         if (this.isOnGround() &&
                 this.getVelocity().length() > 0.05 &&
                 this.getControllingPassenger() != null &&
-            this.age % 20 == 0) {
+                this.age % 20 == 0) {
             this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 1.0F);
             if (this.getWorld() instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, serverWorld.getBlockState(this.getBlockPos().down())),
@@ -291,6 +264,12 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         } else {
             this.setTarget(null);     // forget the target if no one is controlling the APU
         }
+        if (this.getTarget() != null) {
+            this.setPitch(MathUnit.getPitchDeg(MathUnit.relativePos(this.getEyePos(), this.getTarget().getEyePos())));
+            this.serverPitch = this.getPitch();
+        } else {
+            this.setPitch((float) this.serverPitch);
+        }
         if (this.getVelocity().y < -0.1) {
             List<LivingEntity> steppedEntities = this.getSteppedEntities();
             for (LivingEntity steppedEntity : steppedEntities) {
@@ -301,6 +280,8 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             this.setAir(this.getMaxAir());
         }
         super.tick();
+        // TODO test
+        // System.out.println("side: " + (this.getWorld().isClient ? "client" : "server") + ", yaw: " + this.getYaw() + ", pitch: " + this.getPitch());
     }
 
     @Override
