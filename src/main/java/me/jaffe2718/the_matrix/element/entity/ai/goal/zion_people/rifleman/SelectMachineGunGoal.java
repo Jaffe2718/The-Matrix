@@ -28,12 +28,8 @@ public class SelectMachineGunGoal extends TrackTargetGoal {
     public boolean canStart() {
         LivingEntity enemy = this.mob.getTarget();
         this.selectClosestGun();
-        boolean hasTargetMachineGun = false;
-        if (this.mob instanceof ZionPeopleEntity zionPeople) {
-            hasTargetMachineGun = zionPeople.getTargetVehicle() != null;
-        }
-        return !this.mob.hasVehicle()  // if already driving a vehicle, don't select another one
-                && !hasTargetMachineGun       // if already selected a machine gun, don't select another one
+        boolean hasTargetMachineGun = this.mob instanceof ZionPeopleEntity zionPeople && zionPeople.getTargetVehicle() != null;
+        return !hasTargetMachineGun       // if already selected a machine gun, don't select another one
                 && enemy != null       // if no enemy, don't select a machine gun
                 && enemy.isAlive()     // if enemy is dead, don't select a machine gun
                 && ROBOT_CLASSES.contains(enemy.getClass());   // enemy must be a robot

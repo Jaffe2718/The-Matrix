@@ -43,10 +43,14 @@ public class ElectromagneticGunItem extends Item implements GeoItem {
     public void inventoryTick(@NotNull ItemStack stack, @NotNull World world, Entity entity, int slot, boolean selected) {
         if (selected) {
             this.energy = stack.getOrCreateNbt().getInt("Energy");
-            if (stack.getOrCreateNbt().getInt("Energy") == 0 &&
-                    entity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(this) &&
+            if (entity instanceof PlayerEntity player && !player.getItemCooldownManager().isCoolingDown(this) &&
                     (player.getInventory().contains(ItemRegistry.BATTERY.getDefaultStack()) || player.isCreative())) {
-                player.sendMessage(Text.translatable("message.the_matrix.electromagnetic_gun.should_charge"), true);
+                if (stack.getOrCreateNbt().getInt("Energy") == 0) {
+                    player.sendMessage(Text.translatable("message.the_matrix.electromagnetic_gun.should_charge"), true);
+                }
+                else {
+                    player.sendMessage(Text.of(String.format("%d / 6", stack.getOrCreateNbt().getInt("Energy"))), true);
+                }
             }
         }
     }

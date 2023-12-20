@@ -13,6 +13,6 @@ public class SelectTargetGoal<T extends LivingEntity> extends ActiveTargetGoal<T
 
     @Override
     protected Box getSearchBox(double distance) {
-        return this.mob.getBoundingBox().expand(distance, 16.0, distance);
+        return this.mob.getBoundingBox().expand(distance, 16.0, distance).offset(0, -8, 0);
     }
 }

@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
+import me.jaffe2718.the_matrix.element.entity.ai.goal.machine_gun.ShootEnemyGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.MachineGunEntitySpawnS2CPacket;
@@ -43,7 +44,7 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 200.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.0D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1D)
                 .add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0D)
                 .add(EntityAttributes.GENERIC_ARMOR, 10.0D)
                 .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 2.0D)
@@ -89,6 +90,7 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         // TODO: add goals
+        this.goalSelector.add(0, new ShootEnemyGoal(this));
     }
 
     @Override
@@ -112,10 +114,11 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
                 player.getStackInHand(hand).damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
                 this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
-            } else {
-                return ActionResult.PASS;
             }
-        } else if (!this.hasPassengers()) {
+        } else {
+            return ActionResult.PASS;
+        }
+        if (!this.hasPassengers()) {
             player.startRiding(this);
             return ActionResult.success(this.getWorld().isClient);
         } else {
@@ -146,17 +149,29 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     @Override
     public void travel(Vec3d movementInput) {
         if (this.isAlive()) {
+            this.prevYaw = getYaw();
+            this.prevPitch = getPitch();
             if (this.getControllingPassenger() instanceof PlayerEntity passenger) {
-                this.prevYaw = getYaw();
-                this.prevPitch = getPitch();
-                setYaw(passenger.getYaw());
-                setPitch(passenger.getPitch() * 0.5f);
-                setRotation(getYaw(), getPitch());
+                this.setRotation(passenger.getYaw(), passenger.getPitch());
                 this.bodyYaw = this.getYaw();
                 this.headYaw = this.bodyYaw;
-                super.travel(movementInput);
+            } else if (this.getFirstPassenger() instanceof ZionPeopleEntity
+                    && this.getTarget() != null && this.getTarget().isAlive()) {
+//                Vec3d view = MathUnit.relativePos(this.getPos().add(0, this.getDimensions(this.getPose()).height, 0), this.getTarget().getPos().add(0, this.getTarget().getDimensions(this.getTarget().getPose()).height / 2, 0));
+                // this.setPitch(MathUnit.getPitchDeg(view));
+                // this.setYaw(MathUnit.getYawDeg(view) + 180F);
+//                float rawYaw = MathUnit.getYawDeg(view);
+//                this.setRotation(rawYaw + 90, MathUnit.getPitchDeg(view));
+                this.lookAtEntity(this.getTarget(), 30, 360);
             }
         }
+//        if (this.getWorld().isClient) {
+//            System.out.println(this.isAlive());
+//            this.setYaw((float) this.serverYaw);
+//            this.headYaw = (float) this.serverYaw;
+//            this.bodyYaw = (float) this.serverYaw;
+//        }
+        super.travel(movementInput);
     }
 
     @Nullable
@@ -173,6 +188,7 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     @Override
     public void tick() {
         if (this.age % 4 == 0) {
+            // System.out.println("side:" + (this.getWorld().isClient ? "C" : "S") + " , serverYaw: " + this.serverYaw);
             if (this.isShooting() && this.getControllingPassenger() instanceof PlayerEntity player) {
                 this.bulletNum--;
                 if (!this.getWorld().isClient()) {
@@ -198,11 +214,15 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
                             .append(Text.translatable(MinecraftClient.getInstance().options.attackKey.getBoundKeyTranslationKey())).append(" ")
                             .append(Text.translatable("message.the_matrix.to_shoot")), true);
                 }
+            } else if (this.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {
+                this.setTarget(zionPeople.getTarget());
+                this.updatePassengerPosition(zionPeople);
+            } else {
+                this.setTarget(null);
             }
-
+            this.setAir(this.getMaxAir());
         }
         this.fallDistance = 0;
-        this.setAir(this.getMaxAir());
         super.tick();
     }
 

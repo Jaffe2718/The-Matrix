@@ -208,7 +208,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             super.travel(new Vec3d(x, relativeVelocity.y, z));
             return;
         } else if (this.getTarget() != null) {
-            this.lookAtEntity(this.getTarget(), 30.0F, 90.0F);
+            // this.lookAtEntity(this.getTarget(), 30.0F, 90.0F);
             float pitch = MathUnit.getPitchDeg(MathUnit.relativePos(this.getPos(), this.getTarget().getPos()));
             this.prevPitch = this.getPitch();
             this.setPitch(pitch);

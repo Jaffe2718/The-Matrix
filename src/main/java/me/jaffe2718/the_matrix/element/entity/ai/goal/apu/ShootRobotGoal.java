@@ -16,7 +16,6 @@ public class ShootRobotGoal extends Goal {
     protected int stayNoEnemyTicks = 200;
 
     public ShootRobotGoal(ArmoredPersonnelUnitEntity apu) {
-        super();
         this.apu = apu;
     }
     @Override
@@ -57,19 +56,18 @@ public class ShootRobotGoal extends Goal {
     public void tick() {
         // LivingEntity enemy = this.apu.getTarget();
         LivingEntity enemy = this.apu.getTarget();
-        if (enemy != null && enemy.isAlive() && EntityRegistry.ROBOT_CLASSES.contains(enemy.getClass())) {
+        if (this.apu.age % 4 == 0 && enemy != null && enemy.isAlive() && EntityRegistry.ROBOT_CLASSES.contains(enemy.getClass())) {
             // shot the enemy
-            if (this.apu.age % 4 == 0) {
-                double bulletTime = this.apu.distanceTo(enemy) / enemy.speed;
-                // bullet speed = 12 blocks per second
-                Vec3d newPos = enemy.getPos().add(0, enemy.getDimensions(EntityPose.STANDING).height / 2, 0).add(enemy.getVelocity().multiply(bulletTime));
-                Vec3d eyePos = this.apu.getPos().add(0, this.apu.getDimensions(EntityPose.STANDING).height - 1.6, 0);
-                Vec3d bulletVelocity = MathUnit.relativePos(eyePos, newPos).normalize().multiply(12);
-                Vec3d gunPos = eyePos.add(bulletVelocity.normalize().multiply(2.4));
-                BulletEntity.shoot(this.apu, gunPos, bulletVelocity);
-                this.apu.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
-                // TODO: add shoot particle
-            }
+            Vec3d eyePos = this.apu.getPos().add(0, this.apu.getDimensions(EntityPose.STANDING).height - 1.6, 0);
+            double bulletTime = eyePos.distanceTo(enemy.getPos().add(0, enemy.getDimensions(EntityPose.STANDING).height / 2, 0)) / enemy.speed;
+            // bullet speed = 12 blocks per tick
+            Vec3d newPos = enemy.getPos().add(0, enemy.getDimensions(EntityPose.STANDING).height / 2, 0).add(enemy.getVelocity().multiply(bulletTime));
+            Vec3d bulletVelocity = MathUnit.relativePos(eyePos, newPos).normalize().multiply(12);
+            Vec3d gunPos = eyePos.add(bulletVelocity.normalize().multiply(2.4));
+            BulletEntity.shoot(this.apu, gunPos, bulletVelocity);
+            this.apu.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
+            // TODO: add shoot particle
+
         }
     }
 
