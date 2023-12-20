@@ -4,7 +4,9 @@ import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.StartDrivingAPUGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.SelectMachineGunGoal;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
+import me.jaffe2718.the_matrix.unit.ParticleRegistry;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -20,6 +22,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -163,6 +166,16 @@ public class ZionPeopleEntity
                 && !this.targetVehicle.hasPassenger(this)) {
             this.targetVehicle = null;   // if the vehicle is full, don't get into it
         }
+        if (this.age % 200 == 0
+                && (this.getTarget() == null
+                    || !this.getTarget().isAlive()
+                    || !ROBOT_CLASSES.contains(this.getTarget().getClass()))
+                && this.getWorld() instanceof ServerWorld serverWorld) {  // self-heal if no enemy
+            if (this.getHealth() < this.getMaxHealth() && !this.hasVehicle()) {
+                this.setHealth(Math.min(this.getHealth() + 1, this.getMaxHealth()));
+                serverWorld.spawnParticles(ParticleRegistry.HEAL, this.getX(), this.getY() + 1, this.getZ(), 8, 0.4, 0.4, 0.4, 0);
+            }
+        }
     }
 
     /**
@@ -213,6 +226,7 @@ public class ZionPeopleEntity
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             }
             case 9 -> {    // Rifleman
+                this.targetSelector.add(1, new SelectMachineGunGoal(this));
                 this.targetSelector.add(1, new SelectEnemyGoal(this));
                 // use the machine gun
             }

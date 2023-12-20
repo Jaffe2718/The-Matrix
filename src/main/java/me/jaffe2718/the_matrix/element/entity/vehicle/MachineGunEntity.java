@@ -87,6 +87,11 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     }
 
     @Override
+    protected void initGoals() {
+        // TODO: add goals
+    }
+
+    @Override
     protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
         if (!player.getItemCooldownManager().isCoolingDown(player.getStackInHand(hand).getItem())) {
             if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET) && this.bulletNum < MAX_BULLET_NUM) {

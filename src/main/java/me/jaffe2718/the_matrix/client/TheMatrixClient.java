@@ -3,8 +3,11 @@ package me.jaffe2718.the_matrix.client;
 import me.jaffe2718.the_matrix.client.render.entity.*;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.unit.KeyBindings;
+import me.jaffe2718.the_matrix.unit.ParticleRegistry;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.particle.EndRodParticle;
 
 public class TheMatrixClient implements ClientModInitializer {
     /**
@@ -20,5 +23,6 @@ public class TheMatrixClient implements ClientModInitializer {
         EntityRendererRegistry.register(EntityRegistry.MACHINE_GUN, MachineGunRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ROBOT_SENTINEL, RobotSentinelRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ZION_PEOPLE, ZionPeopleRenderer::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.HEAL, EndRodParticle.Factory::new);
     }
 }

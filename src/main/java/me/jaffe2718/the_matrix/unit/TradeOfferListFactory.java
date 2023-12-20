@@ -122,7 +122,7 @@ public abstract class TradeOfferListFactory {
                 tradeOfferList.add(coinForItem(20, Items.IRON_INGOT));
                 tradeOfferList.add(coinForItem(30, Items.GOLD_INGOT));
                 tradeOfferList.add(coinForItem(50, Items.DIAMOND));
-                tradeOfferList.add(new TradeOffer(costCoin(64), Items.GOLD_INGOT.getDefaultStack(), Items.NETHERITE_INGOT.getDefaultStack(), Integer.MAX_VALUE, 1, 1F));
+                tradeOfferList.add(new TradeOffer(costCoin(64), Items.GOLD_INGOT.getDefaultStack().copyWithCount(3), Items.NETHERITE_INGOT.getDefaultStack(), Integer.MAX_VALUE, 1, 1F));
                 tradeOfferList.add(coinForItem(40, Items.EMERALD));
                 tradeOfferList.add(new TradeOffer(costCoin(10), Items.BUCKET.getDefaultStack(), Items.LAVA_BUCKET.getDefaultStack(), Integer.MAX_VALUE, 1, 1F));
                 tradeOfferList.add(new TradeOffer(costCoin(5), Items.BUCKET.getDefaultStack(), Items.WATER_BUCKET.getDefaultStack(), Integer.MAX_VALUE, 1, 1F));
