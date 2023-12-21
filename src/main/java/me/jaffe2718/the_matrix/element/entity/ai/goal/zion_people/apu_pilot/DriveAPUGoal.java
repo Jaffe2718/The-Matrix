@@ -76,12 +76,6 @@ public class DriveAPUGoal extends Goal {
                 && this.apuPilot.getTarget().isAlive()
                 && EntityRegistry.ROBOT_CLASSES.contains(this.apuPilot.getTarget().getClass())) {
             this.apuPilot.getLookControl().lookAt(this.apuPilot.getTarget(), 180.0F, 90.0F);
-//            if (this.apuPilot.age % 4 == 0) {
-//                BulletEntity.shoot(this.apuPilot.getVehicle(),
-//                        this.apuPilot.getEyePos().add(this.apuPilot.getRotationVector().multiply(2.4)),
-//                        MathUnit.relativePos(this.apuPilot.getEyePos(), this.apuPilot.getTarget().getEyePos()).normalize().multiply(12.0));
-//                this.apuPilot.getVehicle().playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
-//            }
         }
     }
 

@@ -17,7 +17,6 @@ public class TheMatrix implements ModInitializer {
         EntityRegistry.register();
         ItemRegistry.register();
         ParticleRegistry.register();
-        PacketRegistry.register();
         SoundEventRegistry.register();
     }
 }

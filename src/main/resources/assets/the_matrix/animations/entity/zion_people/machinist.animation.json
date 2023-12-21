@@ -32,7 +32,8 @@
 				}
 			}
 		},
-		"animation.zion_people.fix": {
+		"animation.zion_people.machinist.fix": {
+			"loop": true,
 			"animation_length": 2,
 			"bones": {
 				"right_arm": {

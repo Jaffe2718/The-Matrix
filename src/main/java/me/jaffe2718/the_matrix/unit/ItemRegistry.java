@@ -36,13 +36,11 @@ public abstract class ItemRegistry {
     public static final Item BULLET_FILLING_BOX = new Item(new FabricItemSettings().maxCount(1).maxDamage(10));
     public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
     public static final Item CPU = new Item(new FabricItemSettings());
-    public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(
-            new FabricItemSettings()
-                    .maxCount(1)
-                    .maxDamage(100));
+    public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(new FabricItemSettings().maxCount(1).maxDamage(100));
     public static final Item MACHINE_GUN = new MachineGunItem(new FabricItemSettings());
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MOBILE_PHONE = new Item(new FabricItemSettings());
+    public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20));
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,
             0x404040, 0xE5E15A,
@@ -83,6 +81,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_gun"), MACHINE_GUN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "spanner"), SPANNER);
 
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "agent_spawn_egg"), AGENT_SPAWN_EGG);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "robot_sentinel_spawn_egg"), ROBOT_SENTINEL_SPAWN_EGG);
@@ -110,6 +109,7 @@ public abstract class ItemRegistry {
             group.add(MACHINE_GUN);
             group.add(MACHINE_PART);
             group.add(MOBILE_PHONE);
+            group.add(SPANNER);
 
             group.add(AGENT_SPAWN_EGG);
             group.add(ROBOT_SENTINEL_SPAWN_EGG);

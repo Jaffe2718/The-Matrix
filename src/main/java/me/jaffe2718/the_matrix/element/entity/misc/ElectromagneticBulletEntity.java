@@ -1,6 +1,5 @@
 package me.jaffe2718.the_matrix.element.entity.misc;
 
-import me.jaffe2718.the_matrix.network.packet.s2c.play.ElectromagneticBulletEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.block.BlockState;
@@ -8,11 +7,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -36,10 +35,9 @@ public class ElectromagneticBulletEntity
         extends ArrowEntity
         implements GeoEntity {
 
-
+    private static final TrackedData<Integer> EXPLOSION_DURATION = DataTracker.registerData(ElectromagneticBulletEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> IS_EXPLODING = DataTracker.registerData(ElectromagneticBulletEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private int explosionDuration = 80;   // max = 80, min = 0, destroy when 0
-    private boolean isExploding = false;
 
     public static void shoot(@NotNull Entity owner, Vec3d pos, Vec3d velocity) {
         ElectromagneticBulletEntity bullet = new ElectromagneticBulletEntity(EntityRegistry.ELECTROMAGNETIC_BULLET, owner.getWorld());
@@ -55,44 +53,50 @@ public class ElectromagneticBulletEntity
     }
 
     @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(EXPLOSION_DURATION, 80);
+        this.dataTracker.startTracking(IS_EXPLODING, false);
+    }
+
+    private int getExplosionDuration() {
+        return this.dataTracker.get(EXPLOSION_DURATION);
+    }
+
+    private void decreaseExplosionDuration() {
+        this.dataTracker.set(EXPLOSION_DURATION, this.getExplosionDuration() - 1);
+    }
+
+    private boolean isExploding() {
+        return this.dataTracker.get(IS_EXPLODING);
+    }
+
+    @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.explosionDuration = nbt.getInt("ExplosionDuration");
+        this.dataTracker.set(EXPLOSION_DURATION, nbt.getInt("ExplosionDuration"));
+        this.dataTracker.set(IS_EXPLODING, this.getExplosionDuration() < 80);
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("ExplosionDuration", this.explosionDuration);
-    }
-
-    @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new ElectromagneticBulletEntitySpawnS2CPacket(this);
-    }
-
-    @Override
-    public void onSpawnPacket(EntitySpawnS2CPacket packet) {
-        super.onSpawnPacket(packet);
-        if (packet instanceof ElectromagneticBulletEntitySpawnS2CPacket ePacket) {
-            this.explosionDuration = ePacket.getExplosionDuration();
-            this.isExploding = ePacket.isExploding();
-        }
+        nbt.putInt("ExplosionDuration", this.getExplosionDuration());
     }
 
     @Override
     protected boolean canHit(Entity entity) {
-        return super.canHit(entity) && !this.isExploding && !this.isOwner(entity);
+        return super.canHit(entity) && !this.isExploding() && !this.isOwner(entity);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (this.isExploding) {
-            this.explosionDuration--;
-            if (this.explosionDuration == 0) {
+        if (this.isExploding()) {
+            this.decreaseExplosionDuration();
+            if (this.getExplosionDuration() == 0) {
                 this.destroy();
-            } else if (this.explosionDuration % 16 == 0) {
+            } else if (this.getExplosionDuration() % 16 == 0) {
                 this.applyExplosion();
             }
         }
@@ -109,7 +113,7 @@ public class ElectromagneticBulletEntity
         super.onCollision(hitResult);
         this.setVelocity(0, 0, 0);  // stop moving when hit & explode
         this.setPosition(hitResult.getPos());
-        this.isExploding = true;
+        this.dataTracker.set(IS_EXPLODING, true);
         this.applyExplosion();
     }
 
@@ -133,14 +137,6 @@ public class ElectromagneticBulletEntity
         this.getWorld().emitGameEvent(GameEvent.ENTITY_DAMAGE, this.getPos(), GameEvent.Emitter.of(this));
     }
 
-    public int getExplosionDuration() {
-        return explosionDuration;
-    }
-
-    public boolean isExploding() {
-        return this.isExploding;
-    }
-
     /**
      * Explode and damage all robots in a 4-block radius.
      * */
@@ -148,7 +144,7 @@ public class ElectromagneticBulletEntity
         Box box = this.getBoundingBox().expand(4);
         DamageSource explosion = this.getDamageSources().explosion(this, this.getOwner());
         for (LivingEntity entity : this.getWorld().getEntitiesByClass(LivingEntity.class, box, entity -> EntityRegistry.ROBOT_CLASSES.contains(entity.getClass()))) {
-            entity.damage(explosion, 30 + this.explosionDuration / 2.0F);
+            entity.damage(explosion, 30 + this.getExplosionDuration() / 2.0F);
         }
         if (!this.getWorld().isClient) {
             this.playSound(SoundEventRegistry.ELECTROMAGNETIC_EXPLOSION, 1, 1);

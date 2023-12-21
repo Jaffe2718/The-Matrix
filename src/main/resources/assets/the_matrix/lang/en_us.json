@@ -29,6 +29,8 @@
     "item.the_matrix.mechanical_leggings": "Mechanical Leggings",
     "item.the_matrix.mobile_phone": "Mobile Phone",
     "item.the_matrix.robot_sentinel_spawn_egg": "Robot Sentinel Spawn Egg",
+    "item.the_matrix.spanner": "Spanner",
+    "item.the_matrix.spanner.tooltip": "Used to repair Armored Personnel Unit and Machine Gun",
     "item.the_matrix.v_mask": "V Mask",
     "item.the_matrix.v_mask.tooltip": "Gain the ability to fight back against agents",
     "item.the_matrix.zion_people_spawn_egg": "Zion People Spawn Egg",
@@ -101,5 +103,6 @@
     "sound.the_matrix.machine_gun_shoot": "Machine gun shooting",
     "sound.the_matrix.robot_sentinel_death": "Robot Sentinel dies",
     "sound.the_matrix.robot_sentinel_hurt": "Robot Sentinel hurts",
-    "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detecting"
+    "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detecting",
+    "sound.the_matrix.spanner_twist": "Spanner twists"
 }

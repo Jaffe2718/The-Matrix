@@ -5,9 +5,11 @@ import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.DriveAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.machinist.FixMachineGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.machinist.SelectMachineGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.SelectMachineGunGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.UseMachineGunGoal;
-import me.jaffe2718.the_matrix.network.packet.s2c.play.ZionPeopleEntitySpawnS2CPacket;
+import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.ParticleRegistry;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
 import net.minecraft.entity.EntityType;
@@ -18,14 +20,14 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
@@ -45,6 +47,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static me.jaffe2718.the_matrix.client.model.entity.ZionPeopleModel.*;
@@ -55,6 +58,23 @@ public class ZionPeopleEntity
         implements Npc, Merchant, GeoEntity {
 
     private static final String JOB_ID_KEY = "JobID";
+    public static final HashMap<Integer, String> jobIDMap = new HashMap<>() {{
+        // 0 -> "random";
+        put(1, "apu_pilot");
+        put(2, "carpenter");
+        put(3, "farm_breeder");
+        put(4, "farmer");
+        put(5, "grocer");
+        put(6, "infantry");
+        put(7, "machinist");
+        put(8, "miner");
+        put(9, "rifleman");
+    }};
+    private static final TrackedData<Integer> JOB_ID = DataTracker.registerData(ZionPeopleEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    /**
+     * For machinist -> if this entity is fixing a machine
+     * */
+    private static final TrackedData<Boolean> IS_FIXING = DataTracker.registerData(ZionPeopleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     @Nullable
     private PlayerEntity customer;
@@ -62,13 +82,12 @@ public class ZionPeopleEntity
     protected TradeOfferList offers;
 
     /**
-     * The vehicle that this entity wants to get into, for apu pilots and rifleman
-     * only armored personnel units and machine guns are valid.
+     * The vehicle that this entity wants to get into, for apu pilots and rifleman.<br>
+     * Or the vehicle that this entity want to fix, for machinist.<br>
+     * Only armored personnel units and machine guns are valid.
      */
     @Nullable
     protected PathAwareEntity targetVehicle;
-
-    public int jobId;   // 0 -> (random), 1 -> AUP Pilot, 2 -> Carpenter, ...
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
@@ -81,18 +100,23 @@ public class ZionPeopleEntity
 
     public ZionPeopleEntity(EntityType<? extends ZionPeopleEntity> entityType, World world) {
         super(entityType, world);
-        if (this.jobId == 0) {
-            this.jobId = this.getRandom().nextInt(9) + 1;
+        if (!MathUnit.isBetween(this.getJobId(), 1, 9)) {
+            this.setJobId(this.getRandom().nextInt(9) + 1);
         }
     }
 
     @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(JOB_ID, 0);
+        this.dataTracker.startTracking(IS_FIXING, false);
+    }
+
+    @Override
     public void readCustomDataFromNbt(@NotNull NbtCompound nbt) {
-        int jobId = nbt.getInt(JOB_ID_KEY);
-        if (jobId != 0 && jobId <= 9) {
-            this.jobId = jobId;
-        } else {
-            this.jobId = this.getRandom().nextInt(9) + 1;
+        this.setJobId(nbt.getInt(JOB_ID_KEY));
+        if (!MathUnit.isBetween(this.getJobId(), 1, 9)) {   // set to random [1, 9] if invalid
+            this.setJobId(this.getRandom().nextInt(9) + 1);
         }
         super.readCustomDataFromNbt(nbt);
         this.setGoals();
@@ -100,37 +124,8 @@ public class ZionPeopleEntity
 
     @Override
     public void writeCustomDataToNbt(@NotNull NbtCompound nbt) {
-        nbt.putInt(JOB_ID_KEY, this.jobId);
+        nbt.putInt(JOB_ID_KEY, this.getJobId());
         super.writeCustomDataToNbt(nbt);
-    }
-
-    /**
-     * Called when this entity is spawned from a packet. This is where we set the job ID.
-     * @see ZionPeopleEntitySpawnS2CPacket
-     * @param packet The packet that spawned this entity
-     */
-    @Override
-    public void onSpawnPacket(EntitySpawnS2CPacket packet) {
-        if (packet instanceof ZionPeopleEntitySpawnS2CPacket zionPacket) {
-            int tempJobID = zionPacket.getJobID();
-            if (tempJobID != 0 && tempJobID <= 9) {
-                this.jobId = tempJobID;
-            } else {
-                this.jobId = this.getRandom().nextInt(9) + 1;
-            }
-        } else {
-            this.jobId = this.getRandom().nextInt(9) + 1;
-        }
-        super.onSpawnPacket(packet);
-    }
-
-    /**
-     * Called when this entity is spawned from a packet. This is where we set the job ID.
-     * @see ZionPeopleEntitySpawnS2CPacket
-     */
-    @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new ZionPeopleEntitySpawnS2CPacket(this);
     }
 
     @Override
@@ -145,10 +140,32 @@ public class ZionPeopleEntity
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (this.jobId == 1 && damageSource.isOf(DamageTypes.FALL) && this.fallDistance < 6) {
+        if (this.getJobId() == 1 && damageSource.isOf(DamageTypes.FALL) && this.fallDistance < 6) {
             return true;
         }
         return super.isInvulnerableTo(damageSource);
+    }
+
+    public int getJobId() {
+        return this.dataTracker.get(JOB_ID);
+    }
+
+    public void setJobId(int jobId) {
+        this.dataTracker.set(JOB_ID, jobId);
+    }
+
+    /**
+     * For machinist -> if this entity is fixing a machine
+     * */
+    public boolean isFixing() {
+        return this.dataTracker.get(IS_FIXING) && this.getJobId() == 7;
+    }
+
+    /**
+     * For machinist -> if this entity is fixing a machine
+     * */
+    public void setFixing(boolean fixing) {
+        this.dataTracker.set(IS_FIXING, fixing && this.getJobId() == 7);
     }
 
     @Override
@@ -185,7 +202,7 @@ public class ZionPeopleEntity
                     || !this.getTarget().isAlive()
                     || !ROBOT_CLASSES.contains(this.getTarget().getClass()))
                 && this.getWorld() instanceof ServerWorld serverWorld) {  // self-heal if no enemy
-            this.setHealth(Math.min(this.getHealth() + 1, this.getMaxHealth()));
+            this.setHealth(this.getHealth() + 1);
             serverWorld.spawnParticles(ParticleRegistry.HEAL, this.getX(), this.getY() + 1.0, this.getZ(), 8, 0.4, 0.4, 0.4, 0.0);
         }
     }
@@ -198,11 +215,11 @@ public class ZionPeopleEntity
         // universal goals for all jobs
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.5D));
-        this.goalSelector.add(3, new WanderAroundGoal(this, 1.0D));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(4, new LookAroundGoal(this));
+        this.goalSelector.add(4, new WanderAroundGoal(this, 1.0D));
+        this.goalSelector.add(5, new LookAroundGoal(this));
         this.goalSelector.add(5, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
-        switch (this.jobId) {  // TODO: Add job-specific goals
+        switch (this.getJobId()) {
             case 1 -> {    // APU Pilot
                 this.targetSelector.add(1, new SelectAPUGoal(this));
                 this.targetSelector.add(1, new SelectEnemyGoal(this));
@@ -223,11 +240,13 @@ public class ZionPeopleEntity
                     this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                             livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             case 6 -> // Infantry
+                    // TODO: add a goal to attack the enemy
                     this.targetSelector.add(1, new SelectEnemyGoal(this));
             case 7 -> {    // Machinist
                 this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
-                // TODO: Add machinist fix goal
+                this.targetSelector.add(1, new SelectMachineGoal(this));
+                this.goalSelector.add(1, new FixMachineGoal(this));
             }
             case 8 -> // Miner
                     this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
@@ -246,7 +265,7 @@ public class ZionPeopleEntity
     @Override
     public int getArmor() {
         List<Integer> soldierID = List.of(1, 6, 9);
-        if (soldierID.contains(this.jobId)) {
+        if (soldierID.contains(this.getJobId())) {
             return super.getArmor() * 2;
         } else {
             return super.getArmor();
@@ -286,13 +305,13 @@ public class ZionPeopleEntity
     @Override
     public TradeOfferList getOffers() {
         if (this.offers == null) {
-            this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.jobId);
+            this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.getJobId());
         }
         return this.offers;
     }
 
     private void prepareOffers() {
-        this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.jobId);
+        this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.getJobId());
     }
 
     @Override
@@ -334,7 +353,7 @@ public class ZionPeopleEntity
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        switch (this.jobId) {
+        switch (this.getJobId()) {
             case 1 -> // APU Pilot
                     controllers.add(new AnimationController<>(this, "controller", 0, this::apuPilotPredicate));
             case 2 -> // Carpenter
@@ -353,13 +372,16 @@ public class ZionPeopleEntity
                     controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(MINER_COMMON)));
             case 9 -> // Rifleman
                     controllers.add(new AnimationController<>(this, "controller", 0, this::riflemanPredicate));
-            default -> TheMatrix.LOGGER.error("Invalid job ID: " + this.jobId);
+            default -> TheMatrix.LOGGER.error("Invalid job ID: " + this.getJobId());
         }
     }
 
     private PlayState machinistPredicate(@NotNull AnimationState<ZionPeopleEntity> state) {
-        // TODO: Add machinist fix animation
-        return state.setAndContinue(COMMON);
+        if (this.isFixing()) {
+            return state.setAndContinue(MACHINIST_FIX);
+        } else {
+            return state.setAndContinue(COMMON);
+        }
     }
 
     private PlayState apuPilotPredicate(AnimationState<ZionPeopleEntity> state) {
@@ -393,7 +415,7 @@ public class ZionPeopleEntity
     }
 
     public String getJobName() {
-        return ZionPeopleEntitySpawnS2CPacket.jobIDMap.get(this.jobId);
+        return ZionPeopleEntity.jobIDMap.get(this.getJobId());
     }
 
 }

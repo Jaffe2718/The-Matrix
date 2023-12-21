@@ -3,7 +3,6 @@ package me.jaffe2718.the_matrix.element.entity.vehicle;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.machine_gun.ShootEnemyGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
-import me.jaffe2718.the_matrix.network.packet.s2c.play.MachineGunEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -12,12 +11,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -37,8 +36,9 @@ import static me.jaffe2718.the_matrix.client.model.entity.MachineGunModel.COMMON
 public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
 
     public static final int MAX_BULLET_NUM = 128;
+    private static final TrackedData<Integer> BULLET_NUM = DataTracker.registerData(MachineGunEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private int bulletNum;
+
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 200.0D)
@@ -54,6 +54,12 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     }
 
     @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(BULLET_NUM, 0);
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }
@@ -61,28 +67,13 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.bulletNum = nbt.getInt("BulletNum");
+        this.dataTracker.set(BULLET_NUM, nbt.getInt("BulletNum"));
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("BulletNum", this.bulletNum);
-    }
-
-    @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new MachineGunEntitySpawnS2CPacket(this);
-    }
-
-    @Override
-    public void onSpawnPacket(EntitySpawnS2CPacket packet) {
-        super.onSpawnPacket(packet);
-        if (packet instanceof MachineGunEntitySpawnS2CPacket) {
-            this.bulletNum = ((MachineGunEntitySpawnS2CPacket) packet).getBulletNum();
-        } else {
-            this.bulletNum = 0;
-        }
+        nbt.putInt("BulletNum", this.dataTracker.get(BULLET_NUM));
     }
 
     @Override
@@ -93,24 +84,35 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     @Override
     protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
         if (!player.getItemCooldownManager().isCoolingDown(player.getStackInHand(hand).getItem())) {
-            if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET) && this.bulletNum < MAX_BULLET_NUM) {
-                this.bulletNum++;
+            int currentBulletNum = this.dataTracker.get(BULLET_NUM);
+            if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET) && currentBulletNum < MAX_BULLET_NUM) {
+                this.dataTracker.set(BULLET_NUM, currentBulletNum + 1);
                 player.getStackInHand(hand).decrement(1);
                 player.getItemCooldownManager().set(player.getStackInHand(hand).getItem(), 25);
                 this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
-            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BOXED_BULLETS) && this.bulletNum <= MAX_BULLET_NUM - 10) {
-                this.bulletNum += 10;
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BOXED_BULLETS) && currentBulletNum <= MAX_BULLET_NUM - 10) {
+                this.dataTracker.set(BULLET_NUM, currentBulletNum + 10);
                 player.getStackInHand(hand).decrement(1);
                 player.getItemCooldownManager().set(player.getStackInHand(hand).getItem(), 25);
                 this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
-            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET_FILLING_BOX) && this.bulletNum <= MAX_BULLET_NUM - 10) {
-                this.bulletNum += 10;
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET_FILLING_BOX) && currentBulletNum <= MAX_BULLET_NUM - 10) {
+                this.dataTracker.set(BULLET_NUM, currentBulletNum + 10);
                 player.getItemCooldownManager().set(player.getStackInHand(hand).getItem(), 10);
                 player.getStackInHand(hand).damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
                 this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
+            } else if (player.getStackInHand(hand).isOf(ItemRegistry.SPANNER)) {
+                if (this.getHealth() < this.getMaxHealth()) {
+                    this.heal(10F);
+                    player.getItemCooldownManager().set(player.getStackInHand(hand).getItem(), 10);
+                    player.getStackInHand(hand).damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
+                    this.playSound(SoundEventRegistry.SPANNER_TWIST, 1.0F, 1.0F);
+                    return ActionResult.success(this.getWorld().isClient);
+                } else {
+                    return ActionResult.PASS;
+                }
             }
         } else {
             return ActionResult.PASS;
@@ -175,7 +177,7 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     public void tick() {
         if (this.age % 4 == 0) {
             if (this.isShooting() && this.getControllingPassenger() instanceof PlayerEntity player) {
-                this.bulletNum--;
+                this.dataTracker.set(BULLET_NUM, this.dataTracker.get(BULLET_NUM) - 1);
                 if (!this.getWorld().isClient()) {
                     BulletEntity.shoot(this,
                             player.getEyePos().add(MathUnit.getRotationVector(player.getPitch(), player.getHeadYaw())),
@@ -227,12 +229,12 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     }
 
     public boolean isShooting() {
-        return this.bulletNum > 0 && this.getFirstPassenger() instanceof PlayerEntity &&
+        return this.dataTracker.get(BULLET_NUM) > 0 && this.getFirstPassenger() instanceof PlayerEntity &&
                 MinecraftClient.getInstance().options.attackKey.isPressed()
                 && KeyBindings.FIRE_SAFETY_CATCH.isPressed() || this.isAttacking();
     }
 
     public int getBulletNum() {
-        return bulletNum;
+        return this.dataTracker.get(BULLET_NUM);
     }
 }

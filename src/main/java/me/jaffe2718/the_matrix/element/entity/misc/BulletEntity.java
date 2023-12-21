@@ -57,7 +57,8 @@ public class BulletEntity
         this.playSound(SoundEventRegistry.BULLET_HITTING_BLOCK, 1.0F, 1.0F);
         // generate particle
         if (this.getWorld() instanceof ServerWorld serverWorld) {
-            serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), this.getX(), this.getY(), this.getZ(), 8, 0.5, 0.5, 0.5, 0.0);
+            Vec3d hitPos = blockHitResult.getPos();
+            serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), hitPos.getX(), hitPos.getY(), hitPos.getZ(), 8, 0.5, 0.5, 0.5, 0.0);
         }
         this.discard();
     }

@@ -43,6 +43,7 @@ public class ShootRobotGoal extends Goal {
             return true;
         } else {
             this.apu.setAttacking(false);
+            this.apu.setWalking(false);
             this.stayNoEnemyTicks--;
             return this.stayNoEnemyTicks > 0;
         }
@@ -52,6 +53,7 @@ public class ShootRobotGoal extends Goal {
     public void start() {
         //this.apu.getNavigation().startMovingAlong(this.path, 1.0);
         this.apu.setAttacking(true);
+        this.apu.setWalking(true);
     }
 
     @Override
@@ -91,6 +93,7 @@ public class ShootRobotGoal extends Goal {
         this.apu.setTarget(null);
         this.apu.getNavigation().stop();
         this.apu.setAttacking(false);
+        this.apu.setWalking(false);
         if (this.apu.getFirstPassenger() instanceof ZionPeopleEntity apuPilot) {
             apuPilot.stopRiding();
         }

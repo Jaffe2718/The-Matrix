@@ -3,7 +3,6 @@ package me.jaffe2718.the_matrix.element.entity.vehicle;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.apu.ShootRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
-import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
 import me.jaffe2718.the_matrix.unit.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
@@ -14,12 +13,13 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageTypes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -47,9 +47,10 @@ import static me.jaffe2718.the_matrix.client.model.entity.ArmoredPersonnelUnitMo
 public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEntity {
 
     public static final int MAX_BULLET_NUM = 512;
+    private static final TrackedData<Integer> BULLET_NUM = DataTracker.registerData(ArmoredPersonnelUnitEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> IS_WALKING = DataTracker.registerData(ArmoredPersonnelUnitEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final String BULLET_NUM_KEY = "BulletNum";
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    protected int bulletNum;
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createLivingAttributes()
@@ -69,32 +70,48 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(BULLET_NUM, 0);
+        this.dataTracker.startTracking(IS_WALKING, false);
+    }
+
+    @Override
     public void readCustomDataFromNbt(@NotNull NbtCompound nbt) {
-        this.bulletNum = nbt.getInt(BULLET_NUM_KEY);
+        // this.bulletNum = nbt.getInt(BULLET_NUM_KEY);
+        this.dataTracker.set(BULLET_NUM, nbt.getInt(BULLET_NUM_KEY));
         super.readCustomDataFromNbt(nbt);
     }
 
     @Override
     public void writeCustomDataToNbt(@NotNull NbtCompound nbt) {
-        nbt.putInt(BULLET_NUM_KEY, this.bulletNum);
+        // nbt.putInt(BULLET_NUM_KEY, this.bulletNum);
+        nbt.putInt(BULLET_NUM_KEY, this.dataTracker.get(BULLET_NUM));
         super.writeCustomDataToNbt(nbt);
     }
 
-    @Override
-    public void onSpawnPacket(EntitySpawnS2CPacket packet) {
-        if (packet instanceof APUEntitySpawnS2CPacket apuPacket) {
-            this.bulletNum = apuPacket.getBulletNum();
-        }
-        super.onSpawnPacket(packet);
-    }
-
-    @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new APUEntitySpawnS2CPacket(this);
-    }
-
     public int getBulletNum() {
-        return this.bulletNum;
+        return this.dataTracker.get(BULLET_NUM);
+    }
+
+    private void setBulletNum(int bulletNum) {
+        this.dataTracker.set(BULLET_NUM, bulletNum);
+    }
+
+    private void addBulletNum(int bulletNum) {
+        this.setBulletNum(Math.min(this.getBulletNum() + bulletNum, MAX_BULLET_NUM));
+    }
+
+    private void consumeBullet() {
+        this.setBulletNum(Math.max(this.getBulletNum() - 1, 0));
+    }
+
+    public boolean isWalking() {
+        return this.dataTracker.get(IS_WALKING);
+    }
+
+    public void setWalking(boolean isWalking) {
+        this.dataTracker.set(IS_WALKING, isWalking);
     }
 
     @Override
@@ -110,38 +127,46 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     protected void initGoals() {
-        // this.goalSelector.add(0, new ShootRobotGoal(this));
         this.goalSelector.add(0, new ShootRobotGoal(this));
     }
 
     @Override
     protected ActionResult interactMob(@NotNull PlayerEntity player, Hand hand) {
+        ItemStack handStack = player.getStackInHand(hand);
         if (this.hasPassenger(player)) {   // the player can only reload the APU when they're riding it
-            if (player.getItemCooldownManager().isCoolingDown(player.getStackInHand(hand).getItem())) {
+            if (player.getItemCooldownManager().isCoolingDown(handStack.getItem())) {
                 return ActionResult.PASS;
-            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET) && this.bulletNum < MAX_BULLET_NUM) {
-                this.bulletNum++;
-                player.getStackInHand(hand).decrement(1);
+            } else if (handStack.isOf(ItemRegistry.BULLET) && this.getBulletNum() < MAX_BULLET_NUM) {
+                this.addBulletNum(1);
+                handStack.decrement(1);
                 player.getItemCooldownManager().set(ItemRegistry.BULLET, 25);
                 this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
-            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BOXED_BULLETS)
-                    && this.bulletNum <= MAX_BULLET_NUM - 10) {
-                this.bulletNum += 10;
-                player.getStackInHand(hand).decrement(1);
+            } else if (handStack.isOf(ItemRegistry.BOXED_BULLETS)
+                    && this.getBulletNum() <= MAX_BULLET_NUM - 10) {
+                this.addBulletNum(10);
+                handStack.decrement(1);
                 player.getItemCooldownManager().set(ItemRegistry.BOXED_BULLETS, 25);
                 this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
-            } else if (player.getStackInHand(hand).isOf(ItemRegistry.BULLET_FILLING_BOX)
-                    && this.bulletNum <= MAX_BULLET_NUM - 10) {
-                this.bulletNum += 10;
-                player.getStackInHand(hand).damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
+            } else if (handStack.isOf(ItemRegistry.BULLET_FILLING_BOX)
+                    && this.getBulletNum() <= MAX_BULLET_NUM - 10) {
+                this.addBulletNum(10);
+                handStack.damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
                 player.getItemCooldownManager().set(ItemRegistry.BULLET_FILLING_BOX, 10);
                 this.playSound(SoundEventRegistry.LOADING_BULLET, 1.0F, 1.0F);
                 return ActionResult.success(this.getWorld().isClient);
             } else {
                 return ActionResult.PASS;
             }
+        } else if (handStack.isOf(ItemRegistry.SPANNER)
+                && this.getHealth() < this.getMaxHealth()
+                && !player.getItemCooldownManager().isCoolingDown(ItemRegistry.SPANNER)) {
+            this.setHealth(this.getHealth() + 10);
+            handStack.damage(1, player, (playerEntity) -> playerEntity.sendToolBreakStatus(hand));
+            player.getItemCooldownManager().set(ItemRegistry.SPANNER, 10);
+            player.playSound(SoundEventRegistry.SPANNER_TWIST, 1.0F, 1.0F);
+            return ActionResult.success(this.getWorld().isClient);
         } else if (this.hasPassengers()) {
             return ActionResult.PASS;
         } else {
@@ -217,8 +242,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     @Override
     public void tick() {
         if (this.isOnGround() &&
-                this.getVelocity().length() > 0.05 &&
-                this.getFirstPassenger() != null &&
+                this.isWalking() &&
                 this.age % 20 == 0) {
             this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 1.0F);
             if (this.getWorld() instanceof ServerWorld serverWorld) {
@@ -228,10 +252,11 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             }
         }
         if (this.getControllingPassenger() instanceof PlayerEntity player && this.age % 4 == 0) {
+            this.setWalking((Math.abs(player.sidewaysSpeed) + Math.abs(player.forwardSpeed)) > 5e-2);
             if (KeyBindings.FIRE_SAFETY_CATCH.isPressed()) {
                 if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
                         this.hasPassenger(MinecraftClient.getInstance().player)) {
-                    if (this.bulletNum > 0) {
+                    if (this.getBulletNum() > 0) {
                         // step 1: calculate the velocity of the bullet and the position of the gun
                         Vec3d velocity = player.getRotationVector().multiply(12);
                         Vec3d gunPos = player.getEyePos().add(player.getRotationVector().multiply(2.4));
@@ -254,7 +279,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                             serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, rightGunPos.getX(), rightGunPos.getY(), rightGunPos.getZ(),
                                     1, 0, 0, 0, 0.3);
                         }
-                        this.bulletNum--;
+                        this.consumeBullet();
                     } else {
                         player.sendMessage(Text.translatable("message.the_matrix.apu_no_bullet"), true);
                     }
@@ -275,6 +300,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
             this.updatePassengerPosition(zionPeople);
         } else {
             this.setTarget(null);     // forget the target if no one is controlling the APU
+            this.setWalking(false);
         }
         if (this.fallDistance > 0.5F) {
             List<LivingEntity> steppedEntities = this.getSteppedEntities();
@@ -317,7 +343,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     private PlayState handleWalk(@NotNull AnimationState<ArmoredPersonnelUnitEntity> state) {
         if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
-                KeyBindings.FIRE_SAFETY_CATCH.isPressed() && this.bulletNum > 0 &&
+                KeyBindings.FIRE_SAFETY_CATCH.isPressed() && this.getBulletNum() > 0 &&
                 this.hasPassenger(MinecraftClient.getInstance().player) || this.isAttacking()) {
             return state.setAndContinue(SHOOT);
         } else if (state.isMoving() && this.getFirstPassenger() != null) {

@@ -25,6 +25,7 @@ public abstract class SoundEventRegistry {
     public static final SoundEvent ROBOT_SENTINEL_DEATH = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_death"));
     public static final SoundEvent ROBOT_SENTINEL_HURT = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_hurt"));
     public static final SoundEvent ROBOT_SENTINEL_RADAR_DETECTION = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_radar_detection"));
+    public static final SoundEvent SPANNER_TWIST = SoundEvent.of(new Identifier(MOD_ID, "spanner_twist"));
 
     public static void register() {
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "armored_personnel_unit_hurt"), ARMORED_PERSONNEL_UNIT_HURT);
@@ -43,5 +44,6 @@ public abstract class SoundEventRegistry {
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_death"), ROBOT_SENTINEL_DEATH);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_hurt"), ROBOT_SENTINEL_HURT);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_radar_detection"), ROBOT_SENTINEL_RADAR_DETECTION);
+        Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "spanner_twist"), SPANNER_TWIST);
     }
 }

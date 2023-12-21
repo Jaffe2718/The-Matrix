@@ -159,5 +159,15 @@
                 "stream": true
             }
         ]
+    },
+    "spanner_twist": {
+        "subtitle": "sound.the_matrix.spanner_twist",
+        "sounds": [
+            {
+                "name": "the_matrix:spanner_twist",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
     }
 }

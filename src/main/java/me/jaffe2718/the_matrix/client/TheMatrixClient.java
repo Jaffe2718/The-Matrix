@@ -5,7 +5,6 @@ import me.jaffe2718.the_matrix.element.particle.BulletShellParticle;
 import me.jaffe2718.the_matrix.element.particle.HealParticle;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.unit.KeyBindings;
-import me.jaffe2718.the_matrix.unit.PacketRegistry;
 import me.jaffe2718.the_matrix.unit.ParticleRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -25,7 +24,6 @@ public class TheMatrixClient implements ClientModInitializer {
         EntityRendererRegistry.register(EntityRegistry.MACHINE_GUN, MachineGunRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ROBOT_SENTINEL, RobotSentinelRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ZION_PEOPLE, ZionPeopleRenderer::new);
-        PacketRegistry.registerClient();
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.BULLET_SHELL, BulletShellParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.HEAL, HealParticle.Factory::new);
     }

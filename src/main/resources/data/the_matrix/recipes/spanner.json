@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+        " M ",
+        " MM",
+        "M  "
+    ],
+    "key": {
+        "M": {
+            "item": "the_matrix:machine_part"
+        }
+    },
+    "result": {
+        "item": "the_matrix:spanner",
+        "count": 1
+    },
+    "show_notification": true
+}
