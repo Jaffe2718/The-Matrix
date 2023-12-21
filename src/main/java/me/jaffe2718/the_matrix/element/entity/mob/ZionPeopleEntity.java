@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.entity.mob;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.DriveAPUGoal;
@@ -94,7 +95,6 @@ public class ZionPeopleEntity
             this.jobId = this.getRandom().nextInt(9) + 1;
         }
         super.readCustomDataFromNbt(nbt);
-        // System.out.println("Setting goals in readCustomDataFromNbt");
         this.setGoals();
     }
 
@@ -186,7 +186,7 @@ public class ZionPeopleEntity
                     || !ROBOT_CLASSES.contains(this.getTarget().getClass()))
                 && this.getWorld() instanceof ServerWorld serverWorld) {  // self-heal if no enemy
             this.setHealth(Math.min(this.getHealth() + 1, this.getMaxHealth()));
-            serverWorld.spawnParticles(ParticleRegistry.HEAL, this.getX(), this.getY() + 1.3, this.getZ(), 8, 0.4, 0.4, 0.4, 0.0);
+            serverWorld.spawnParticles(ParticleRegistry.HEAL, this.getX(), this.getY() + 1.0, this.getZ(), 8, 0.4, 0.4, 0.4, 0.0);
         }
     }
 
@@ -334,35 +334,26 @@ public class ZionPeopleEntity
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        // TODO: Register controllers
         switch (this.jobId) {
-            case 1 -> {    // APU Pilot
-                controllers.add(new AnimationController<>(this, "controller", 0, this::apuPilotPredicate));
-            }
-            case 2 -> {    // Carpenter
-                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
-            }
-            case 3 -> {    // Farm Breeder
-                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
-            }
-            case 4 -> {    // Farmer
-                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
-            }
-            case 5 -> {    // Grocer
-                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
-            }
-            case 6 -> {    // Infantry
-                controllers.add(new AnimationController<>(this, "controller", 0, this::infantryPredicate));
-            }
-            case 7 -> {    // Machinist
-                controllers.add(new AnimationController<>(this, "controller", 0, this::machinistPredicate));
-            }
-            case 8 -> {    // Miner
-                controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(MINER_COMMON)));
-            }
-            case 9 -> {    // Rifleman
-                controllers.add(new AnimationController<>(this, "controller", 0, this::riflemanPredicate));
-            }
+            case 1 -> // APU Pilot
+                    controllers.add(new AnimationController<>(this, "controller", 0, this::apuPilotPredicate));
+            case 2 -> // Carpenter
+                    controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
+            case 3 -> // Farm Breeder
+                    controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
+            case 4 -> // Farmer
+                    controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
+            case 5 -> // Grocer
+                    controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(COMMON)));
+            case 6 -> // Infantry
+                    controllers.add(new AnimationController<>(this, "controller", 0, this::infantryPredicate));
+            case 7 -> // Machinist
+                    controllers.add(new AnimationController<>(this, "controller", 0, this::machinistPredicate));
+            case 8 -> // Miner
+                    controllers.add(new AnimationController<>(this, "controller", 0, state -> state.setAndContinue(MINER_COMMON)));
+            case 9 -> // Rifleman
+                    controllers.add(new AnimationController<>(this, "controller", 0, this::riflemanPredicate));
+            default -> TheMatrix.LOGGER.error("Invalid job ID: " + this.jobId);
         }
     }
 

@@ -1,9 +1,6 @@
 package me.jaffe2718.the_matrix;
 
-import me.jaffe2718.the_matrix.unit.EntityRegistry;
-import me.jaffe2718.the_matrix.unit.ItemRegistry;
-import me.jaffe2718.the_matrix.unit.ParticleRegistry;
-import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
+import me.jaffe2718.the_matrix.unit.*;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +17,7 @@ public class TheMatrix implements ModInitializer {
         EntityRegistry.register();
         ItemRegistry.register();
         ParticleRegistry.register();
+        PacketRegistry.register();
         SoundEventRegistry.register();
     }
 }

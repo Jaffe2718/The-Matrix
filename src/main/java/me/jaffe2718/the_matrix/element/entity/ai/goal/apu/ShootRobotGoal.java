@@ -5,10 +5,12 @@ import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.unit.MathUnit;
+import me.jaffe2718.the_matrix.unit.ParticleRegistry;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 
 public class ShootRobotGoal extends Goal {
@@ -66,8 +68,16 @@ public class ShootRobotGoal extends Goal {
             Vec3d gunPos = eyePos.add(bulletVelocity.normalize().multiply(2.4));
             BulletEntity.shoot(this.apu, gunPos, bulletVelocity);
             this.apu.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
-            // TODO: add shoot particle
-
+            if (this.apu.getWorld() instanceof ServerWorld serverWorld) {
+                Vec3d view = this.apu.getRotationVector();
+                Vec3d leftGunPos = this.apu.getPos().add(0, this.apu.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(-view.z, 0, view.x).normalize().multiply(2.5));
+                Vec3d rightGunPos = this.apu.getPos().add(0, this.apu.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(view.z, 0, -view.x).normalize().multiply(2.5));
+                // spawn particles
+                serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, leftGunPos.getX(), leftGunPos.getY(), leftGunPos.getZ(),
+                        1, 0, 0, 0, 0.3);
+                serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, rightGunPos.getX(), rightGunPos.getY(), rightGunPos.getZ(),
+                        1, 0, 0, 0, 0.3);
+            }
         }
     }
 

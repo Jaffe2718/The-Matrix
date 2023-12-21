@@ -60,7 +60,6 @@ public class DriveAPUGoal extends Goal {
                 noAPU = this.apuPilot.distanceTo(vehicle) < this.apuPilot.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE);
             }
         }
-        // System.out.println("StartDrivingAPUGoalStartDrivingAPUGoal canStop: " + noEnemy + " " + noAPU);
         return noEnemy || noAPU;
     }
 

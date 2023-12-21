@@ -35,7 +35,7 @@ public class MechanicalMaterial implements ArmorMaterial {
     }
 
     @Override
-    public SoundEvent getEquipSound() {  // TODO: Change this to a custom sound
+    public SoundEvent getEquipSound() {
         return SoundEventRegistry.MECHANICAL_ARMOR_EQUIPS;
     }
 

@@ -62,7 +62,6 @@ public class IdleFlyGoal extends FlyMovementGoal {
                 this.mob.getRandom().nextBetween(3, 8) * (this.mob.getRandom().nextBoolean() ? 1 : -1),
                 this.mob.getRandom().nextBetween(-5, 5)
         ).normalize().multiply(this.mob.getRandom().nextBetween(25, 40));
-        // System.out.println("circlingCenter: " + this.circlingCenter + ", rotationVec: " + this.rotationVec);
     }
 
     private void invertDirection() {

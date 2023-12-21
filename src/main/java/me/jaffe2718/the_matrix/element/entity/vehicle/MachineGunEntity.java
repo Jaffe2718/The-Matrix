@@ -4,10 +4,7 @@ import me.jaffe2718.the_matrix.element.entity.ai.goal.machine_gun.ShootEnemyGoal
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.MachineGunEntitySpawnS2CPacket;
-import me.jaffe2718.the_matrix.unit.ItemRegistry;
-import me.jaffe2718.the_matrix.unit.KeyBindings;
-import me.jaffe2718.the_matrix.unit.MathUnit;
-import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
+import me.jaffe2718.the_matrix.unit.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -21,6 +18,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -89,7 +87,6 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
 
     @Override
     protected void initGoals() {
-        // TODO: add goals
         this.goalSelector.add(0, new ShootEnemyGoal(this));
     }
 
@@ -157,20 +154,9 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
                 this.headYaw = this.bodyYaw;
             } else if (this.getFirstPassenger() instanceof ZionPeopleEntity
                     && this.getTarget() != null && this.getTarget().isAlive()) {
-//                Vec3d view = MathUnit.relativePos(this.getPos().add(0, this.getDimensions(this.getPose()).height, 0), this.getTarget().getPos().add(0, this.getTarget().getDimensions(this.getTarget().getPose()).height / 2, 0));
-                // this.setPitch(MathUnit.getPitchDeg(view));
-                // this.setYaw(MathUnit.getYawDeg(view) + 180F);
-//                float rawYaw = MathUnit.getYawDeg(view);
-//                this.setRotation(rawYaw + 90, MathUnit.getPitchDeg(view));
                 this.lookAtEntity(this.getTarget(), 30, 360);
             }
         }
-//        if (this.getWorld().isClient) {
-//            System.out.println(this.isAlive());
-//            this.setYaw((float) this.serverYaw);
-//            this.headYaw = (float) this.serverYaw;
-//            this.bodyYaw = (float) this.serverYaw;
-//        }
         super.travel(movementInput);
     }
 
@@ -188,7 +174,6 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     @Override
     public void tick() {
         if (this.age % 4 == 0) {
-            // System.out.println("side:" + (this.getWorld().isClient ? "C" : "S") + " , serverYaw: " + this.serverYaw);
             if (this.isShooting() && this.getControllingPassenger() instanceof PlayerEntity player) {
                 this.bulletNum--;
                 if (!this.getWorld().isClient()) {
@@ -197,6 +182,11 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
                             player.getRotationVector().multiply(10));
                     this.playSound(SoundEventRegistry.MACHINE_GUN_SHOOT, 1.0F, 1.0F);
                     this.playSound(SoundEventRegistry.BULLET_SHELL_HITTING_THE_GROUND, 1.0F, 1.0F);
+                    // spawn particles
+                    if (this.getWorld() instanceof ServerWorld serverWorld) {
+                        Vec3d muzzlePos = this.getPos().add(0, this.getHeight(), 0).add(this.getRotationVector().multiply(2.0));
+                        serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, muzzlePos.getX(), muzzlePos.getY(), muzzlePos.getZ(), 1, 0, 0, 0, 0.3);
+                    }
                 }
                 if (this.getFirstPassenger() instanceof PlayerEntity user) {
                     user.setYaw(user.getYaw() + this.random.nextFloat() * 3 - 1.5F);
@@ -239,11 +229,7 @@ public class MachineGunEntity extends PathAwareEntity implements GeoEntity {
     public boolean isShooting() {
         return this.bulletNum > 0 && this.getFirstPassenger() instanceof PlayerEntity &&
                 MinecraftClient.getInstance().options.attackKey.isPressed()
-                && KeyBindings.FIRE_SAFETY_CATCH.isPressed() || this.isAIShooting();
-    }
-
-    private boolean isAIShooting() {   // TODO: AI shooting
-        return false;
+                && KeyBindings.FIRE_SAFETY_CATCH.isPressed() || this.isAttacking();
     }
 
     public int getBulletNum() {

@@ -5,10 +5,12 @@ import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.unit.MathUnit;
+import me.jaffe2718.the_matrix.unit.ParticleRegistry;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Vec3d;
 
 /**
@@ -68,7 +70,9 @@ public class ShootEnemyGoal extends Goal {
             Vec3d muzzlePos = eyePos.add(bulletVelocity.normalize().multiply(2.0));
             BulletEntity.shoot(this.machineGun, muzzlePos, bulletVelocity);
             this.machineGun.playSound(SoundEventRegistry.MACHINE_GUN_SHOOT, 1.0F, 1.0F);
-            // TODO: add particle effect
+            if (this.machineGun.getWorld() instanceof ServerWorld serverWorld) {
+                serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, muzzlePos.getX(), muzzlePos.getY(), muzzlePos.getZ(), 1, 0, 0, 0, 0.3);
+            }
         }
     }
 

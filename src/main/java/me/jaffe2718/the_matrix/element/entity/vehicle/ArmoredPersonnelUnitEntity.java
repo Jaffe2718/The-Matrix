@@ -4,10 +4,7 @@ import me.jaffe2718.the_matrix.element.entity.ai.goal.apu.ShootRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.network.packet.s2c.play.APUEntitySpawnS2CPacket;
-import me.jaffe2718.the_matrix.unit.ItemRegistry;
-import me.jaffe2718.the_matrix.unit.KeyBindings;
-import me.jaffe2718.the_matrix.unit.MathUnit;
-import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
+import me.jaffe2718.the_matrix.unit.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
@@ -191,9 +188,9 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     public void travel(Vec3d relativeVelocity) {
-        if (this.getControllingPassenger() instanceof PlayerEntity player) {
-            this.prevYaw = getYaw();
-            this.prevPitch = getPitch();
+        if (this.getFirstPassenger() instanceof PlayerEntity player) {
+            this.prevYaw = this.getYaw();
+            this.prevPitch = this.getPitch();
             this.setRotation(player.getYaw(), player.getPitch());
             this.bodyYaw = this.getYaw();
             this.headYaw = this.bodyYaw;
@@ -221,7 +218,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     public void tick() {
         if (this.isOnGround() &&
                 this.getVelocity().length() > 0.05 &&
-                this.getControllingPassenger() != null &&
+                this.getFirstPassenger() != null &&
                 this.age % 20 == 0) {
             this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 1.0F);
             if (this.getWorld() instanceof ServerWorld serverWorld) {
@@ -247,7 +244,16 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                             this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
                             this.playSound(SoundEventRegistry.BULLET_SHELL_HITTING_THE_GROUND, 1.0F, 1.0F);
                         }
-                        // TODO: spawn particles
+                        Vec3d view = this.getRotationVector();
+                        Vec3d leftGunPos = this.getPos().add(0, this.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(-view.z, 0, view.x).normalize().multiply(2.5));
+                        Vec3d rightGunPos = this.getPos().add(0, this.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(view.z, 0, -view.x).normalize().multiply(2.5));
+                        // spawn particles
+                        if (this.getWorld() instanceof ServerWorld serverWorld) {
+                            serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, leftGunPos.getX(), leftGunPos.getY(), leftGunPos.getZ(),
+                                    1, 0, 0, 0, 0.3);
+                            serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, rightGunPos.getX(), rightGunPos.getY(), rightGunPos.getZ(),
+                                    1, 0, 0, 0, 0.3);
+                        }
                         this.bulletNum--;
                     } else {
                         player.sendMessage(Text.translatable("message.the_matrix.apu_no_bullet"), true);
@@ -270,7 +276,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         } else {
             this.setTarget(null);     // forget the target if no one is controlling the APU
         }
-        if (this.getVelocity().y < -0.1) {
+        if (this.fallDistance > 0.5F) {
             List<LivingEntity> steppedEntities = this.getSteppedEntities();
             for (LivingEntity steppedEntity : steppedEntities) {
                 this.tryAttack(steppedEntity);
@@ -278,10 +284,8 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         }
         if (this.age % 10 == 0) {
             this.setAir(this.getMaxAir());
-            // System.out.println("Tick side: " + (this.getWorld().isClient ? "client" : "server") + ", yaw: " + this.getYaw() + ", pitch: " + this.getPitch());
         }
         super.tick();
-
     }
 
     @Override
