@@ -91,7 +91,6 @@ public abstract class EntityRegistry {
             Registries.ENTITY_TYPE,
             new Identifier(MOD_ID, "zion_people"),
             EntityType.Builder.create(ZionPeopleEntity::new, SpawnGroup.CREATURE)
-                    .makeFireImmune()
                     .maxTrackingRange(10)
                     .setDimensions(0.6F, 1.95F)
                     .build("zion_people")

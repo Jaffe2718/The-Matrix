@@ -216,9 +216,9 @@ public class ZionPeopleEntity
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.5D));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(4, new WanderAroundGoal(this, 1.0D));
+        this.goalSelector.add(4, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
+        this.goalSelector.add(5, new WanderAroundGoal(this, 1.0D));
         this.goalSelector.add(5, new LookAroundGoal(this));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
         switch (this.getJobId()) {
             case 1 -> {    // APU Pilot
                 this.targetSelector.add(1, new SelectAPUGoal(this));
@@ -245,6 +245,7 @@ public class ZionPeopleEntity
             case 7 -> {    // Machinist
                 this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
+                this.targetSelector.add(2, new SelectEnemyGoal(this));
                 this.targetSelector.add(1, new SelectMachineGoal(this));
                 this.goalSelector.add(1, new FixMachineGoal(this));
             }
