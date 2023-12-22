@@ -241,7 +241,6 @@ public class ZionPeopleEntity
                     this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                             livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
             case 6 -> { // Infantry
-                // TODO: add a goal to attack the enemy
                 this.targetSelector.add(1, new SelectEnemyGoal(this));
                 this.goalSelector.add(1, new ShootGoal(this));
             }
