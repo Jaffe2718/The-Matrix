@@ -5,6 +5,7 @@ import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.DriveAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.infantry.ShootGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.machinist.FixMachineGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.machinist.SelectMachineGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.SelectMachineGunGoal;
@@ -239,9 +240,11 @@ public class ZionPeopleEntity
             case 5 -> // Grocer
                     this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                             livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
-            case 6 -> // Infantry
-                    // TODO: add a goal to attack the enemy
-                    this.targetSelector.add(1, new SelectEnemyGoal(this));
+            case 6 -> { // Infantry
+                // TODO: add a goal to attack the enemy
+                this.targetSelector.add(1, new SelectEnemyGoal(this));
+                this.goalSelector.add(1, new ShootGoal(this));
+            }
             case 7 -> {    // Machinist
                 this.goalSelector.add(1, new FleeRobotGoal<>(this, LivingEntity.class, 64, 1.2f, 1.5F,
                         livingEntity -> ROBOT_CLASSES.contains(livingEntity.getClass())));
@@ -394,8 +397,7 @@ public class ZionPeopleEntity
     }
 
     private PlayState infantryPredicate(AnimationState<ZionPeopleEntity> state) {
-        LivingEntity target = this.getTarget();
-        if (target != null && target.isAlive() && ROBOT_CLASSES.contains(target.getClass())) {
+        if (this.isAttacking()) {
             return state.setAndContinue(INFANTRY_COMBAT);
         } else {
             return state.setAndContinue(INFANTRY_IDLE);
