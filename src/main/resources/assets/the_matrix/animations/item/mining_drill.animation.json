@@ -1,0 +1,27 @@
+{
+    "format_version": "1.8.0",
+    "animations": {
+        "animation.mining_drill.common": {
+            "loop": true,
+            "animation_length": 1,
+            "bones": {
+                "d0": {
+                    "rotation": {
+                        "vector": [0, 0, "query.anim_time * 180"]
+                    }
+                },
+                "d1": {
+                    "rotation": {
+                        "vector": [0, 0, "-query.anim_time * 180"]
+                    }
+                },
+                "d2": {
+                    "rotation": {
+                        "vector": [0, 0, "query.anim_time * 270"]
+                    }
+                }
+            }
+        }
+    },
+    "geckolib_format_version": 2
+}

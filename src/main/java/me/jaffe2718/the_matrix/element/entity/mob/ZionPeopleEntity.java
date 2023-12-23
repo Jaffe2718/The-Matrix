@@ -12,6 +12,7 @@ import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.Selec
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.UseMachineGunGoal;
 import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.ParticleRegistry;
+import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -347,6 +348,17 @@ public class ZionPeopleEntity
     @Override
     public SoundEvent getYesSound() {
         return null;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        List<Integer> femaleID = List.of(3, 5);
+        if (femaleID.contains(this.getJobId())) {
+            return SoundEventRegistry.ZION_PEOPLE_FEMALE_HURT;
+        } else {
+            return SoundEventRegistry.ZION_PEOPLE_MALE_HURT;
+        }
     }
 
     @Override

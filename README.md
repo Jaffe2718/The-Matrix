@@ -81,14 +81,15 @@ This mod is still in development, and the plan is as follows:
              - [x] 7 -> machinist
              - [x] 8 -> miner
              - [x] 9 -> rifleman
-       - [ ] Animations
-       - [ ] AI Goals
+       - [x] Animations
+       - [x] AI Goals
        - [ ] Sound events
           - [ ] Ambient
           - [ ] Hurt
           - [ ] Death
           - [ ] Attack
-       - [ ] Trading
+       - [x] Trading
+       - [ ] Spawn conditions
 2. Virtual World
    - [ ] Agent
       - [x] Define Agent entity: see [AgentEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/AgentEntity.java)
@@ -166,7 +167,7 @@ This mod is still in development, and the plan is as follows:
       - [ ] Realise function to make the space warship
    - [x] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
    - [x] Mechanical Armors
-   - [ ] Drill (to mine)
+   - [x] Mining Drill (to mine)
    - [x] Batteries (to power the electromagnetic guns)
       - [x] Define battery item
       - [x] Realise function to power the electromagnetic guns

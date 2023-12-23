@@ -82,8 +82,8 @@ public class MachineGunItem extends Item implements GeoItem {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-
+    public void registerControllers(AnimatableManager.@NotNull ControllerRegistrar controllers) {
+        // controllers.add(new AnimationController<>(this, "controller", state -> state.setAndContinue(COMMON)));
     }
 
     @Override

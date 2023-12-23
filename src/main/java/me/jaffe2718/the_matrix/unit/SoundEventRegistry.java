@@ -11,7 +11,7 @@ public abstract class SoundEventRegistry {
 
     public static final SoundEvent ARMORED_PERSONNEL_UNIT_HURT = SoundEvent.of(new Identifier(MOD_ID, "armored_personnel_unit_hurt"));
     public static final SoundEvent ARMORED_PERSONNEL_UNIT_LAND = SoundEvent.of(new Identifier(MOD_ID, "armored_personnel_unit_land"));
-    public static final SoundEvent ARMORED_PERSONNEL_UNIT_SHOOT = SoundEvent.of(new Identifier(MOD_ID, "armored_personnel_unit_shoot"));
+    public static final SoundEvent ARMORED_PERSONNEL_UNIT_SHOOT = SoundEvent.of(new Identifier(MOD_ID, "armored_personnel_unit_shoot"), 32F);
     public static final SoundEvent ARMORED_PERSONNEL_UNIT_STEP = SoundEvent.of(new Identifier(MOD_ID, "armored_personnel_unit_step"));
     public static final SoundEvent BULLET_HITTING_BLOCK = SoundEvent.of(new Identifier(MOD_ID, "bullet_hitting_block"));
     public static final SoundEvent BULLET_HITTING_ENTITY = SoundEvent.of(new Identifier(MOD_ID, "bullet_hitting_entity"));
@@ -20,12 +20,14 @@ public abstract class SoundEventRegistry {
     public static final SoundEvent ELECTROMAGNETIC_GUN_CHARGING = SoundEvent.of(new Identifier(MOD_ID, "electromagnetic_gun_charging"));
     public static final SoundEvent ELECTROMAGNETIC_GUN_SHOOT = SoundEvent.of(new Identifier(MOD_ID, "electromagnetic_gun_shoot"));
     public static final SoundEvent LOADING_BULLET = SoundEvent.of(new Identifier(MOD_ID, "loading_bullet"));
-    public static final SoundEvent MACHINE_GUN_SHOOT = SoundEvent.of(new Identifier(MOD_ID, "machine_gun_shoot"));
+    public static final SoundEvent MACHINE_GUN_SHOOT = SoundEvent.of(new Identifier(MOD_ID, "machine_gun_shoot"), 32F);
     public static final SoundEvent MECHANICAL_ARMOR_EQUIPS = SoundEvent.of(new Identifier(MOD_ID, "mechanical_armor_equips"));
     public static final SoundEvent ROBOT_SENTINEL_DEATH = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_death"));
     public static final SoundEvent ROBOT_SENTINEL_HURT = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_hurt"));
     public static final SoundEvent ROBOT_SENTINEL_RADAR_DETECTION = SoundEvent.of(new Identifier(MOD_ID, "robot_sentinel_radar_detection"));
     public static final SoundEvent SPANNER_TWIST = SoundEvent.of(new Identifier(MOD_ID, "spanner_twist"));
+    public static final SoundEvent ZION_PEOPLE_FEMALE_HURT = SoundEvent.of(new Identifier(MOD_ID, "zion_people_female_hurt"));
+    public static final SoundEvent ZION_PEOPLE_MALE_HURT = SoundEvent.of(new Identifier(MOD_ID, "zion_people_male_hurt"));
 
     public static void register() {
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "armored_personnel_unit_hurt"), ARMORED_PERSONNEL_UNIT_HURT);
@@ -45,5 +47,7 @@ public abstract class SoundEventRegistry {
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_hurt"), ROBOT_SENTINEL_HURT);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "robot_sentinel_radar_detection"), ROBOT_SENTINEL_RADAR_DETECTION);
         Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "spanner_twist"), SPANNER_TWIST);
+        Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "zion_people_female_hurt"), ZION_PEOPLE_FEMALE_HURT);
+        Registry.register(Registries.SOUND_EVENT, new Identifier(MOD_ID, "zion_people_male_hurt"), ZION_PEOPLE_MALE_HURT);
     }
 }

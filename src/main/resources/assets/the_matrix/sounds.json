@@ -169,5 +169,25 @@
                 "stream": true
             }
         ]
+    },
+    "zion_people_female_hurt": {
+        "subtitle": "sound.the_matrix.zion_people.female.hurt",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/female/hurt",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_male_hurt": {
+        "subtitle": "sound.the_matrix.zion_people.male.hurt",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/hurt",
+                "pitch": 1.0,
+                "stream": true
+            }
+        ]
     }
 }

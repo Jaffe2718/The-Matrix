@@ -27,6 +27,7 @@
     "item.the_matrix.mechanical_chestplate": "Mechanical Chestplate",
     "item.the_matrix.mechanical_helmet": "Mechanical Helmet",
     "item.the_matrix.mechanical_leggings": "Mechanical Leggings",
+    "item.the_matrix.mining_drill": "Mining Drill",
     "item.the_matrix.mobile_phone": "Mobile Phone",
     "item.the_matrix.robot_sentinel_spawn_egg": "Robot Sentinel Spawn Egg",
     "item.the_matrix.spanner": "Spanner",
@@ -104,5 +105,7 @@
     "sound.the_matrix.robot_sentinel_death": "Robot Sentinel dies",
     "sound.the_matrix.robot_sentinel_hurt": "Robot Sentinel hurts",
     "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detecting",
-    "sound.the_matrix.spanner_twist": "Spanner twists"
+    "sound.the_matrix.spanner_twist": "Spanner twists",
+    "sound.the_matrix.zion_people.female.hurt": "Zion People hurts",
+    "sound.the_matrix.zion_people.male.hurt": "Zion People hurts"
 }
