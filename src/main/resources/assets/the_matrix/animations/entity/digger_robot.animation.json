@@ -1,0 +1,47 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.digger_robot.common": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"drill0": {
+					"rotation": {
+						"vector": [0, "query.anim_time * 180", 0]
+					}
+				},
+				"drill1": {
+					"rotation": {
+						"vector": [0, "- query.anim_time * 180", 0]
+					}
+				},
+				"drill2": {
+					"rotation": {
+						"vector": [0, "query.anim_time * 180", 0]
+					}
+				},
+				"drill3": {
+					"rotation": {
+						"vector": [0, "query.anim_time * 180", 0]
+					}
+				},
+				"r1": {
+					"rotation": {
+						"vector": [0, "query.anim_time * 180", 0]
+					}
+				},
+				"r2": {
+					"rotation": {
+						"vector": [0, "query.anim_time * 180", 0]
+					}
+				},
+				"drill": {
+					"rotation": {
+						"vector": [0, "- query.anim_time * 180", 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

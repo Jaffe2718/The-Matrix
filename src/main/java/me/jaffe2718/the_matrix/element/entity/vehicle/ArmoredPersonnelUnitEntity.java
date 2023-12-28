@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.entity.vehicle;
 
+import me.jaffe2718.the_matrix.element.entity.ai.goal.apu.APURevengeGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.apu.ShootRobotGoal;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
@@ -127,7 +128,8 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new ShootRobotGoal(this));
+        this.goalSelector.add(1, new ShootRobotGoal(this));
+        this.targetSelector.add(0, new APURevengeGoal(this));
     }
 
     @Override

@@ -2,6 +2,8 @@
     "entity.the_matrix.agent": "Agent",
     "entity.the_matrix.armored_personnel_unit": "Armored Personnel Unit",
     "entity.the_matrix.bullet": "Bullet",
+    "entity.the_matrix.digger_robot": "Digger Robot",
+    "entity.the_matrix.electromagnetic_bullet": "Electromagnetic Bullet",
     "entity.the_matrix.machine_gun": "Machine Gun",
     "entity.the_matrix.robot_sentinel": "Robot Sentinel",
     "entity.the_matrix.zion_people": "Zion People",

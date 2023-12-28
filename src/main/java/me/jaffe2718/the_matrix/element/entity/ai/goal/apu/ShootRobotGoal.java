@@ -31,7 +31,9 @@ public class ShootRobotGoal extends Goal {
     private boolean checkEnemy() {
         LivingEntity enemy = this.apu.getTarget();
         if (enemy == null || !enemy.isAlive()) return false;
-        this.apu.getMoveControl().moveTo(enemy.getX(), enemy.getY(), enemy.getZ(), 1.0);
+        // this.apu.getMoveControl().moveTo(enemy.getX(), enemy.getY(), enemy.getZ(), 1.0);
+        this.apu.getNavigation().startMovingAlong(this.apu.getNavigation().findPathTo(enemy, 25), 1.0);
+        this.apu.getLookControl().lookAt(enemy, 180, 90);
         return EntityRegistry.ROBOT_CLASSES.contains(enemy.getClass());
     }
 
@@ -58,13 +60,11 @@ public class ShootRobotGoal extends Goal {
 
     @Override
     public void tick() {
-        // LivingEntity enemy = this.apu.getTarget();
         LivingEntity enemy = this.apu.getTarget();
         if (this.apu.age % 4 == 0 && enemy != null && enemy.isAlive() && EntityRegistry.ROBOT_CLASSES.contains(enemy.getClass())) {
-            // shot the enemy
+            // shot the enemy, bullet speed = 12 blocks per tick
             Vec3d eyePos = this.apu.getPos().add(0, this.apu.getDimensions(EntityPose.STANDING).height - 1.6, 0);
-            double bulletTime = eyePos.distanceTo(enemy.getPos().add(0, enemy.getDimensions(EntityPose.STANDING).height / 2, 0)) / enemy.speed;
-            // bullet speed = 12 blocks per tick
+            double bulletTime = eyePos.distanceTo(enemy.getPos().add(0, enemy.getDimensions(EntityPose.STANDING).height / 2, 0)) / 12;
             Vec3d newPos = enemy.getPos().add(0, enemy.getDimensions(EntityPose.STANDING).height / 2, 0).add(enemy.getVelocity().multiply(bulletTime));
             Vec3d bulletVelocity = MathUnit.relativePos(eyePos, newPos).normalize().multiply(12);
             Vec3d gunPos = eyePos.add(bulletVelocity.normalize().multiply(2.4));

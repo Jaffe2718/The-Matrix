@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.unit;
 
+import me.jaffe2718.the_matrix.element.entity.boss.DiggerRobotEntity;
 import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.misc.ElectromagneticBulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
@@ -25,7 +26,8 @@ public abstract class EntityRegistry {
      * Only robots will be affected by the electromagnetic pulse.
      * */
     public static final List<Class<? extends LivingEntity>> ROBOT_CLASSES = List.of(  // TODO: add more robot classes
-            RobotSentinelEntity.class);
+            RobotSentinelEntity.class,
+            DiggerRobotEntity.class);
 
     public static final EntityType<AgentEntity> AGENT = Registry.register(
             Registries.ENTITY_TYPE,
@@ -55,6 +57,16 @@ public abstract class EntityRegistry {
                     .maxTrackingRange(10)
                     .setDimensions(0.125F, 0.125F)
                     .build("bullet")
+    );
+
+    public static final EntityType<DiggerRobotEntity> DIGGER_ROBOT = Registry.register(
+            Registries.ENTITY_TYPE,
+            new Identifier(MOD_ID, "digger_robot"),
+            EntityType.Builder.create(DiggerRobotEntity::new, SpawnGroup.MONSTER)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(9.0F, 25F)
+                    .build("digger_robot")
     );
 
     public static final EntityType<ElectromagneticBulletEntity> ELECTROMAGNETIC_BULLET = Registry.register(
@@ -99,6 +111,7 @@ public abstract class EntityRegistry {
     public static void register() {
         FabricDefaultAttributeRegistry.register(AGENT, AgentEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(DIGGER_ROBOT, DiggerRobotEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(MACHINE_GUN, MachineGunEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ROBOT_SENTINEL, RobotSentinelEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ZION_PEOPLE, ZionPeopleEntity.createAttributes());

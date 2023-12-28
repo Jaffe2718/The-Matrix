@@ -21,6 +21,7 @@ public class TheMatrixClient implements ClientModInitializer {
         EntityRendererRegistry.register(EntityRegistry.AGENT, AgentRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.BULLET, BulletRenderer::new);
+        EntityRendererRegistry.register(EntityRegistry.DIGGER_ROBOT, DiggerRobotRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ELECTROMAGNETIC_BULLET, ElectromagneticBulletRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.MACHINE_GUN, MachineGunRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ROBOT_SENTINEL, RobotSentinelRenderer::new);
