@@ -151,9 +151,12 @@ This mod is still in development, and the plan is as follows:
 ### Items
 
 1. Virtual World
-   - [ ] Mobile Phone (to tp to Zion by calling)
+   - [x] Mobile Phone (to tp to Zion by calling)
       - [x] Define telephone item
-      - [ ] Realise function to tp to Zion
+      - [x] Realise functions
+         - [x] `tp` to Zion
+         - [x] clear player's inventory (cannot take anything leaving Virtual World except **coins**)
+         - [x] record player's inventory (next time `tp` to Virtual World, the inventory will be restored, but **coins** will be taken away by the player)
    - [x] Armors
       - [x] V Mask: see [VMaskItem.java](src/main/java/me/jaffe2718/the_matrix/element/item/VMaskItem.java)
          - [x] Ability to attack agents

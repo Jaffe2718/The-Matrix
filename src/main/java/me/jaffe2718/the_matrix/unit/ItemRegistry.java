@@ -40,7 +40,7 @@ public abstract class ItemRegistry {
     public static final Item MACHINE_GUN = new MachineGunItem(new FabricItemSettings());
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MINING_DRILL = new MiningDrillItem(new FabricItemSettings());
-    public static final Item MOBILE_PHONE = new Item(new FabricItemSettings());
+    public static final Item MOBILE_PHONE = new MobilePhoneItem(new FabricItemSettings());
     public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20));
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,

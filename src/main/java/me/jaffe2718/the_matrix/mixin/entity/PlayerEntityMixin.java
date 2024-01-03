@@ -1,13 +1,19 @@
 package me.jaffe2718.the_matrix.mixin.entity;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
 import me.jaffe2718.the_matrix.element.item.HackerBootsItem;
 import me.jaffe2718.the_matrix.element.item.HackerCloakItem;
 import me.jaffe2718.the_matrix.element.item.HackerPantsItem;
+import me.jaffe2718.the_matrix.unit.EventHandler;
+import me.jaffe2718.the_matrix.unit.InventoryManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -19,8 +25,38 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Objects;
+
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
+
+    @Inject(at = @At("TAIL"), method = "readCustomDataFromNbt")
+    private void readCustomDataFromNbtMixin(@NotNull NbtCompound nbt, CallbackInfo ci) {
+        // TODO: unfinished, add new dimension for agent smith boss
+        InventoryManager inventoryManager = Objects.requireNonNullElse(
+                EventHandler.playerInventoryMap.get(((PlayerEntity) (Object) this).getUuid()),
+                new InventoryManager((PlayerEntity) (Object) this));
+        inventoryManager.robotWorldInventory.readNbt(nbt.getList("RobotWorldInventory",  NbtElement.COMPOUND_TYPE));
+        inventoryManager.vanillaInventory.readNbt(nbt.getList("VanillaInventory",  NbtElement.COMPOUND_TYPE));
+        inventoryManager.virtualWorldInventory.readNbt(nbt.getList("VirtualWorldInventory",  NbtElement.COMPOUND_TYPE));
+        inventoryManager.zionInventory.readNbt(nbt.getList("ZionInventory",  NbtElement.COMPOUND_TYPE));
+        EventHandler.playerInventoryMap.put(((PlayerEntity) (Object) this).getUuid(), inventoryManager);  // update player inventory info
+        TheMatrix.LOGGER.info("loading player data");
+    }
+
+    @Inject(at = @At("TAIL"), method = "writeCustomDataToNbt")
+    private void writeCustomDataToNbtMixin(@NotNull NbtCompound nbt, CallbackInfo ci) {
+        // TODO: unfinished, add new dimension for agent smith boss
+        InventoryManager inventoryManager = Objects.requireNonNullElse(
+                EventHandler.playerInventoryMap.get(((PlayerEntity) (Object) this).getUuid()),
+                new InventoryManager((PlayerEntity) (Object) this));
+        nbt.put("RobotWorldInventory", inventoryManager.robotWorldInventory.writeNbt(new NbtList()));
+        nbt.put("VanillaInventory", inventoryManager.vanillaInventory.writeNbt(new NbtList()));
+        nbt.put("VirtualWorldInventory", inventoryManager.virtualWorldInventory.writeNbt(new NbtList()));
+        nbt.put("ZionInventory", inventoryManager.zionInventory.writeNbt(new NbtList()));
+        EventHandler.playerInventoryMap.put(((PlayerEntity) (Object) this).getUuid(), inventoryManager);  // update player inventory info
+        TheMatrix.LOGGER.info("saving player data");
+    }
 
     @Shadow public abstract void incrementStat(Identifier stat);
 

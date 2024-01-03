@@ -2,10 +2,11 @@ package me.jaffe2718.the_matrix.element.particle;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.AnimatedParticle;
+import net.minecraft.client.particle.ParticleFactory;
+import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particle.DefaultParticleType;
-import org.jetbrains.annotations.Nullable;
 
 public class HealParticle extends AnimatedParticle {
 
@@ -29,7 +30,6 @@ public class HealParticle extends AnimatedParticle {
             this.spriteProvider = spriteProvider;
         }
 
-        @Nullable
         @Override
         public HealParticle createParticle(DefaultParticleType parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
             return new HealParticle(world, x, y, z, this.spriteProvider);

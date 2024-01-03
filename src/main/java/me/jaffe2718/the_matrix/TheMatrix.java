@@ -15,6 +15,7 @@ public class TheMatrix implements ModInitializer {
     @Override
     public void onInitialize() {
         EntityRegistry.register();
+        EventHandler.register();
         ItemRegistry.register();
         ParticleRegistry.register();
         SoundEventRegistry.register();

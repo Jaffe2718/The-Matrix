@@ -3,6 +3,7 @@ package me.jaffe2718.the_matrix.client;
 import me.jaffe2718.the_matrix.client.render.entity.*;
 import me.jaffe2718.the_matrix.element.particle.BulletShellParticle;
 import me.jaffe2718.the_matrix.element.particle.HealParticle;
+import me.jaffe2718.the_matrix.element.particle.MobilePhone01Particle;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import me.jaffe2718.the_matrix.unit.KeyBindings;
 import me.jaffe2718.the_matrix.unit.ModelPredicateInit;
@@ -28,6 +29,7 @@ public class TheMatrixClient implements ClientModInitializer {
         EntityRendererRegistry.register(EntityRegistry.ZION_PEOPLE, ZionPeopleRenderer::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.BULLET_SHELL, BulletShellParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ParticleRegistry.HEAL, HealParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ParticleRegistry.MOBILE_PHONE_01, MobilePhone01Particle.Factory::new);
         ModelPredicateInit.register();
     }
 }
