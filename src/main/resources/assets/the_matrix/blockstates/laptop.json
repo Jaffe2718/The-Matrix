@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "the_matrix:block/laptop",
+            "y": 0
+        },
+        "facing=south": {
+            "model": "the_matrix:block/laptop",
+            "y": 180
+        },
+        "facing=east": {
+            "model": "the_matrix:block/laptop",
+            "y": 90
+        },
+        "facing=west": {
+            "model": "the_matrix:block/laptop",
+            "y": 270
+        }
+    }
+}

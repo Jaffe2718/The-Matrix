@@ -178,9 +178,13 @@ This mod is still in development, and the plan is as follows:
       - [ ] Realise function to tp to Virtual World
    
 3. Common
-   - [ ] CPUs (to make the space warship)
+   - [ ] CPUs
       - [x] Define CPU item
       - [ ] Realise function to make the space warship
+      - [ ] To recipe Laptop
+   - [ ] Laptop (to earn coins)
+      - [x] Define laptop item
+      - [ ] Realise function to earn coins by playing game 2048
    - [x] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
    - [x] Mechanical Armors
    - [x] Mining Drill (to mine)

@@ -1,16 +1,15 @@
 package me.jaffe2718.the_matrix.client;
 
+import me.jaffe2718.the_matrix.client.render.block.*;
 import me.jaffe2718.the_matrix.client.render.entity.*;
 import me.jaffe2718.the_matrix.element.particle.BulletShellParticle;
 import me.jaffe2718.the_matrix.element.particle.HealParticle;
 import me.jaffe2718.the_matrix.element.particle.MobilePhone01Particle;
-import me.jaffe2718.the_matrix.unit.EntityRegistry;
-import me.jaffe2718.the_matrix.unit.KeyBindings;
-import me.jaffe2718.the_matrix.unit.ModelPredicateInit;
-import me.jaffe2718.the_matrix.unit.ParticleRegistry;
+import me.jaffe2718.the_matrix.unit.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 
 public class TheMatrixClient implements ClientModInitializer {
     /**
@@ -19,6 +18,7 @@ public class TheMatrixClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         KeyBindings.register();
+        BlockEntityRendererFactories.register(BlockRegistry.LAPTOP_BLOCK_ENTITY, LaptopRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.AGENT, AgentRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.BULLET, BulletRenderer::new);

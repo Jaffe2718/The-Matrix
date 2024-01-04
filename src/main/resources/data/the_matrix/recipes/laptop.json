@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "  M",
+        "  Q",
+        "MCM"
+    ],
+    "key": {
+        "C": {
+            "item": "the_matrix:cpu"
+        },
+        "M": {
+            "item": "the_matrix:machine_part"
+        },
+        "Q": {
+            "item": "minecraft:quartz"
+        }
+    },
+    "result": {
+        "item": "the_matrix:laptop",
+        "count": 1
+    },
+    "show_notification": true
+}

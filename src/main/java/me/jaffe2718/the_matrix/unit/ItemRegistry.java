@@ -37,6 +37,7 @@ public abstract class ItemRegistry {
     public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
     public static final Item CPU = new Item(new FabricItemSettings());
     public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(new FabricItemSettings().maxCount(1).maxDamage(100));
+    public static final Item LAPTOP = new LaptopItem(BlockRegistry.LAPTOP, new FabricItemSettings());
     public static final Item MACHINE_GUN = new MachineGunItem(new FabricItemSettings());
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MINING_DRILL = new MiningDrillItem(new FabricItemSettings());
@@ -79,6 +80,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "electromagnetic_gun"), ELECTROMAGNETIC_GUN);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "laptop"), LAPTOP);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_gun"), MACHINE_GUN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mining_drill"), MINING_DRILL);
@@ -108,6 +110,7 @@ public abstract class ItemRegistry {
             group.add(COIN);
             group.add(CPU);
             group.add(ELECTROMAGNETIC_GUN);
+            group.add(LAPTOP);
             group.add(MACHINE_GUN);
             group.add(MACHINE_PART);
             group.add(MINING_DRILL);
