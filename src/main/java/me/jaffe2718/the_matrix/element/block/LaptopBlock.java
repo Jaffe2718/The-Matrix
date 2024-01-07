@@ -38,9 +38,8 @@ public class LaptopBlock extends BlockWithEntity {
         if (world.isClient) {
             return ActionResult.SUCCESS;
         } else {
-            // TODO: Open the computer GUI (game 2048)
-//            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-//            player.incrementStat(me.jaffe2718.the_matrix.unit.States.INTERACT_WITH_COMPUTER);
+            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+            player.incrementStat(me.jaffe2718.the_matrix.unit.States.INTERACT_WITH_LAPTOP);
             return ActionResult.CONSUME;
         }
     }

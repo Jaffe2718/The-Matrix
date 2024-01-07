@@ -19,6 +19,8 @@ public class TheMatrix implements ModInitializer {
         EventHandler.register();
         ItemRegistry.register();
         ParticleRegistry.register();
+        ScreenRegistry.register();
         SoundEventRegistry.register();
+        States.init();
     }
 }

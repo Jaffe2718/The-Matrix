@@ -11,12 +11,16 @@ import static net.minecraft.stat.Stats.CUSTOM;
 import static software.bernie.geckolib.GeckoLib.MOD_ID;
 
 public abstract class States {
-    public static final Identifier INTERACT_WITH_COMPUTER = register(new Identifier(MOD_ID, "interact_with_computer"), StatFormatter.DEFAULT);
+    public static Identifier INTERACT_WITH_LAPTOP;
 
     @Contract(pure = true)
     private static @NotNull Identifier register(Identifier identifier, StatFormatter formatter) {
         Registry.register(Registries.CUSTOM_STAT, identifier.toString(), identifier);
         CUSTOM.getOrCreateStat(identifier, formatter);
         return identifier;
+    }
+
+    public static void init() {
+        INTERACT_WITH_LAPTOP = register(new Identifier(MOD_ID, "interact_with_computer"), StatFormatter.DEFAULT);
     }
 }
