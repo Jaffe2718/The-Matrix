@@ -49,7 +49,7 @@ public abstract class MathUnit {
      * Class Matrix4i is a 4x4 matrix of integers.<br>
      * It is used to store the game board of 2048.
      * */
-    public static class Matrix4i {   // TODO: fix logic bug
+    public static class Matrix4i {
         public int[][] matrix;
 
         /**
