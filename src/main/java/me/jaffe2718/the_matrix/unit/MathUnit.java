@@ -102,10 +102,19 @@ public abstract class MathUnit {
             matrix[3][index] = column[3];
         }
 
+        /**
+         * Remove all zeros and fill the array with zeros.<br>
+         * Example:<br>
+         * [0, 2, 0, 4], false -> [2, 4, 0, 0]<br>
+         * [2, 0, 0, 2], true -> [0, 0, 2, 2]<br>
+         * [2, 0, 0, 2], false -> [2, 2, 0, 0]<br>
+         * [0, 2, 0, 4], true -> [0, 0, 2, 4]<br>
+         * @param array the array to be processed
+         * @param inv if true, fill the array from the end
+         * @return the processed array
+         * */
         @Contract(pure = true)
         private int @NotNull [] remove0AndFill(int @NotNull [] array, boolean inv) {
-            // [0, 2, 0, 4]: false -> [2, 4, 0, 0]; true -> [0, 0, 2, 4]
-            // [2, 0, 0, 2]: false -> [2, 2, 0, 0]; true -> [0, 0, 2, 2]
             List<Integer> list = new ArrayList<>();
             for (int i : array) {
                 if (i != 0) {
@@ -119,32 +128,10 @@ public abstract class MathUnit {
             return result;
         }
 
-        private void moveUp() {
+        public void up2048() {
             for (int c = 0; c < 4; c++) {
                 this.setColumn(c, this.remove0AndFill(this.getColumn(c), false));
             }
-        }
-
-        private void moveDown() {
-            for (int c = 0; c < 4; c++) {
-                this.setColumn(c, this.remove0AndFill(this.getColumn(c), true));
-            }
-        }
-
-        private void moveLeft() {
-            for (int r = 0; r < 4; r++) {
-                matrix[r] = this.remove0AndFill(matrix[r], false);
-            }
-        }
-
-        private void moveRight() {
-            for (int r = 0; r < 4; r++) {
-                matrix[r] = this.remove0AndFill(matrix[r], true);
-            }
-        }
-
-        public void up2048() {
-            this.moveUp();
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 3; j++) {
                     if (matrix[j][i] == matrix[j + 1][i]) {
@@ -157,7 +144,9 @@ public abstract class MathUnit {
         }
 
         public void down2048() {
-            this.moveDown();
+            for (int c = 0; c < 4; c++) {
+                this.setColumn(c, this.remove0AndFill(this.getColumn(c), true));
+            }
             for (int i = 0; i < 4; i++) {
                 for (int j = 3; j > 0; j--) {
                     if (matrix[j][i] == matrix[j - 1][i]) {
@@ -170,7 +159,9 @@ public abstract class MathUnit {
         }
 
         public void left2048() {
-            this.moveLeft();
+            for (int r = 0; r < 4; r++) {
+                matrix[r] = this.remove0AndFill(matrix[r], false);
+            }
             for (int i = 0; i < 4; i++) {
                 int[] row = matrix[i];
                 for (int j = 0; j < 3; j++) {
@@ -184,7 +175,9 @@ public abstract class MathUnit {
         }
 
         public void right2048() {
-            this.moveRight();
+            for (int r = 0; r < 4; r++) {
+                matrix[r] = this.remove0AndFill(matrix[r], true);
+            }
             for (int i = 0; i < 4; i++) {
                 int[] row = matrix[i];
                 for (int j = 3; j > 0; j--) {
@@ -198,13 +191,29 @@ public abstract class MathUnit {
         }
 
         private void addRandom() {
-            int x = (int) (Math.random() * 4);
-            int y = (int) (Math.random() * 4);
-            while (matrix[x][y] != 0) {
-                x = (int) (Math.random() * 4);
-                y = (int) (Math.random() * 4);
+            ArrayList<Integer> emptyIndex = new ArrayList<>();
+            for (int i = 0; i < 16; i++) {
+                if (matrix[i / 4][i % 4] == 0) {
+                    emptyIndex.add(i);
+                }
             }
-            matrix[x][y] = Math.random() < 0.9 ? 2 : 4;
+            if (emptyIndex.isEmpty()) {
+                return;
+            }
+            int randomIndex = emptyIndex.get((int) (Math.random() * emptyIndex.size()));
+            matrix[randomIndex / 4][randomIndex % 4] = Math.random() < 0.9 ? 2 : 4;
+        }
+
+        @Contract(pure = true)
+        private boolean isFull() {
+            for (int[] row : matrix) {
+                for (int i : row) {
+                    if (i == 0) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         /**

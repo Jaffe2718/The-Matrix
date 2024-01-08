@@ -28,6 +28,12 @@ public class Game2048Screen extends HandledScreen<Game2048ScreenHandler> {
     }
 
     @Override
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+        super.drawForeground(context, mouseX, mouseY);
+        context.drawText(this.textRenderer, Text.translatable("container.the_matrix.game2048.reward"), 136, 20, 4210752, false);
+    }
+
+    @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         this.drawMatrix(context);

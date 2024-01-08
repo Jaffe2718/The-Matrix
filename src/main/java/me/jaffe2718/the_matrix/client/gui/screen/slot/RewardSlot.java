@@ -15,7 +15,7 @@ public class RewardSlot extends Slot {
 
     @Override
     public boolean canInsert(ItemStack stack) {
-        return true;  // TODO: set to false after testing
+        return false;
     }
 
     @Override
@@ -23,6 +23,9 @@ public class RewardSlot extends Slot {
         return false;
     }
 
+    /**
+     * The player must take all the items in the slot.
+     * */
     @Override
     public ItemStack takeStack(int amount) {
         return this.inventory.removeStack(0, this.getStack().getCount());

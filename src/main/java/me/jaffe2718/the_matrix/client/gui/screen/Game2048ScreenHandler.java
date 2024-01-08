@@ -6,6 +6,7 @@ import me.jaffe2718.the_matrix.client.gui.screen.slot.MatrixSlot;
 import me.jaffe2718.the_matrix.client.gui.screen.slot.RewardSlot;
 import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
+import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.ScreenRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -134,9 +135,11 @@ public class Game2048ScreenHandler extends ScreenHandler {
     @Override
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
-        Slot slot = this.slots.get(slotIndex);
-        if (slot instanceof ButtonSlot buttonSlot) {
-            buttonSlot.runnable.run();
+        if (MathUnit.isBetween(slotIndex, 53, 57)) {    // button slots
+            Slot slot = this.slots.get(slotIndex);
+            if (slot instanceof ButtonSlot buttonSlot) {
+                buttonSlot.runnable.run();
+            }
         }
     }
 

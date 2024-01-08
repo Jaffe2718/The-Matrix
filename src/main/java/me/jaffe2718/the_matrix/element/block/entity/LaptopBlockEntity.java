@@ -92,4 +92,5 @@ public class LaptopBlockEntity extends BlockEntity implements GeoBlockEntity, Na
     public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
         return new Game2048ScreenHandler(syncId, playerInventory, this);
     }
+
 }
