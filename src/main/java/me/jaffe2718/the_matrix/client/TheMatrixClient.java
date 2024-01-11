@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.client;
 
 import me.jaffe2718.the_matrix.client.render.block.*;
+import me.jaffe2718.the_matrix.client.render.block.entity.*;
 import me.jaffe2718.the_matrix.client.render.entity.*;
 import me.jaffe2718.the_matrix.element.particle.BulletShellParticle;
 import me.jaffe2718.the_matrix.element.particle.HealParticle;
@@ -19,6 +20,7 @@ public class TheMatrixClient implements ClientModInitializer {
     public void onInitializeClient() {
         KeyBindings.register();
         BlockEntityRendererFactories.register(BlockRegistry.LAPTOP_BLOCK_ENTITY, LaptopRenderer::new);
+        BlockEntityRendererFactories.register(BlockRegistry.PLASMA_EMITTER_BLOCK_ENTITY, PlasmaEmitterBlockEntityRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.AGENT, AgentRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.BULLET, BulletRenderer::new);

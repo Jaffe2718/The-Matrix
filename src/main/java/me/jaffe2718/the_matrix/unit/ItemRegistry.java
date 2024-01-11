@@ -38,10 +38,13 @@ public abstract class ItemRegistry {
     public static final Item CPU = new Item(new FabricItemSettings());
     public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(new FabricItemSettings().maxCount(1).maxDamage(100));
     public static final Item LAPTOP = new LaptopItem(BlockRegistry.LAPTOP, new FabricItemSettings());
+    public static final Item MACHINE_BLOCK = new BlockItem(BlockRegistry.MACHINE_BLOCK, new FabricItemSettings());
     public static final Item MACHINE_GUN = new MachineGunItem(new FabricItemSettings());
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MINING_DRILL = new MiningDrillItem(new FabricItemSettings());
     public static final Item MOBILE_PHONE = new MobilePhoneItem(new FabricItemSettings());
+    public static final Item PLASMA_EMITTER = new BlockItem(BlockRegistry.PLASMA_EMITTER, new FabricItemSettings());
+    public static final Item PLASMA_LAMP = new BlockItem(BlockRegistry.PLASMA_LAMP, new FabricItemSettings());
     public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20));
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,
@@ -81,10 +84,13 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "electromagnetic_gun"), ELECTROMAGNETIC_GUN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "laptop"), LAPTOP);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_block"), MACHINE_BLOCK);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_gun"), MACHINE_GUN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mining_drill"), MINING_DRILL);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "plasma_emitter"), PLASMA_EMITTER);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "plasma_lamp"), PLASMA_LAMP);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "spanner"), SPANNER);
 
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "agent_spawn_egg"), AGENT_SPAWN_EGG);
@@ -111,10 +117,13 @@ public abstract class ItemRegistry {
             group.add(CPU);
             group.add(ELECTROMAGNETIC_GUN);
             group.add(LAPTOP);
+            group.add(MACHINE_BLOCK);
             group.add(MACHINE_GUN);
             group.add(MACHINE_PART);
             group.add(MINING_DRILL);
             group.add(MOBILE_PHONE);
+            group.add(PLASMA_EMITTER);
+            group.add(PLASMA_LAMP);
             group.add(SPANNER);
 
             group.add(AGENT_SPAWN_EGG);

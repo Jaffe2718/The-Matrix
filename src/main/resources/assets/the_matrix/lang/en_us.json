@@ -1,5 +1,8 @@
 {
     "block.the_matrix.laptop": "Laptop",
+    "block.the_matrix.machine_block": "Machine Block",
+    "block.the_matrix.plasma_lamp": "Plasma Lamp",
+    "block.the_matrix.plasma_emitter": "Plasma Emitter",
     "container.the_matrix.laptop": "Laptop",
     "container.the_matrix.game2048.reward": "Reward",
     "entity.the_matrix.agent": "Agent",

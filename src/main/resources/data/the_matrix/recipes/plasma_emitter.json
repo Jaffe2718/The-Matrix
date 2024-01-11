@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "mise",
+    "pattern": [
+        "MPM",
+        "MPM",
+        "MMM"
+    ],
+    "key": {
+        "M": {
+            "item": "the_matrix:machine_part"
+        },
+        "P": {
+            "item": "the_matrix:plasma_lamp"
+        }
+    },
+    "result": {
+        "item": "the_matrix:plasma_emitter",
+        "count": 1
+    },
+    "show_notification": true
+}
