@@ -243,18 +243,18 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     @Override
     public void tick() {
-        if (this.isOnGround() &&
-                this.isWalking() &&
-                this.age % 20 == 0) {
-            this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 1.0F);
-            if (this.getWorld() instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, serverWorld.getBlockState(this.getBlockPos().down())),
-                        this.getX(), this.getY(), this.getZ(),
-                        32, 1, 1, 1, 0.0);
-            }
-        }
         if (this.getControllingPassenger() instanceof PlayerEntity player && this.age % 4 == 0) {
             this.setWalking((Math.abs(player.sidewaysSpeed) + Math.abs(player.forwardSpeed)) > 5e-2);
+            if (this.isOnGround() &&
+                    this.isWalking() &&
+                    this.age % 20 == 0) {
+                this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_STEP, 1.0F, 1.0F);
+                if (this.getWorld() instanceof ServerWorld serverWorld) {
+                    serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, serverWorld.getBlockState(this.getBlockPos().down())),
+                            this.getX(), this.getY(), this.getZ(),
+                            32, 1, 1, 1, 0.0);
+                }
+            }
             if (KeyBindings.FIRE_SAFETY_CATCH.isPressed()) {
                 if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
                         this.hasPassenger(MinecraftClient.getInstance().player)) {
