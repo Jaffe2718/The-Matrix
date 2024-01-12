@@ -1,0 +1,7 @@
+{
+	"parent": "builtin/entity",
+	"textures": {
+		"texture": "the_matrix:block/vending_machine",
+		"particle": "the_matrix:block/vending_machine"
+	}
+}

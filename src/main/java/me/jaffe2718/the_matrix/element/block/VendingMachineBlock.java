@@ -1,7 +1,10 @@
 package me.jaffe2718.the_matrix.element.block;
 
-import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;
-import net.minecraft.block.*;
+import me.jaffe2718.the_matrix.element.block.entity.VendingMachineBlockEntity;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -11,15 +14,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LaptopBlock extends BlockWithEntity {
-    public LaptopBlock(Settings settings) {
+public class VendingMachineBlock extends BlockWithEntity {
+
+    public VendingMachineBlock(Settings settings) {
         super(settings);
     }
 
@@ -30,20 +31,17 @@ public class LaptopBlock extends BlockWithEntity {
 
     @Override
     @SuppressWarnings("deprecation")
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.cuboid(0.125, 0, 0.125, 0.875, 0.4, 0.875);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
     public ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.isClient) {
-            return ActionResult.SUCCESS;
-        } else {
-            player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-            player.incrementStat(me.jaffe2718.the_matrix.unit.States.INTERACT_WITH_LAPTOP);
-            return ActionResult.CONSUME;
+        if (world.getBlockEntity(pos) instanceof VendingMachineBlockEntity vendingMachine) {
+            if (world.isClient) {
+                return ActionResult.SUCCESS;
+            } else {
+                vendingMachine.setCustomer(player);
+                vendingMachine.sendOffers(player, this.getName(), 1);
+                return ActionResult.CONSUME;
+            }
         }
+        return super.onUse(state, world, pos, player, hand, hit);
     }
 
     @Nullable
@@ -52,14 +50,14 @@ public class LaptopBlock extends BlockWithEntity {
         return this.getDefaultState().with(Properties.HORIZONTAL_FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
 
-    @Nullable
+
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new LaptopBlockEntity(pos, state);
+        return new VendingMachineBlockEntity(pos, state);
     }
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+        return BlockRenderType.MODEL;
     }
 }

@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "MMM",
+        "M G",
+        "MPM"
+    ],
+    "key": {
+        "G": {
+            "item": "minecraft:glass"
+        },
+        "M": {
+            "item": "the_matrix:machine_part"
+        },
+        "P": {
+            "item": "the_matrix:plasma_lamp"
+        }
+    },
+    "result": {
+        "item": "the_matrix:vending_machine",
+        "count": 1
+    },
+    "show_notification": true
+}

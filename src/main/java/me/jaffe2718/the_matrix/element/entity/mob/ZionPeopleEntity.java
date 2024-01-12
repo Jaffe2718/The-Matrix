@@ -346,7 +346,7 @@ public class ZionPeopleEntity
     }
 
     @Override
-    public SoundEvent getYesSound() {
+    public SoundEvent getYesSound() {       // TODO: add sounds for different jobs
         return null;
     }
 

@@ -1,4 +1,4 @@
-package me.jaffe2718.the_matrix.client.render.block;
+package me.jaffe2718.the_matrix.client.render.block.entity;
 
 import me.jaffe2718.the_matrix.client.model.block.LaptopModel;
 import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;

@@ -12,6 +12,19 @@ import static me.jaffe2718.the_matrix.unit.ItemRegistry.COIN;
 
 public abstract class TradeOfferListFactory {
 
+    public static @NotNull TradeOfferList createVendingMachineTradeOfferList() {  // TODO: add more offers
+        TradeOfferList tradeOfferList = new TradeOfferList();
+        tradeOfferList.add(coinForItem(1, Items.APPLE));
+        tradeOfferList.add(coinForItem(2, Items.BAKED_POTATO));
+        tradeOfferList.add(coinForItem(1, Items.BEETROOT));
+        tradeOfferList.add(coinForItem(4, Items.COOKED_BEEF));
+        tradeOfferList.add(coinForItem(3, Items.COOKED_CHICKEN));
+        tradeOfferList.add(coinForItem(2, Items.COOKED_COD));
+        tradeOfferList.add(coinForItem(3, Items.COOKED_MUTTON));
+        tradeOfferList.add(coinForItem(2, Items.COOKED_PORKCHOP));
+        return tradeOfferList;
+    }
+
     public static @NotNull TradeOfferList createZionPeopleTradeOfferList(int jobID) {
         TradeOfferList tradeOfferList = new TradeOfferList();
         switch (jobID) {
