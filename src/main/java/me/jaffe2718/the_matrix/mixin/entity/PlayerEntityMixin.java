@@ -12,8 +12,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -36,10 +34,7 @@ public abstract class PlayerEntityMixin {
         InventoryManager inventoryManager = Objects.requireNonNullElse(
                 EventHandler.playerInventoryMap.get(((PlayerEntity) (Object) this).getUuid()),
                 new InventoryManager((PlayerEntity) (Object) this));
-        inventoryManager.robotWorldInventory.readNbt(nbt.getList("RobotWorldInventory",  NbtElement.COMPOUND_TYPE));
-        inventoryManager.vanillaInventory.readNbt(nbt.getList("VanillaInventory",  NbtElement.COMPOUND_TYPE));
-        inventoryManager.virtualWorldInventory.readNbt(nbt.getList("VirtualWorldInventory",  NbtElement.COMPOUND_TYPE));
-        inventoryManager.zionInventory.readNbt(nbt.getList("ZionInventory",  NbtElement.COMPOUND_TYPE));
+        inventoryManager.readNbt(nbt);
         EventHandler.playerInventoryMap.put(((PlayerEntity) (Object) this).getUuid(), inventoryManager);  // update player inventory info
         TheMatrix.LOGGER.info("loading player data");
     }
@@ -50,10 +45,7 @@ public abstract class PlayerEntityMixin {
         InventoryManager inventoryManager = Objects.requireNonNullElse(
                 EventHandler.playerInventoryMap.get(((PlayerEntity) (Object) this).getUuid()),
                 new InventoryManager((PlayerEntity) (Object) this));
-        nbt.put("RobotWorldInventory", inventoryManager.robotWorldInventory.writeNbt(new NbtList()));
-        nbt.put("VanillaInventory", inventoryManager.vanillaInventory.writeNbt(new NbtList()));
-        nbt.put("VirtualWorldInventory", inventoryManager.virtualWorldInventory.writeNbt(new NbtList()));
-        nbt.put("ZionInventory", inventoryManager.zionInventory.writeNbt(new NbtList()));
+        inventoryManager.writeNbt(nbt);
         EventHandler.playerInventoryMap.put(((PlayerEntity) (Object) this).getUuid(), inventoryManager);  // update player inventory info
         TheMatrix.LOGGER.info("saving player data");
     }

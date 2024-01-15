@@ -12,16 +12,12 @@ import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoBlockEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class VendingMachineBlockEntity
         extends BlockEntity
-        implements GeoBlockEntity, Merchant {
+        implements Merchant {
 
-    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    // private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     @Nullable
     private PlayerEntity customer;
@@ -86,12 +82,13 @@ public class VendingMachineBlockEntity
         return this.world == null || this.world.isClient;
     }
 
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.cache;
-    }
+    //
+//    @Override
+//    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+//    }
+//
+//    @Override
+//    public AnimatableInstanceCache getAnimatableInstanceCache() {
+//        return this.cache;
+//    }
 }

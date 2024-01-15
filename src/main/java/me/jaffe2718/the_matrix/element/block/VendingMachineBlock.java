@@ -60,4 +60,9 @@ public class VendingMachineBlock extends BlockWithEntity {
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
+//
+//    @Override
+//    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
+//        return true;
+//    }
 }

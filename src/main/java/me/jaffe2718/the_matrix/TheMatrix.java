@@ -22,5 +22,6 @@ public class TheMatrix implements ModInitializer {
         ScreenRegistry.register();
         SoundEventRegistry.register();
         States.init();
+        TheMatrix.LOGGER.info("The Matrix has been initialized.");
     }
 }

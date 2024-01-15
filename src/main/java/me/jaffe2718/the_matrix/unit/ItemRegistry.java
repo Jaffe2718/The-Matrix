@@ -46,7 +46,7 @@ public abstract class ItemRegistry {
     public static final Item TELEPORTER = new BlockItem(BlockRegistry.TELEPORTER, new FabricItemSettings());
     public static final Item PLASMA_LAMP = new BlockItem(BlockRegistry.PLASMA_LAMP, new FabricItemSettings());
     public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20));
-    public static final Item VENDING_MACHINE = new VendingMachineItem(BlockRegistry.VENDING_MACHINE, new FabricItemSettings());
+    public static final Item VENDING_MACHINE = new BlockItem(BlockRegistry.VENDING_MACHINE, new FabricItemSettings());
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,
             0x404040, 0xE5E15A,

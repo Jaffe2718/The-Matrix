@@ -16,11 +16,10 @@ import net.minecraft.world.TeleportTarget;
 import org.jetbrains.annotations.NotNull;
 
 public class TeleporterScreenHandler extends ScreenHandler {
-    private final PlayerEntity player;
 
     public TeleporterScreenHandler(int syncId, @NotNull PlayerInventory playerInventory) {
         super(ScreenRegistry.TELEPORTER_SCREEN_HANDLER, syncId);
-        this.player = playerInventory.player;
+        PlayerEntity player = playerInventory.player;
         if (player instanceof ServerPlayerEntity serverPlayerEntity) {    // server side
             this.addSlot(new ButtonSlot(() -> {
                 ServerWorld zion = serverPlayerEntity.getServerWorld();
