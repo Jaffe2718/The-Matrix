@@ -1,6 +1,6 @@
-package me.jaffe2718.the_matrix.client.gui.screen.listener;
+package me.jaffe2718.the_matrix.unit.gui.screen.listener;
 
-import me.jaffe2718.the_matrix.client.gui.screen.Game2048ScreenHandler;
+import me.jaffe2718.the_matrix.unit.gui.screen.Game2048ScreenHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerListener;

@@ -1,9 +1,9 @@
-package me.jaffe2718.the_matrix.client.gui.screen;
+package me.jaffe2718.the_matrix.unit.gui.screen;
 
-import me.jaffe2718.the_matrix.client.gui.screen.listener.Game2048ScreenListener;
-import me.jaffe2718.the_matrix.client.gui.screen.slot.ButtonSlot;
-import me.jaffe2718.the_matrix.client.gui.screen.slot.MatrixSlot;
-import me.jaffe2718.the_matrix.client.gui.screen.slot.RewardSlot;
+import me.jaffe2718.the_matrix.unit.gui.screen.listener.Game2048ScreenListener;
+import me.jaffe2718.the_matrix.unit.gui.screen.slot.ButtonSlot;
+import me.jaffe2718.the_matrix.unit.gui.screen.slot.MatrixSlot;
+import me.jaffe2718.the_matrix.unit.gui.screen.slot.RewardSlot;
 import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
 import me.jaffe2718.the_matrix.unit.MathUnit;

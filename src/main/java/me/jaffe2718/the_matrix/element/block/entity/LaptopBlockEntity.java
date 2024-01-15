@@ -1,6 +1,6 @@
 package me.jaffe2718.the_matrix.element.block.entity;
 
-import me.jaffe2718.the_matrix.client.gui.screen.Game2048ScreenHandler;
+import me.jaffe2718.the_matrix.unit.gui.screen.Game2048ScreenHandler;
 import me.jaffe2718.the_matrix.unit.BlockRegistry;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
 import me.jaffe2718.the_matrix.unit.MathUnit;

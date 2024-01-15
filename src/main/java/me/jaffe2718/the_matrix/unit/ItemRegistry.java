@@ -43,7 +43,7 @@ public abstract class ItemRegistry {
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MINING_DRILL = new MiningDrillItem(new FabricItemSettings());
     public static final Item MOBILE_PHONE = new MobilePhoneItem(new FabricItemSettings());
-    public static final Item PLASMA_EMITTER = new BlockItem(BlockRegistry.PLASMA_EMITTER, new FabricItemSettings());
+    public static final Item TELEPORTER = new BlockItem(BlockRegistry.TELEPORTER, new FabricItemSettings());
     public static final Item PLASMA_LAMP = new BlockItem(BlockRegistry.PLASMA_LAMP, new FabricItemSettings());
     public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20));
     public static final Item VENDING_MACHINE = new VendingMachineItem(BlockRegistry.VENDING_MACHINE, new FabricItemSettings());
@@ -90,9 +90,9 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mining_drill"), MINING_DRILL);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "plasma_emitter"), PLASMA_EMITTER);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "plasma_lamp"), PLASMA_LAMP);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "spanner"), SPANNER);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "teleporter"), TELEPORTER);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "vending_machine"), VENDING_MACHINE);
 
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "agent_spawn_egg"), AGENT_SPAWN_EGG);
@@ -124,9 +124,9 @@ public abstract class ItemRegistry {
             group.add(MACHINE_PART);
             group.add(MINING_DRILL);
             group.add(MOBILE_PHONE);
-            group.add(PLASMA_EMITTER);
             group.add(PLASMA_LAMP);
             group.add(SPANNER);
+            group.add(TELEPORTER);
             group.add(VENDING_MACHINE);
 
             group.add(AGENT_SPAWN_EGG);

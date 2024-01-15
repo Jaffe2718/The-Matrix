@@ -1,6 +1,6 @@
-package me.jaffe2718.the_matrix.client.gui.screen.slot;
+package me.jaffe2718.the_matrix.unit.gui.screen.slot;
 
-import me.jaffe2718.the_matrix.client.gui.screen.Game2048ScreenHandler;
+import me.jaffe2718.the_matrix.unit.gui.screen.Game2048ScreenHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;

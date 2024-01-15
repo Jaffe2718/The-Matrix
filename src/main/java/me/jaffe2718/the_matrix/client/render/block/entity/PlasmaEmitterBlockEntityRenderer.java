@@ -1,6 +1,6 @@
 package me.jaffe2718.the_matrix.client.render.block.entity;
 
-import me.jaffe2718.the_matrix.element.block.entity.PlasmaEmitterBlockEntity;
+import me.jaffe2718.the_matrix.element.block.entity.TeleporterBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
-public class PlasmaEmitterBlockEntityRenderer implements BlockEntityRenderer<PlasmaEmitterBlockEntity> {
+public class PlasmaEmitterBlockEntityRenderer implements BlockEntityRenderer<TeleporterBlockEntity> {
     private static final Identifier BEAM_TEXTURE = new Identifier("textures/entity/beacon_beam.png");
 
     @Contract(pure = true)
@@ -21,7 +21,7 @@ public class PlasmaEmitterBlockEntityRenderer implements BlockEntityRenderer<Pla
     }
 
     @Override
-    public void render(@NotNull PlasmaEmitterBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(@NotNull TeleporterBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         long worldTime = entity.getWorld() == null ? 0 : entity.getWorld().getTime();
         BeaconBlockEntityRenderer.renderBeam(matrices, vertexConsumers, BEAM_TEXTURE,
                 tickDelta, 1.0F, worldTime, 1, 384,

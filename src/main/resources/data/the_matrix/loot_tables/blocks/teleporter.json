@@ -7,7 +7,7 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "the_matrix:plasma_emitter"
+                    "name": "the_matrix:teleporter"
                 }
             ],
             "conditions": [

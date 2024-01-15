@@ -12,6 +12,7 @@ import static software.bernie.geckolib.GeckoLib.MOD_ID;
 
 public abstract class States {
     public static Identifier INTERACT_WITH_LAPTOP;
+    public static Identifier INTERACT_WITH_TELEPORTER;
 
     @Contract(pure = true)
     private static @NotNull Identifier register(Identifier identifier, StatFormatter formatter) {
@@ -22,5 +23,6 @@ public abstract class States {
 
     public static void init() {
         INTERACT_WITH_LAPTOP = register(new Identifier(MOD_ID, "interact_with_computer"), StatFormatter.DEFAULT);
+        INTERACT_WITH_TELEPORTER = register(new Identifier(MOD_ID, "interact_with_teleporter"), StatFormatter.DEFAULT);
     }
 }

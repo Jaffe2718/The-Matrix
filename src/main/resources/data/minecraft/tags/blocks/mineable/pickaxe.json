@@ -3,7 +3,7 @@
   "values": [
     "the_matrix:machine_block",
     "the_matrix:plasma_lamp",
-    "the_matrix:plasma_emitter",
+    "the_matrix:teleporter",
     "the_matrix:vending_machine"
   ]
 }

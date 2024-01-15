@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.client.gui.screen;
 
+import me.jaffe2718.the_matrix.unit.gui.screen.Game2048ScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -14,7 +15,7 @@ import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 @Environment(EnvType.CLIENT)
 public class Game2048Screen extends HandledScreen<Game2048ScreenHandler> {
-    private static final Identifier TEXTURE = new Identifier(MOD_ID, "textures/gui/container/game2048.png");
+    private static final Identifier BACKGROUND = new Identifier(MOD_ID, "textures/gui/container/game2048.png");
     private static final Identifier BUTTONS = new Identifier(MOD_ID, "textures/gui/sprites/game2048/buttons.png");
 
     public Game2048Screen(Game2048ScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -23,7 +24,7 @@ public class Game2048Screen extends HandledScreen<Game2048ScreenHandler> {
 
     @Override
     protected void drawBackground(@NotNull DrawContext context, float delta, int mouseX, int mouseY) {
-        context.drawTexture(TEXTURE, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        context.drawTexture(BACKGROUND, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
         context.drawTexture(BUTTONS, this.x + 72, this.y + 14, 0F, 0F, 60, 60, 60, 60);
     }
 

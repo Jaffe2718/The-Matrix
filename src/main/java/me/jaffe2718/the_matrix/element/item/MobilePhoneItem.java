@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -72,12 +71,12 @@ public class MobilePhoneItem extends Item {
                             player.getInventory().removeStack(i);
                         }
                     }
-                    FabricDimensions.teleport(player, zionWorld, new TeleportTarget(this.getZionSpawnPos(zionWorld), Vec3d.ZERO, player.getYaw(), player.getPitch()));
+                    FabricDimensions.teleport(player, zionWorld, new TeleportTarget(Dimensions.getZionSpawnPos(zionWorld), Vec3d.ZERO, player.getYaw(), player.getPitch()));
                     for (ItemStack coinStack : coinStacks) {                     // give all coins to player back
                         player.getInventory().offerOrDrop(coinStack);
                     }
                 } else {
-                    FabricDimensions.teleport(user, zionWorld, new TeleportTarget(this.getZionSpawnPos(zionWorld), Vec3d.ZERO, user.getYaw(), user.getPitch()));
+                    FabricDimensions.teleport(user, zionWorld, new TeleportTarget(Dimensions.getZionSpawnPos(zionWorld), Vec3d.ZERO, user.getYaw(), user.getPitch()));
                 }
             }
         }
@@ -94,26 +93,5 @@ public class MobilePhoneItem extends Item {
         }
     }
 
-    @Contract("_ -> new")
-    private @NotNull Vec3d getZionSpawnPos(ServerWorld zionWorld) {
-        BlockPos pos = BlockPos.ORIGIN;
-        int dy = -2;
-        while (dy != 0) {
-            dy = checkZionSpawnPos(zionWorld, pos);
-            pos = pos.add(0, dy, 0);
-        }
-        return new Vec3d(pos.getX(), pos.getY(), pos.getZ());
-    }
 
-    private int checkZionSpawnPos(@NotNull ServerWorld zionWorld, BlockPos pos) {
-        if (!zionWorld.getBlockState(pos).isAir()) {              // if standing inside a block, move up 2 blocks
-            return +2;
-        } else if (!zionWorld.getBlockState(pos.up()).isAir()) {  // if head is inside a block, move down 1 block
-            return -1;
-        } else if (zionWorld.getBlockState(pos.down()).isAir()) { // if feet is in the air, move down 1 block
-            return -1;
-        } else{                                                   // fine
-            return 0;
-        }
-    }
 }
