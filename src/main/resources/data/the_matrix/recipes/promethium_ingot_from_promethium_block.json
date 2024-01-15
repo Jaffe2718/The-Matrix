@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "promethium_ingot",
+  "ingredients": [
+    {
+      "item": "the_matrix:promethium_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "the_matrix:promethium_ingot"
+  }
+}

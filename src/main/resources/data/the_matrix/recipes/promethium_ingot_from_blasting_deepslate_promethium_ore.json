@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "group": "promethium_ingot",
+  "ingredient": {
+    "item": "the_matrix:deepslate_promethium_ore"
+  },
+  "result": "the_matrix:promethium_ingot"
+}

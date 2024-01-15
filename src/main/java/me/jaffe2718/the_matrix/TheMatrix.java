@@ -7,8 +7,11 @@ import org.slf4j.LoggerFactory;
 
 
 public class TheMatrix implements ModInitializer {
+
     public static final String MOD_ID = "the_matrix";
-    public static Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+
     /**
      * Runs the mod initializer.
      */

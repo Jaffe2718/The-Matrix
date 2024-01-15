@@ -39,19 +39,16 @@ This mod is still in development, and the plan is as follows:
 ### Entities
 
 1. Zion
-   - [ ] Armored Personnel Unit (APU) Mecha (rideable)
+   - [ ] Armored Personnel Unit (APU) (rideable)
       - [x] Define APU entity: see [ArmoredPersonnelUnitEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/vehicle/ArmoredPersonnelUnitEntity.java)
       - [x] Model & Textures: see [ArmoredPersonnelUnitModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/ArmoredPersonnelUnitModel.java)
       - [x] Animations
-      - [ ] AI Goals
+      - [x] AI Goals
       - [ ] Sound events
          - [x] Ambient
          - [x] Hurt
          - [ ] Death
-      - [ ] Loot table
-         - [ ] Machine parts
-         - [ ] CPU
-      - [ ] Spawn conditions
+      - [ ] Create APU like iron golem
       - [x] Translations
    - [ ] Digger Robot (boss)
      - [x] Model & Textures
@@ -70,15 +67,11 @@ This mod is still in development, and the plan is as follows:
       - [x] Define Machine Gun entity: see [MachineGunEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/vehicle/MachineGunEntity.java)
       - [x] Model & Textures: see [MachineGunModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/MachineGunModel.java)
       - [x] Animations
-      - [ ] AI Goals
+      - [x] AI Goals
       - [ ] Sound events
          - [x] Ambient
          - [ ] Hurt
          - [ ] Death
-      - [ ] Loot table
-         - [ ] Machine parts
-         - [ ] CPU
-      - [ ] Spawn conditions
       - [x] Translations
    - [ ] Space Warship (rideable)
    - [ ] Zion People
@@ -196,13 +189,16 @@ This mod is still in development, and the plan is as follows:
       - [x] Animations & Models & Textures
       - [x] Realise function to shoot
    - [ ] Electromagnetic hand grenades (to kill robots)
-   - [ ] Raduim Ore (to make energy batteries, etc)
-   - [ ] Raduim Ingot (to make energy batteries)
-   - [ ] Raduim Block (to make energy batteries)
+   - [ ] Promethium Ore (to make energy batteries, etc)
+      - [x] Define [deepslate] promethium ore block
+      - [x] Define promethium ore item
+      - [ ] Spawn conditions
+   - [x] Promethium Ingot (to make energy batteries)
+   - [x] Promethium Block (to make energy batteries)
 
 ### Particles
    - [ ] Zion
-      - [ ] APU machine gun shoot
-      - [ ] Electromagnetic gun shoot
+      - [x] APU machine gun shoot
+      - [x] Electromagnetic gun shoot
    - [ ] Virtual World
       - [ ] Zero One

@@ -1,9 +1,13 @@
 {
-  "replace": false,
-  "values": [
-    "the_matrix:machine_block",
-    "the_matrix:plasma_lamp",
-    "the_matrix:teleporter",
-    "the_matrix:vending_machine"
-  ]
+    "replace": false,
+    "values": [
+        "the_matrix:deepslate_promethium_ore",
+        "the_matrix:machine_block",
+        "the_matrix:plasma_lamp",
+        "the_matrix:promethium_block",
+        "the_matrix:promethium_ore",
+        "the_matrix:raw_promethium_block",
+        "the_matrix:teleporter",
+        "the_matrix:vending_machine"
+    ]
 }

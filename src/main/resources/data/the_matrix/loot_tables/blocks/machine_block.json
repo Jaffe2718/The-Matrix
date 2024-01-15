@@ -19,5 +19,6 @@
                 }
             ]
         }
-    ]
+    ],
+    "random_sequence": "the_matrix:blocks/machine_block"
 }

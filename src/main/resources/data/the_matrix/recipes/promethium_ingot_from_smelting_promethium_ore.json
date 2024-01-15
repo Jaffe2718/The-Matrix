@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "group": "promethium_ingot",
+  "ingredient": {
+    "item": "the_matrix:promethium_ore"
+  },
+  "result": "the_matrix:promethium_ingot"
+}

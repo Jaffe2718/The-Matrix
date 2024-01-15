@@ -36,6 +36,7 @@ public abstract class ItemRegistry {
     public static final Item BULLET_FILLING_BOX = new Item(new FabricItemSettings().maxCount(1).maxDamage(10));
     public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
     public static final Item CPU = new Item(new FabricItemSettings());
+    public static final Item DEEPSLATE_PROMETHIUM_ORE = new BlockItem(BlockRegistry.DEEPSLATE_PROMETHIUM_ORE, new FabricItemSettings());
     public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(new FabricItemSettings().maxCount(1).maxDamage(100));
     public static final Item LAPTOP = new LaptopItem(BlockRegistry.LAPTOP, new FabricItemSettings());
     public static final Item MACHINE_BLOCK = new BlockItem(BlockRegistry.MACHINE_BLOCK, new FabricItemSettings());
@@ -43,6 +44,11 @@ public abstract class ItemRegistry {
     public static final Item MACHINE_PART = new Item(new FabricItemSettings());
     public static final Item MINING_DRILL = new MiningDrillItem(new FabricItemSettings());
     public static final Item MOBILE_PHONE = new MobilePhoneItem(new FabricItemSettings());
+    public static final Item PROMETHIUM_BLOCK = new BlockItem(BlockRegistry.PROMETHIUM_BLOCK, new FabricItemSettings());
+    public static final Item PROMETHIUM_INGOT = new Item(new FabricItemSettings());
+    public static final Item PROMETHIUM_ORE = new BlockItem(BlockRegistry.PROMETHIUM_ORE, new FabricItemSettings());
+    public static final Item RAW_PROMETHIUM = new Item(new FabricItemSettings());
+    public static final Item RAW_PROMETHIUM_BLOCK = new BlockItem(BlockRegistry.RAW_PROMETHIUM_BLOCK, new FabricItemSettings());
     public static final Item TELEPORTER = new BlockItem(BlockRegistry.TELEPORTER, new FabricItemSettings());
     public static final Item PLASMA_LAMP = new BlockItem(BlockRegistry.PLASMA_LAMP, new FabricItemSettings());
     public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20));
@@ -83,6 +89,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet_filling_box"), BULLET_FILLING_BOX);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "deepslate_promethium_ore"), DEEPSLATE_PROMETHIUM_ORE);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "electromagnetic_gun"), ELECTROMAGNETIC_GUN);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "laptop"), LAPTOP);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_block"), MACHINE_BLOCK);
@@ -91,6 +98,11 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mining_drill"), MINING_DRILL);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "plasma_lamp"), PLASMA_LAMP);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "promethium_block"), PROMETHIUM_BLOCK);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "promethium_ingot"), PROMETHIUM_INGOT);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "promethium_ore"), PROMETHIUM_ORE);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "raw_promethium"), RAW_PROMETHIUM);
+        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "raw_promethium_block"), RAW_PROMETHIUM_BLOCK);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "spanner"), SPANNER);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "teleporter"), TELEPORTER);
         Registry.register(Registries.ITEM, new Identifier(MOD_ID, "vending_machine"), VENDING_MACHINE);
@@ -117,6 +129,7 @@ public abstract class ItemRegistry {
             group.add(BULLET_FILLING_BOX);
             group.add(COIN);
             group.add(CPU);
+            group.add(DEEPSLATE_PROMETHIUM_ORE);
             group.add(ELECTROMAGNETIC_GUN);
             group.add(LAPTOP);
             group.add(MACHINE_BLOCK);
@@ -125,6 +138,11 @@ public abstract class ItemRegistry {
             group.add(MINING_DRILL);
             group.add(MOBILE_PHONE);
             group.add(PLASMA_LAMP);
+            group.add(PROMETHIUM_BLOCK);
+            group.add(PROMETHIUM_INGOT);
+            group.add(PROMETHIUM_ORE);
+            group.add(RAW_PROMETHIUM);
+            group.add(RAW_PROMETHIUM_BLOCK);
             group.add(SPANNER);
             group.add(TELEPORTER);
             group.add(VENDING_MACHINE);

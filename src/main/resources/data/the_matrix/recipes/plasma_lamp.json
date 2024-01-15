@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "building",
+    "pattern": [
+        "##",
+        "##"
+
+    ],
+    "key": {
+        "#": {
+            "item": "the_matrix:promethium_ingot"
+        }
+    },
+    "result": {
+        "item": "the_matrix:plasma_lamp",
+        "count": 2
+    },
+    "show_notification": true
+}

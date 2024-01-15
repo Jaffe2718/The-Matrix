@@ -7,7 +7,7 @@
             "entries": [
                 {
                     "type": "minecraft:item",
-                    "name": "the_matrix:teleporter"
+                    "name": "the_matrix:promethium_block"
                 }
             ],
             "conditions": [
@@ -20,5 +20,5 @@
             ]
         }
     ],
-    "random_sequence": "the_matrix:blocks/teleporter"
+    "random_sequence": "the_matrix:blocks/promethium_block"
 }

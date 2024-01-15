@@ -1,11 +1,16 @@
 package me.jaffe2718.the_matrix.unit;
 
-import me.jaffe2718.the_matrix.element.block.*;
-import me.jaffe2718.the_matrix.element.block.entity.*;
+import me.jaffe2718.the_matrix.element.block.LaptopBlock;
+import me.jaffe2718.the_matrix.element.block.TeleporterBlock;
+import me.jaffe2718.the_matrix.element.block.VendingMachineBlock;
+import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;
+import me.jaffe2718.the_matrix.element.block.entity.TeleporterBlockEntity;
+import me.jaffe2718.the_matrix.element.block.entity.VendingMachineBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ExperienceDroppingBlock;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.Instrument;
@@ -13,11 +18,22 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class BlockRegistry {
     // Blocks here
+    public static final Block DEEPSLATE_PROMETHIUM_ORE = new ExperienceDroppingBlock(FabricBlockSettings
+            .create()
+            .collidable(true)
+            .instrument(Instrument.BASEDRUM)
+            .mapColor(MapColor.STONE_GRAY)
+            .requiresTool()
+            .sounds(BlockSoundGroup.DEEPSLATE)
+            .luminance(7)
+            .strength(4.5F, 3.0F), UniformIntProvider.create(3, 7));
+
     public static final Block LAPTOP = new LaptopBlock(FabricBlockSettings
             .create()
             .collidable(true)
@@ -44,6 +60,33 @@ public abstract class BlockRegistry {
             .luminance(15)
             .sounds(BlockSoundGroup.GLASS)
             .solidBlock(Blocks::never));
+
+    public static final Block PROMETHIUM_BLOCK = new Block(FabricBlockSettings
+            .create()
+            .collidable(true)
+            .instrument(Instrument.BELL)
+            .mapColor(MapColor.DIAMOND_BLUE)
+            .requiresTool()
+            .luminance(15)
+            .strength(5.0F, 6.0F));
+
+    public static final Block PROMETHIUM_ORE = new ExperienceDroppingBlock(FabricBlockSettings
+            .create()
+            .collidable(true)
+            .instrument(Instrument.BASEDRUM)
+            .mapColor(MapColor.STONE_GRAY)
+            .requiresTool()
+            .luminance(7)
+            .strength(3.0F, 3.0F), UniformIntProvider.create(3, 7));
+
+    public static final Block RAW_PROMETHIUM_BLOCK = new Block(FabricBlockSettings
+            .create()
+            .collidable(true)
+            .instrument(Instrument.BASEDRUM)
+            .mapColor(MapColor.DIAMOND_BLUE)
+            .requiresTool()
+            .luminance(7)
+            .strength(5.0F, 6.0F));
 
     public static final Block TELEPORTER = new TeleporterBlock(FabricBlockSettings
             .create()
@@ -76,9 +119,13 @@ public abstract class BlockRegistry {
      * Register blocks and block entities
      */
     public static void register() {
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "deepslate_promethium_ore"), DEEPSLATE_PROMETHIUM_ORE);
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "laptop"), LAPTOP);
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "machine_block"), MACHINE_BLOCK);
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "plasma_lamp"), PLASMA_LAMP);
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "promethium_block"), PROMETHIUM_BLOCK);
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "promethium_ore"), PROMETHIUM_ORE);
+        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "raw_promethium_block"), RAW_PROMETHIUM_BLOCK);
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "teleporter"), TELEPORTER);
         Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "vending_machine"), VENDING_MACHINE);
         LAPTOP_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,

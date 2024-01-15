@@ -40,26 +40,25 @@ public class InventoryManager {
             case REAL_WORLD ->
                 this.realWorldInventory.readNbt(inventory.writeNbt(new NbtList()));
             case VIRTUAL_END ->
-                    this.virtualEndInventory.readNbt(inventory.writeNbt(new NbtList()));
+                this.virtualEndInventory.readNbt(inventory.writeNbt(new NbtList()));
             case VIRTUAL_WORLD ->
-                    this.virtualWorldInventory.readNbt(inventory.writeNbt(new NbtList()));
+                this.virtualWorldInventory.readNbt(inventory.writeNbt(new NbtList()));
             default ->  // vanilla
-                vanillaInventory.readNbt(inventory.writeNbt(new NbtList()));
+                this.vanillaInventory.readNbt(inventory.writeNbt(new NbtList()));
         }
         TheMatrix.LOGGER.info("recording player inventory: " + originFlag);
     }
 
     public void restoreInventory(@NotNull Dimensions.DimensionFlags dimensionFlag) {
-        PlayerEntity player = vanillaInventory.player;
         switch (dimensionFlag) {
             case REAL_WORLD ->
-                player.getInventory().readNbt(realWorldInventory.writeNbt(new NbtList()));
+                this.realWorldInventory.player.getInventory().readNbt(this.realWorldInventory.writeNbt(new NbtList()));
             case VIRTUAL_END ->
-                player.getInventory().readNbt(virtualEndInventory.writeNbt(new NbtList()));
+                this.virtualEndInventory.player.getInventory().readNbt(this.virtualEndInventory.writeNbt(new NbtList()));
             case VIRTUAL_WORLD ->
-                player.getInventory().readNbt(virtualWorldInventory.writeNbt(new NbtList()));
+                this.virtualWorldInventory.player.getInventory().readNbt(this.virtualWorldInventory.writeNbt(new NbtList()));
             default ->  // vanilla
-                player.getInventory().readNbt(vanillaInventory.writeNbt(new NbtList()));
+                this.vanillaInventory.player.getInventory().readNbt(this.vanillaInventory.writeNbt(new NbtList()));
         }
         TheMatrix.LOGGER.info("restoring player inventory: " + dimensionFlag);
     }
