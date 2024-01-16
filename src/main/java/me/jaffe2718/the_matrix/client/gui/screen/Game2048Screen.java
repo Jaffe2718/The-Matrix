@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.client.gui.screen;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.unit.gui.screen.Game2048ScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,12 +12,10 @@ import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
-
 @Environment(EnvType.CLIENT)
 public class Game2048Screen extends HandledScreen<Game2048ScreenHandler> {
-    private static final Identifier BACKGROUND = new Identifier(MOD_ID, "textures/gui/container/game2048.png");
-    private static final Identifier BUTTONS = new Identifier(MOD_ID, "textures/gui/sprites/game2048/buttons.png");
+    private static final Identifier BACKGROUND = TheMatrix.id("textures/gui/container/game2048.png");
+    private static final Identifier BUTTONS = TheMatrix.id("textures/gui/sprites/game2048/buttons.png");
 
     public Game2048Screen(Game2048ScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -54,6 +53,6 @@ public class Game2048Screen extends HandledScreen<Game2048ScreenHandler> {
 
     @Contract("_ -> new")
     private static @NotNull Identifier getTextureForNumber(int number) {   // no texture for 0
-        return new Identifier(MOD_ID, "textures/gui/sprites/game2048/n" + number + ".png");
+        return TheMatrix.id("textures/gui/sprites/game2048/n" + number + ".png");
     }
 }

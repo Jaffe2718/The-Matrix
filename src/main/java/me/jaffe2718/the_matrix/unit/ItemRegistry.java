@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.unit;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.item.*;
 import me.jaffe2718.the_matrix.element.item.armor_material.MechanicalMaterial;
 import me.jaffe2718.the_matrix.element.item.armor_material.VirtualArmorMaterial;
@@ -11,7 +12,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
@@ -71,48 +71,48 @@ public abstract class ItemRegistry {
             .build();
 
     public static void register() {
-        Registry.register(Registries.ITEM_GROUP, new Identifier(MOD_ID, "item_group"), THE_MATRIX_Item_GROUP);
+        Registry.register(Registries.ITEM_GROUP, TheMatrix.id("item_group"), THE_MATRIX_Item_GROUP);
 
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "v_mask"), V_MASK);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_cloak"), HACKER_CLOAK);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_pants"), HACKER_PANTS);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "hacker_boots"), HACKER_BOOTS);
+        Registry.register(Registries.ITEM, TheMatrix.id("v_mask"), V_MASK);
+        Registry.register(Registries.ITEM, TheMatrix.id("hacker_cloak"), HACKER_CLOAK);
+        Registry.register(Registries.ITEM, TheMatrix.id("hacker_pants"), HACKER_PANTS);
+        Registry.register(Registries.ITEM, TheMatrix.id("hacker_boots"), HACKER_BOOTS);
 
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_helmet"), MECHANICAL_HELMET);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_chestplate"), MECHANICAL_CHESTPLATE);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_leggings"), MECHANICAL_LEGGINGS);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mechanical_boots"), MECHANICAL_BOOTS);
+        Registry.register(Registries.ITEM, TheMatrix.id("mechanical_helmet"), MECHANICAL_HELMET);
+        Registry.register(Registries.ITEM, TheMatrix.id("mechanical_chestplate"), MECHANICAL_CHESTPLATE);
+        Registry.register(Registries.ITEM, TheMatrix.id("mechanical_leggings"), MECHANICAL_LEGGINGS);
+        Registry.register(Registries.ITEM, TheMatrix.id("mechanical_boots"), MECHANICAL_BOOTS);
 
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "battery"), BATTERY);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "boxed_bullets"), BOXED_BULLETS);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet"), BULLET);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "bullet_filling_box"), BULLET_FILLING_BOX);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "coin"), COIN);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "cpu"), CPU);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "deepslate_promethium_ore"), DEEPSLATE_PROMETHIUM_ORE);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "electromagnetic_gun"), ELECTROMAGNETIC_GUN);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "laptop"), LAPTOP);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_block"), MACHINE_BLOCK);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_gun"), MACHINE_GUN);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "machine_part"), MACHINE_PART);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mining_drill"), MINING_DRILL);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "mobile_phone"), MOBILE_PHONE);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "plasma_lamp"), PLASMA_LAMP);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "promethium_block"), PROMETHIUM_BLOCK);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "promethium_ingot"), PROMETHIUM_INGOT);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "promethium_ore"), PROMETHIUM_ORE);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "raw_promethium"), RAW_PROMETHIUM);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "raw_promethium_block"), RAW_PROMETHIUM_BLOCK);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "spanner"), SPANNER);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "teleporter"), TELEPORTER);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "vending_machine"), VENDING_MACHINE);
+        Registry.register(Registries.ITEM, TheMatrix.id("battery"), BATTERY);
+        Registry.register(Registries.ITEM, TheMatrix.id("boxed_bullets"), BOXED_BULLETS);
+        Registry.register(Registries.ITEM, TheMatrix.id("bullet"), BULLET);
+        Registry.register(Registries.ITEM, TheMatrix.id("bullet_filling_box"), BULLET_FILLING_BOX);
+        Registry.register(Registries.ITEM, TheMatrix.id("coin"), COIN);
+        Registry.register(Registries.ITEM, TheMatrix.id("cpu"), CPU);
+        Registry.register(Registries.ITEM, TheMatrix.id("deepslate_promethium_ore"), DEEPSLATE_PROMETHIUM_ORE);
+        Registry.register(Registries.ITEM, TheMatrix.id("electromagnetic_gun"), ELECTROMAGNETIC_GUN);
+        Registry.register(Registries.ITEM, TheMatrix.id("laptop"), LAPTOP);
+        Registry.register(Registries.ITEM, TheMatrix.id("machine_block"), MACHINE_BLOCK);
+        Registry.register(Registries.ITEM, TheMatrix.id("machine_gun"), MACHINE_GUN);
+        Registry.register(Registries.ITEM, TheMatrix.id("machine_part"), MACHINE_PART);
+        Registry.register(Registries.ITEM, TheMatrix.id("mining_drill"), MINING_DRILL);
+        Registry.register(Registries.ITEM, TheMatrix.id("mobile_phone"), MOBILE_PHONE);
+        Registry.register(Registries.ITEM, TheMatrix.id("plasma_lamp"), PLASMA_LAMP);
+        Registry.register(Registries.ITEM, TheMatrix.id("promethium_block"), PROMETHIUM_BLOCK);
+        Registry.register(Registries.ITEM, TheMatrix.id("promethium_ingot"), PROMETHIUM_INGOT);
+        Registry.register(Registries.ITEM, TheMatrix.id("promethium_ore"), PROMETHIUM_ORE);
+        Registry.register(Registries.ITEM, TheMatrix.id("raw_promethium"), RAW_PROMETHIUM);
+        Registry.register(Registries.ITEM, TheMatrix.id("raw_promethium_block"), RAW_PROMETHIUM_BLOCK);
+        Registry.register(Registries.ITEM, TheMatrix.id("spanner"), SPANNER);
+        Registry.register(Registries.ITEM, TheMatrix.id("teleporter"), TELEPORTER);
+        Registry.register(Registries.ITEM, TheMatrix.id("vending_machine"), VENDING_MACHINE);
 
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "agent_spawn_egg"), AGENT_SPAWN_EGG);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "robot_sentinel_spawn_egg"), ROBOT_SENTINEL_SPAWN_EGG);
-        Registry.register(Registries.ITEM, new Identifier(MOD_ID, "zion_people_spawn_egg"), ZION_PEOPLE_SPAWN_EGG);
+        Registry.register(Registries.ITEM, TheMatrix.id("agent_spawn_egg"), AGENT_SPAWN_EGG);
+        Registry.register(Registries.ITEM, TheMatrix.id("robot_sentinel_spawn_egg"), ROBOT_SENTINEL_SPAWN_EGG);
+        Registry.register(Registries.ITEM, TheMatrix.id("zion_people_spawn_egg"), ZION_PEOPLE_SPAWN_EGG);
 
         // add items to item group
-        RegistryKey<ItemGroup> groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), new Identifier(MOD_ID, "item_group"));
+        RegistryKey<ItemGroup> groupRegistryKey = RegistryKey.of(Registries.ITEM_GROUP.getKey(), TheMatrix.id("item_group"));
         ItemGroupEvents.modifyEntriesEvent(groupRegistryKey).register(group -> {
             group.add(V_MASK);
             group.add(HACKER_CLOAK);

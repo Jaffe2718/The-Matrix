@@ -1,13 +1,12 @@
 package me.jaffe2718.the_matrix.client.model.entity;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
-
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class RobotSentinelModel extends GeoModel<RobotSentinelEntity> {
 
@@ -16,17 +15,17 @@ public class RobotSentinelModel extends GeoModel<RobotSentinelEntity> {
     private static final String DEPRESSION = "variable.depression";   // MoLang variable for depression angle
     @Override
     public Identifier getModelResource(RobotSentinelEntity animatable) {
-        return new Identifier(MOD_ID, "geo/entity/robot_sentinel.geo.json");
+        return TheMatrix.id("geo/entity/robot_sentinel.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(RobotSentinelEntity animatable) {
-        return new Identifier(MOD_ID, "textures/entity/robot_sentinel.png");
+        return TheMatrix.id("textures/entity/robot_sentinel.png");
     }
 
     @Override
     public Identifier getAnimationResource(RobotSentinelEntity animatable) {
-        return new Identifier(MOD_ID, "animations/entity/robot_sentinel.animation.json");
+        return TheMatrix.id("animations/entity/robot_sentinel.animation.json");
     }
 
     @Override

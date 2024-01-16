@@ -1,9 +1,9 @@
 package me.jaffe2718.the_matrix.unit;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -13,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class Dimensions {
-    public static final RegistryKey<World> ROBOT_WORLD = RegistryKey.of(RegistryKeys.WORLD, new Identifier(MOD_ID, "robot_world"));
-    public static final RegistryKey<World> VIRTUAL_WORLD = RegistryKey.of(RegistryKeys.WORLD, new Identifier(MOD_ID, "virtual_world"));
-    public static final RegistryKey<World> ZION = RegistryKey.of(RegistryKeys.WORLD, new Identifier(MOD_ID, "zion"));
+    public static final RegistryKey<World> ROBOT_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("robot_world"));
+    public static final RegistryKey<World> VIRTUAL_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("virtual_world"));
+    public static final RegistryKey<World> ZION = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("zion"));
 
     /**
      * @param targetWorld the world to teleport to, can be {@link #ROBOT_WORLD}, {@link #VIRTUAL_WORLD}

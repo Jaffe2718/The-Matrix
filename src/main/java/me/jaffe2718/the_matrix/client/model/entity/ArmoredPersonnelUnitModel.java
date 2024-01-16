@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.client.model.entity;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,8 +9,6 @@ import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
-
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class ArmoredPersonnelUnitModel extends GeoModel<ArmoredPersonnelUnitEntity> {
 
@@ -22,17 +21,17 @@ public class ArmoredPersonnelUnitModel extends GeoModel<ArmoredPersonnelUnitEnti
 
     @Override
     public Identifier getModelResource(ArmoredPersonnelUnitEntity animatable) {
-        return new Identifier(MOD_ID, "geo/entity/armored_personnel_unit.geo.json");
+        return TheMatrix.id("geo/entity/armored_personnel_unit.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(ArmoredPersonnelUnitEntity animatable) {
-        return new Identifier(MOD_ID, "textures/entity/armored_personnel_unit.png");
+        return TheMatrix.id("textures/entity/armored_personnel_unit.png");
     }
 
     @Override
     public Identifier getAnimationResource(ArmoredPersonnelUnitEntity animatable) {
-        return new Identifier(MOD_ID, "animations/entity/armored_personnel_unit.animation.json");
+        return TheMatrix.id("animations/entity/armored_personnel_unit.animation.json");
     }
 
     @Override

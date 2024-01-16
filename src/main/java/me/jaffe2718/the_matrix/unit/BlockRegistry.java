@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.unit;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.block.LaptopBlock;
 import me.jaffe2718.the_matrix.element.block.TeleporterBlock;
 import me.jaffe2718.the_matrix.element.block.VendingMachineBlock;
@@ -17,10 +18,7 @@ import net.minecraft.block.enums.Instrument;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public abstract class BlockRegistry {
     // Blocks here
@@ -119,23 +117,23 @@ public abstract class BlockRegistry {
      * Register blocks and block entities
      */
     public static void register() {
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "deepslate_promethium_ore"), DEEPSLATE_PROMETHIUM_ORE);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "laptop"), LAPTOP);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "machine_block"), MACHINE_BLOCK);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "plasma_lamp"), PLASMA_LAMP);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "promethium_block"), PROMETHIUM_BLOCK);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "promethium_ore"), PROMETHIUM_ORE);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "raw_promethium_block"), RAW_PROMETHIUM_BLOCK);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "teleporter"), TELEPORTER);
-        Registry.register(Registries.BLOCK, new Identifier(MOD_ID, "vending_machine"), VENDING_MACHINE);
+        Registry.register(Registries.BLOCK, TheMatrix.id("deepslate_promethium_ore"), DEEPSLATE_PROMETHIUM_ORE);
+        Registry.register(Registries.BLOCK, TheMatrix.id("laptop"), LAPTOP);
+        Registry.register(Registries.BLOCK, TheMatrix.id("machine_block"), MACHINE_BLOCK);
+        Registry.register(Registries.BLOCK, TheMatrix.id("plasma_lamp"), PLASMA_LAMP);
+        Registry.register(Registries.BLOCK, TheMatrix.id("promethium_block"), PROMETHIUM_BLOCK);
+        Registry.register(Registries.BLOCK, TheMatrix.id("promethium_ore"), PROMETHIUM_ORE);
+        Registry.register(Registries.BLOCK, TheMatrix.id("raw_promethium_block"), RAW_PROMETHIUM_BLOCK);
+        Registry.register(Registries.BLOCK, TheMatrix.id("teleporter"), TELEPORTER);
+        Registry.register(Registries.BLOCK, TheMatrix.id("vending_machine"), VENDING_MACHINE);
         LAPTOP_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(MOD_ID, "laptop"),
+                TheMatrix.id("laptop"),
                 FabricBlockEntityTypeBuilder.create(LaptopBlockEntity::new, LAPTOP).build());
         TELEPORTER_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(MOD_ID, "teleporter"),
+                TheMatrix.id("teleporter"),
                 FabricBlockEntityTypeBuilder.create(TeleporterBlockEntity::new, TELEPORTER).build());
         VENDING_MACHINE_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(MOD_ID, "vending_machine"),
+                TheMatrix.id("vending_machine"),
                 FabricBlockEntityTypeBuilder.create(VendingMachineBlockEntity::new, VENDING_MACHINE).build());
     }
 }

@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.mixin.ui;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
 import net.minecraft.client.MinecraftClient;
@@ -13,12 +14,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
-
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
     @Unique
-    private static final Identifier BULLET_TEXTURE = new Identifier(MOD_ID, "hud/bullet");
+    private static final Identifier BULLET_TEXTURE = TheMatrix.id("hud/bullet");
     @Unique
     private static final Identifier VEHICLE_CONTAINER_HEART_TEXTURE = new Identifier("hud/heart/vehicle_container");
     @Unique

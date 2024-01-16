@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.client.gui.screen;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.unit.gui.screen.TeleporterScreenHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,24 +11,22 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
-
 @Environment(EnvType.CLIENT)
 public class TeleporterScreen extends HandledScreen<TeleporterScreenHandler> {
-    private static final Identifier BACKGROUND = new Identifier(MOD_ID, "textures/gui/container/teleporter.png");
-    private static final Identifier BUTTON = new Identifier(MOD_ID, "textures/gui/sprites/teleporter/button.png");
+    private static final Identifier BACKGROUND = TheMatrix.id("textures/gui/container/teleporter.png");
+    private static final Identifier BUTTON = TheMatrix.id("textures/gui/sprites/teleporter/button.png");
 
     /**
      * Origin: 720x480<br>
      * Scaled: 72x48
      * */
-    private static final Identifier ROBOT_WORLD_TEXTURE = new Identifier(MOD_ID, "textures/gui/sprites/teleporter/robot_world.png");
+    private static final Identifier ROBOT_WORLD_TEXTURE = TheMatrix.id("textures/gui/sprites/teleporter/robot_world.png");
 
     /**
      * Origin: 720x480<br>
      * Scaled: 72x48
      * */
-    private static final Identifier VIRTUAL_WORLD_TEXTURE = new Identifier(MOD_ID, "textures/gui/sprites/teleporter/virtual_world.png");
+    private static final Identifier VIRTUAL_WORLD_TEXTURE = TheMatrix.id("textures/gui/sprites/teleporter/virtual_world.png");
 
     public TeleporterScreen(TeleporterScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

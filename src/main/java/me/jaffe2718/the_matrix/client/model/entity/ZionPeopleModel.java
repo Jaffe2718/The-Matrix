@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.client.model.entity;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -50,17 +51,17 @@ public class ZionPeopleModel extends GeoModel<ZionPeopleEntity> {
 
     @Override
     public Identifier getModelResource(@NotNull ZionPeopleEntity animatable) {
-        return new Identifier("the_matrix", "geo/entity/zion_people/" + animatable.getJobName() + ".geo.json");
+        return TheMatrix.id("geo/entity/zion_people/" + animatable.getJobName() + ".geo.json");
     }
 
     @Override
     public Identifier getTextureResource(@NotNull ZionPeopleEntity animatable) {
-        return new Identifier("the_matrix", "textures/entity/zion_people/" + animatable.getJobName() + ".png");
+        return TheMatrix.id("textures/entity/zion_people/" + animatable.getJobName() + ".png");
     }
 
     @Override
     public Identifier getAnimationResource(@NotNull ZionPeopleEntity animatable) {
-        return new Identifier("the_matrix", "animations/entity/zion_people/" + animatable.getJobName() + ".animation.json");
+        return TheMatrix.id("animations/entity/zion_people/" + animatable.getJobName() + ".animation.json");
     }
     @Override
     public void applyMolangQueries(ZionPeopleEntity animatable, double animTime) {

@@ -1,13 +1,12 @@
 package me.jaffe2718.the_matrix.client.model.entity;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
-
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class MachineGunModel extends GeoModel<MachineGunEntity> {
 
@@ -18,17 +17,17 @@ public class MachineGunModel extends GeoModel<MachineGunEntity> {
 
     @Override
     public Identifier getModelResource(MachineGunEntity animatable) {
-        return new Identifier(MOD_ID, "geo/entity/machine_gun.geo.json");
+        return TheMatrix.id("geo/entity/machine_gun.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(MachineGunEntity animatable) {
-        return new Identifier(MOD_ID, "textures/entity/machine_gun.png");
+        return TheMatrix.id("textures/entity/machine_gun.png");
     }
 
     @Override
     public Identifier getAnimationResource(MachineGunEntity animatable) {
-        return new Identifier(MOD_ID, "animations/entity/machine_gun.animation.json");
+        return TheMatrix.id("animations/entity/machine_gun.animation.json");
     }
 
     @Override

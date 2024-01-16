@@ -1,12 +1,11 @@
 package me.jaffe2718.the_matrix.client.model.entity;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.model.GeoModel;
-
-import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
 public class AgentModel extends GeoModel<AgentEntity> {
 
@@ -17,16 +16,16 @@ public class AgentModel extends GeoModel<AgentEntity> {
 
     @Override
     public Identifier getModelResource(AgentEntity animatable) {
-        return new Identifier(MOD_ID, "geo/entity/agent.geo.json");
+        return TheMatrix.id("geo/entity/agent.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(AgentEntity animatable) {
-        return new Identifier(MOD_ID, "textures/entity/agent.png");
+        return TheMatrix.id("textures/entity/agent.png");
     }
 
     @Override
     public Identifier getAnimationResource(AgentEntity animatable) {
-        return new Identifier(MOD_ID, "animations/entity/agent.animation.json");
+        return TheMatrix.id("animations/entity/agent.animation.json");
     }
 }

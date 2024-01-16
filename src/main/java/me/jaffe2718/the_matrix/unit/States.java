@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.unit;
 
+import me.jaffe2718.the_matrix.TheMatrix;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.stat.StatFormatter;
@@ -8,7 +9,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.stat.Stats.CUSTOM;
-import static software.bernie.geckolib.GeckoLib.MOD_ID;
 
 public abstract class States {
     public static Identifier INTERACT_WITH_LAPTOP;
@@ -22,7 +22,7 @@ public abstract class States {
     }
 
     public static void init() {
-        INTERACT_WITH_LAPTOP = register(new Identifier(MOD_ID, "interact_with_computer"), StatFormatter.DEFAULT);
-        INTERACT_WITH_TELEPORTER = register(new Identifier(MOD_ID, "interact_with_teleporter"), StatFormatter.DEFAULT);
+        INTERACT_WITH_LAPTOP = register(TheMatrix.id("interact_with_computer"), StatFormatter.DEFAULT);
+        INTERACT_WITH_TELEPORTER = register(TheMatrix.id("interact_with_teleporter"), StatFormatter.DEFAULT);
     }
 }
