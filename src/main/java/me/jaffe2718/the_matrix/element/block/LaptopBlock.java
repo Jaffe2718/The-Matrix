@@ -8,6 +8,8 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -61,5 +63,17 @@ public class LaptopBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockState rotate(@NotNull BlockState state, @NotNull BlockRotation rotation) {
+        return state.with(Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING)));
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockState mirror(@NotNull BlockState state, @NotNull BlockMirror mirror) {
+        return state.rotate(mirror.getRotation(state.get(Properties.HORIZONTAL_FACING)));
     }
 }

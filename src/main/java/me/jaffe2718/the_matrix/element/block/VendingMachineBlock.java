@@ -1,16 +1,15 @@
 package me.jaffe2718.the_matrix.element.block;
 
 import me.jaffe2718.the_matrix.element.block.entity.VendingMachineBlockEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -60,9 +59,16 @@ public class VendingMachineBlock extends BlockWithEntity {
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
-//
-//    @Override
-//    public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
-//        return true;
-//    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockState rotate(@NotNull BlockState state, @NotNull BlockRotation rotation) {
+        return state.with(Properties.HORIZONTAL_FACING, rotation.rotate(state.get(Properties.HORIZONTAL_FACING)));
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public BlockState mirror(@NotNull BlockState state, @NotNull BlockMirror mirror) {
+        return state.rotate(mirror.getRotation(state.get(Properties.HORIZONTAL_FACING)));
+    }
 }

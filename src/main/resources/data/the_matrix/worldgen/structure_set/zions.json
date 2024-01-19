@@ -1,0 +1,18 @@
+{
+    "placement": {
+        "type": "minecraft:concentric_rings",
+        "count": 1,
+        "distance": 1,
+        "preferred_biomes": [
+            "the_matrix:zion_cave"
+        ],
+        "salt": 0,
+        "spread": 1023
+    },
+    "structures": [
+        {
+            "structure": "the_matrix:zion",
+            "weight": 1
+        }
+    ]
+}
