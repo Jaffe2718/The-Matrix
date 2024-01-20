@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 
 import static me.jaffe2718.the_matrix.unit.ItemRegistry.COIN;
 
-public abstract class TradeOfferListFactory {
+public interface TradeOfferListFactory {
 
-    public static @NotNull TradeOfferList createVendingMachineTradeOfferList() {  // TODO: add more offers
+    static @NotNull TradeOfferList createVendingMachineTradeOfferList() {
         TradeOfferList tradeOfferList = new TradeOfferList();
         tradeOfferList.add(coinForItem(1, Items.APPLE));
         tradeOfferList.add(coinForItem(2, Items.BAKED_POTATO));
@@ -21,16 +21,22 @@ public abstract class TradeOfferListFactory {
         tradeOfferList.add(coinForItem(3, Items.COOKED_CHICKEN));
         tradeOfferList.add(coinForItem(2, Items.COOKED_COD));
         tradeOfferList.add(coinForItem(3, Items.COOKED_MUTTON));
-        tradeOfferList.add(coinForItem(2, Items.COOKED_PORKCHOP));
+        tradeOfferList.add(coinForItem(4, Items.COOKED_PORKCHOP));
+        tradeOfferList.add(coinForItem(3, Items.COOKED_RABBIT));
+        tradeOfferList.add(coinForItem(2, Items.COOKED_SALMON));
+        tradeOfferList.add(coinForItem(2, Items.COOKIE));
+        tradeOfferList.add(coinForItem(2, Items.PUMPKIN_PIE));
+        tradeOfferList.add(coinForItem(64, Items.ENCHANTED_GOLDEN_APPLE));
         return tradeOfferList;
     }
 
-    public static @NotNull TradeOfferList createZionPeopleTradeOfferList(int jobID) {
+    static @NotNull TradeOfferList createZionPeopleTradeOfferList(int jobID) {
         TradeOfferList tradeOfferList = new TradeOfferList();
         switch (jobID) {
             case 1 -> {    // APU Pilot
                 tradeOfferList.add(coinForItem(1, ItemRegistry.BULLET));
                 tradeOfferList.add(coinForItem(8, ItemRegistry.BOXED_BULLETS));
+                tradeOfferList.add(coinForItem(25, ItemRegistry.MACHINE_PART));
             }
             case 2 -> {    // Carpenter
                 tradeOfferList.add(itemForCoin(1, Items.OAK_LOG));
@@ -123,7 +129,7 @@ public abstract class TradeOfferListFactory {
             }
             case 6 -> {    // Infantry
                 tradeOfferList.add(new TradeOffer(costCoin(64), ItemRegistry.MACHINE_PART.getDefaultStack().copyWithCount(8), ItemRegistry.ELECTROMAGNETIC_GUN.getDefaultStack(), Integer.MAX_VALUE, 1, 1F));
-                tradeOfferList.add(coinForItem(5, ItemRegistry.BATTERY));
+                tradeOfferList.add(coinForItem(25, ItemRegistry.MACHINE_PART));
             }
             case 7 -> {    // Machinist
                 tradeOfferList.add(coinForItem(64, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE));
@@ -131,6 +137,7 @@ public abstract class TradeOfferListFactory {
                 tradeOfferList.add(itemForCoin(64, ItemRegistry.CPU));
             }
             case 8 -> {    // Miner
+                // sell
                 tradeOfferList.add(coinForItem(3, Items.COAL));
                 tradeOfferList.add(coinForItem(20, Items.IRON_INGOT));
                 tradeOfferList.add(coinForItem(30, Items.GOLD_INGOT));
@@ -156,6 +163,20 @@ public abstract class TradeOfferListFactory {
                 tradeOfferList.add(coinForItem(1, Items.RED_SAND));
                 tradeOfferList.add(coinForItem(1, Items.GRAVEL));
                 tradeOfferList.add(coinForItem(1, Items.MAGMA_BLOCK));
+                // purchase
+                tradeOfferList.add(itemForCoin(3, Items.COAL));
+                tradeOfferList.add(itemForCoin(20, Items.IRON_INGOT));
+                tradeOfferList.add(itemForCoin(30, Items.GOLD_INGOT));
+                tradeOfferList.add(itemForCoin(50, Items.DIAMOND));
+                tradeOfferList.add(itemForCoin(40, Items.EMERALD));
+                tradeOfferList.add(itemForCoin(40, Items.AMETHYST_SHARD));
+                tradeOfferList.add(itemForCoin(10, Items.REDSTONE));
+                tradeOfferList.add(itemForCoin(10, Items.LAPIS_LAZULI));
+                tradeOfferList.add(itemForCoin(3, Items.COPPER_INGOT));
+                tradeOfferList.add(itemForCoin(3, Items.FLINT));
+                tradeOfferList.add(itemForCoin(3, Items.POINTED_DRIPSTONE));
+                tradeOfferList.add(itemForCoin(2, Items.CLAY_BALL));
+                tradeOfferList.add(itemForCoin(64, ItemRegistry.PROMETHIUM_INGOT));
             }
             case 9 -> {    // Rifleman
                 tradeOfferList.add(coinForItem(1, ItemRegistry.BULLET));

@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
-public abstract class Dimensions {
-    public static final RegistryKey<World> ROBOT_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("robot_world"));
-    public static final RegistryKey<World> VIRTUAL_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("virtual_world"));
-    public static final RegistryKey<World> ZION = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("zion"));
+public interface Dimensions {
+    RegistryKey<World> ROBOT_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("robot_world"));
+    RegistryKey<World> VIRTUAL_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("virtual_world"));
+    RegistryKey<World> ZION = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("zion"));
 
     /**
      * @param targetWorld the world to teleport to, can be {@link #ROBOT_WORLD}, {@link #VIRTUAL_WORLD}
@@ -24,7 +24,7 @@ public abstract class Dimensions {
      * @return the position to teleport to
      */
     @Contract("_, _, _ -> new")
-    public static @NotNull Vec3d getWorldTeleportPos(@NotNull ServerWorld targetWorld, @NotNull ServerWorld zionWorld, @NotNull BlockPos zionPos) {
+    static @NotNull Vec3d getWorldTeleportPos(@NotNull ServerWorld targetWorld, @NotNull ServerWorld zionWorld, @NotNull BlockPos zionPos) {
         // get the coordinate scale between the two worlds
         double coordinateScale = targetWorld.getDimension().coordinateScale() / zionWorld.getDimension().coordinateScale();
         // get the scaled position of the zion spawn position
@@ -38,7 +38,7 @@ public abstract class Dimensions {
     }
 
     @Contract("_ -> new")
-    public static @NotNull Vec3d getZionSpawnPos(ServerWorld zionWorld) {
+    static @NotNull Vec3d getZionSpawnPos(ServerWorld zionWorld) {
         BlockPos pos = BlockPos.ORIGIN;
         int dy = -2;
         while (dy != 0) {
@@ -60,7 +60,7 @@ public abstract class Dimensions {
         }
     }
 
-    public static DimensionFlags getDimensionFlag(@NotNull RegistryKey<World> registryKey) {
+    static DimensionFlags getDimensionFlag(@NotNull RegistryKey<World> registryKey) {
         switch (registryKey.getValue().toString()) {
             case MOD_ID + ":robot_world", MOD_ID + ":zion" -> {
                 return DimensionFlags.REAL_WORLD;
@@ -77,7 +77,7 @@ public abstract class Dimensions {
         }
     }
 
-    public enum DimensionFlags {
+    enum DimensionFlags {
         REAL_WORLD,        // zion + robot_world
         VIRTUAL_WORLD,     // virtual_world
         VIRTUAL_END,       // virtual_end

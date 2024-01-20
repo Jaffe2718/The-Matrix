@@ -62,7 +62,7 @@ This mod is still in development, and the plan is as follows:
      - [x] Loot table
          - [x] Machine parts
          - [x] CPU
-     - [ ] Spawn conditions
+     - [x] Spawn conditions
    - [ ] Machine Gun (rideable, no living entity like boat)
       - [x] Define Machine Gun entity: see [MachineGunEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/vehicle/MachineGunEntity.java)
       - [x] Model & Textures: see [MachineGunModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/MachineGunModel.java)

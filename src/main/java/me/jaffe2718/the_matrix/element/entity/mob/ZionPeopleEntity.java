@@ -18,6 +18,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -105,6 +106,7 @@ public class ZionPeopleEntity
         if (!MathUnit.isBetween(this.getJobId(), 1, 9)) {
             this.setJobId(this.getRandom().nextInt(9) + 1);
         }
+        ((MobNavigation) this.getNavigation()).setCanPathThroughDoors(true);
     }
 
     @Override

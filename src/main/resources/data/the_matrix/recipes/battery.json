@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "pattern": [
+        "GIC",
+        "IPI",
+        "III"
+    ],
+    "key": {
+        "C": {
+            "item": "minecraft:copper_ingot"
+        },
+        "G": {
+            "item": "minecraft:gold_ingot"
+        },
+        "I": {
+            "item": "minecraft:iron_nugget"
+        },
+        "P": {
+            "item": "the_matrix:promethium_ingot"
+        }
+    },
+    "result": {
+        "item": "the_matrix:battery",
+        "count": 4
+    },
+    "show_notification": true
+}

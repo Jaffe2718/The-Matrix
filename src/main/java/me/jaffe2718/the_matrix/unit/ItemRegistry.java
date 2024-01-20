@@ -7,12 +7,18 @@ import me.jaffe2718.the_matrix.element.item.armor_material.VirtualArmorMaterial;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Rarity;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 
@@ -29,11 +35,30 @@ public abstract class ItemRegistry {
     public static final Item MECHANICAL_CHESTPLATE = new MechanicalArmorItem(ArmorItem.Type.CHESTPLATE, new FabricItemSettings().fireproof());
     public static final Item MECHANICAL_LEGGINGS = new MechanicalArmorItem(ArmorItem.Type.LEGGINGS, new FabricItemSettings().fireproof());
     public static final Item MECHANICAL_BOOTS = new MechanicalArmorItem(ArmorItem.Type.BOOTS, new FabricItemSettings().fireproof());
-
-    public static final Item BATTERY = new Item(new FabricItemSettings());
-    public static final Item BOXED_BULLETS = new Item(new FabricItemSettings());
-    public static final Item BULLET = new Item(new FabricItemSettings());
-    public static final Item BULLET_FILLING_BOX = new Item(new FabricItemSettings().maxCount(1).maxDamage(10));
+    public static final Item BATTERY = new Item(new FabricItemSettings()) {
+        @Override
+        public void appendTooltip(ItemStack stack, @Nullable World world, @NotNull List<Text> tooltip, TooltipContext context) {
+            tooltip.add(Text.translatable("item.the_matrix.battery.tooltip"));
+        }
+    };
+    public static final Item BOXED_BULLETS = new Item(new FabricItemSettings()) {
+        @Override
+        public void appendTooltip(ItemStack stack, @Nullable World world, @NotNull List<Text> tooltip, TooltipContext context) {
+            tooltip.add(Text.translatable("item.the_matrix.boxed_bullets.tooltip"));
+        }
+    };
+    public static final Item BULLET = new Item(new FabricItemSettings()) {
+        @Override
+        public void appendTooltip(ItemStack stack, @Nullable World world, @NotNull List<Text> tooltip, TooltipContext context) {
+            tooltip.add(Text.translatable("item.the_matrix.bullet.tooltip"));
+        }
+    };
+    public static final Item BULLET_FILLING_BOX = new Item(new FabricItemSettings().maxCount(1).maxDamage(10)) {
+        @Override
+        public void appendTooltip(ItemStack stack, @Nullable World world, @NotNull List<Text> tooltip, TooltipContext context) {
+            tooltip.add(Text.translatable("item.the_matrix.bullet_filling_box.tooltip"));
+        }
+    };
     public static final Item COIN = new Item(new FabricItemSettings());    // use it in virtual world
     public static final Item CPU = new Item(new FabricItemSettings());
     public static final Item DEEPSLATE_PROMETHIUM_ORE = new BlockItem(BlockRegistry.DEEPSLATE_PROMETHIUM_ORE, new FabricItemSettings());
@@ -51,7 +76,12 @@ public abstract class ItemRegistry {
     public static final Item RAW_PROMETHIUM_BLOCK = new BlockItem(BlockRegistry.RAW_PROMETHIUM_BLOCK, new FabricItemSettings());
     public static final Item TELEPORTER = new BlockItem(BlockRegistry.TELEPORTER, new FabricItemSettings());
     public static final Item PLASMA_LAMP = new BlockItem(BlockRegistry.PLASMA_LAMP, new FabricItemSettings());
-    public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20));
+    public static final Item SPANNER = new Item(new FabricItemSettings().maxCount(1).maxDamage(20)) {
+        @Override
+        public void appendTooltip(ItemStack stack, @Nullable World world, @NotNull List<Text> tooltip, TooltipContext context) {
+            tooltip.add(Text.translatable("item.the_matrix.spanner.tooltip"));
+        }
+    };
     public static final Item VENDING_MACHINE = new BlockItem(BlockRegistry.VENDING_MACHINE, new FabricItemSettings());
 
     public static final Item AGENT_SPAWN_EGG = new SpawnEggItem(EntityRegistry.AGENT,
