@@ -2,7 +2,9 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 
 import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.GoHomeGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectHomeGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.DriveAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.infantry.ShootGoal;
@@ -14,6 +16,8 @@ import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.ParticleRegistry;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
@@ -36,6 +40,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.Merchant;
 import net.minecraft.village.TradeOffer;
 import net.minecraft.village.TradeOfferList;
@@ -79,6 +84,11 @@ public class ZionPeopleEntity
      * */
     private static final TrackedData<Boolean> IS_FIXING = DataTracker.registerData(ZionPeopleEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private static final String HAS_HOME_KEY = "HasHome";        // nbt boolean
+    private static final String HOME_POS_KEY = "HomePos";        // nbt long
+    @Environment(EnvType.SERVER)
+    public boolean hasHome = false;
+    public BlockPos homePos = BlockPos.ORIGIN;
     @Nullable
     private PlayerEntity customer;
     @Nullable
@@ -122,6 +132,8 @@ public class ZionPeopleEntity
         if (!MathUnit.isBetween(this.getJobId(), 1, 9)) {   // set to random [1, 9] if invalid
             this.setJobId(this.getRandom().nextInt(9) + 1);
         }
+        this.hasHome = nbt.getBoolean(HAS_HOME_KEY);
+        this.homePos = BlockPos.fromLong(nbt.getLong(HOME_POS_KEY));
         super.readCustomDataFromNbt(nbt);
         this.setGoals();
     }
@@ -129,6 +141,8 @@ public class ZionPeopleEntity
     @Override
     public void writeCustomDataToNbt(@NotNull NbtCompound nbt) {
         nbt.putInt(JOB_ID_KEY, this.getJobId());
+        nbt.putBoolean(HAS_HOME_KEY, this.hasHome);
+        nbt.putLong(HOME_POS_KEY, this.homePos.asLong());
         super.writeCustomDataToNbt(nbt);
     }
 
@@ -217,8 +231,11 @@ public class ZionPeopleEntity
      */
     protected void setGoals() {
         // universal goals for all jobs
+        this.targetSelector.add(2, new SelectHomeGoal(this));
         this.goalSelector.add(1, new SwimGoal(this));
+        // this.goalSelector.add(1, new LongDoorInteractGoal(this, true));    // TODO: add long door interact goal after debugging
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.5D));
+        this.goalSelector.add(3, new GoHomeGoal(this));
         this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(4, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
         this.goalSelector.add(5, new WanderAroundGoal(this, 1.0D));
