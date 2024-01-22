@@ -14,7 +14,6 @@ public class GoHomeGoal extends Goal {
     private final ZionPeopleEntity zionPeople;
 
     public GoHomeGoal(ZionPeopleEntity zionPeople) {
-        super();
         this.zionPeople = zionPeople;
         this.setControls(EnumSet.of(Goal.Control.MOVE));
     }

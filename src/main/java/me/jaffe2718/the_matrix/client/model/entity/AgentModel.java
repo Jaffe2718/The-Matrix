@@ -5,6 +5,7 @@ import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
 import net.minecraft.util.Identifier;
 import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.molang.MolangParser;
 import software.bernie.geckolib.model.GeoModel;
 
 public class AgentModel extends GeoModel<AgentEntity> {
@@ -27,5 +28,12 @@ public class AgentModel extends GeoModel<AgentEntity> {
     @Override
     public Identifier getAnimationResource(AgentEntity animatable) {
         return TheMatrix.id("animations/entity/agent.animation.json");
+    }
+
+    @Override
+    public void applyMolangQueries(AgentEntity animatable, double animTime) {
+        super.applyMolangQueries(animatable, animTime);
+        MolangParser parser = MolangParser.INSTANCE;
+        parser.setMemoizedValue("variable.head_pitch", animatable::getPitch);
     }
 }

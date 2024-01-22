@@ -3,8 +3,7 @@
         "subtitle": "sound.the_matrix.armored_personnel_unit_hurt",
         "sounds": [
             {
-                "name": "the_matrix:armored_personnel_unit_hurt",
-                "pitch": 1.0,
+                "name": "the_matrix:apu/hurt",
                 "stream": true
             }
         ]
@@ -13,8 +12,7 @@
         "subtitle": "sound.the_matrix.armored_personnel_unit_land",
         "sounds": [
             {
-                "name": "the_matrix:armored_personnel_unit_land",
-                "pitch": 1.0,
+                "name": "the_matrix:apu/land",
                 "stream": true
             }
         ]
@@ -23,8 +21,7 @@
         "subtitle": "sound.the_matrix.armored_personnel_unit_shoot",
         "sounds": [
             {
-                "name": "the_matrix:armored_personnel_unit_shoot",
-                "pitch": 1.0,
+                "name": "the_matrix:apu/shoot",
                 "stream": true
             }
         ]
@@ -33,8 +30,7 @@
         "subtitle": "sound.the_matrix.armored_personnel_unit_step",
         "sounds": [
             {
-                "name": "the_matrix:armored_personnel_unit_step",
-                "pitch": 1.0,
+                "name": "the_matrix:apu/step",
                 "stream": true
             }
         ]
@@ -43,8 +39,7 @@
         "subtitle": "sound.the_matrix.bullet_hitting_block",
         "sounds": [
             {
-                "name": "the_matrix:bullet_hitting_block",
-                "pitch": 1.0,
+                "name": "the_matrix:bullet/hitting_block",
                 "stream": true
             }
         ]
@@ -53,8 +48,7 @@
         "subtitle": "sound.the_matrix.bullet_hitting_entity",
         "sounds": [
             {
-                "name": "the_matrix:bullet_hitting_entity",
-                "pitch": 1.0,
+                "name": "the_matrix:bullet/hitting_entity",
                 "stream": true
             }
         ]
@@ -65,7 +59,6 @@
         "sounds": [
             {
                 "name": "the_matrix:bullet_shell_hitting_the_ground",
-                "pitch": 1.0,
                 "stream": true
             }
         ]
@@ -75,7 +68,6 @@
         "sounds": [
             {
                 "name": "the_matrix:dialing",
-                "pitch": 1.0,
                 "stream": true
             }
         ]
@@ -85,7 +77,6 @@
         "sounds": [
             {
                 "name": "the_matrix:electromagnetic_explosion",
-                "pitch": 1.0,
                 "stream": true
             }
         ]
@@ -94,8 +85,7 @@
         "subtitle": "sound.the_matrix.electromagnetic_gun_charging",
         "sounds": [
             {
-                "name": "the_matrix:electromagnetic_gun_charging",
-                "pitch": 1.0,
+                "name": "the_matrix:electromagnetic_gun/charging",
                 "stream": true
             }
         ]
@@ -104,8 +94,7 @@
         "subtitle": "sound.the_matrix.electromagnetic_gun_shoot",
         "sounds": [
             {
-                "name": "the_matrix:electromagnetic_gun_shoot",
-                "pitch": 1.0,
+                "name": "the_matrix:electromagnetic_gun/shoot",
                 "stream": true
             }
         ]
@@ -115,7 +104,6 @@
         "sounds": [
             {
                 "name": "the_matrix:loading_bullet",
-                "pitch": 1.0,
                 "stream": true
             }
         ]
@@ -125,7 +113,6 @@
         "sounds": [
             {
                 "name": "the_matrix:machine_gun_shoot",
-                "pitch": 1.0,
                 "stream": true
             }
         ]
@@ -135,7 +122,6 @@
         "sounds": [
             {
                 "name": "the_matrix:mechanical_armor_equips",
-                "pitch": 1.0,
                 "stream": true
             }
         ]
@@ -144,8 +130,7 @@
         "subtitle": "sound.the_matrix.robot_sentinel_death",
         "sounds": [
             {
-                "name": "the_matrix:robot_sentinel_death",
-                "pitch": 1.0,
+                "name": "the_matrix:robot_sentinel/death",
                 "stream": true
             }
         ]
@@ -154,8 +139,7 @@
         "subtitle": "sound.the_matrix.robot_sentinel_hurt",
         "sounds": [
             {
-                "name": "the_matrix:robot_sentinel_hurt",
-                "pitch": 1.0,
+                "name": "the_matrix:robot_sentinel/hurt",
                 "stream": true
             }
         ]
@@ -164,8 +148,7 @@
         "subtitle": "sound.the_matrix.robot_sentinel_radar_detection",
         "sounds": [
             {
-                "name": "the_matrix:robot_sentinel_radar_detection",
-                "pitch": 1.0,
+                "name": "the_matrix:robot_sentinel/radar_detection",
                 "stream": true
             }
         ]
@@ -175,7 +158,43 @@
         "sounds": [
             {
                 "name": "the_matrix:spanner_twist",
-                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
+    "vending_machine_goods_popping": {
+        "subtitle": "sound.the_matrix.vending_machine_goods_popping",
+        "sounds": [
+            {
+                "name": "the_matrix:vending_machine/goods_popping",
+                "stream": true
+            }
+        ]
+    },
+    "vending_machine_switching_options": {
+        "subtitle": "sound.the_matrix.vending_machine_switching_options",
+        "sounds": [
+            {
+                "name": "the_matrix:vending_machine/switching_options",
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_female_death": {
+        "subtitle": "sound.the_matrix.zion_people.female.death",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/female/hurt",
+                "pitch": 1.1,
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_female_greet": {
+        "subtitle": "sound.the_matrix.zion_people.female.greet",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/female/greet",
                 "stream": true
             }
         ]
@@ -185,7 +204,40 @@
         "sounds": [
             {
                 "name": "the_matrix:zion_people/female/hurt",
-                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_female_trade": {
+        "subtitle": "sound.the_matrix.zion_people.female.trade",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/female/trad_0",
+                "stream": true,
+                "weight": 50
+            },
+            {
+                "name": "the_matrix:zion_people/female/trade_1",
+                "stream": true,
+                "weight": 50
+            }
+        ]
+    },
+    "zion_people_male_death": {
+        "subtitle": "sound.the_matrix.zion_people.male.hurt",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/hurt",
+                "pitch": 1.1,
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_male_greet": {
+        "subtitle": "sound.the_matrix.zion_people.male.greet",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/greet",
                 "stream": true
             }
         ]
@@ -195,7 +247,46 @@
         "sounds": [
             {
                 "name": "the_matrix:zion_people/male/hurt",
-                "pitch": 1.0,
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_male_trade": {
+        "subtitle": "sound.the_matrix.zion_people.male.trade",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/trade_0",
+                "stream": true,
+                "weight": 50
+            },
+            {
+                "name": "the_matrix:zion_people/male/trade_1",
+                "stream": true,
+                "weight": 50
+            }
+        ]
+    },
+    "zion_people_soldier_promote": {
+        "subtitle": "sound.the_matrix.zion_people.soldier.promote",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/soldier/promote_0",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/soldier/promote_1",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/soldier/promote_2",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/soldier/promote_3",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/soldier/promote_4",
                 "stream": true
             }
         ]

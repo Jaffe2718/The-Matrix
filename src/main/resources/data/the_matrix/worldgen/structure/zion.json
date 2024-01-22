@@ -4,7 +4,19 @@
     "biomes": [
         "the_matrix:zion_cave"
     ],
-    "spawn_overrides": {},
+    "spawn_overrides": {
+        "misc": {
+            "bounding_box": "full",
+            "spawns": [
+                {
+                    "type": "the_matrix:zion_people",
+                    "maxCount": 1,
+                    "minCount": 1,
+                    "weight": 3
+                }
+            ]
+        }
+    },
     "start_pool": "the_matrix:zion/base_0",
     "size": 7,
     "start_height": {

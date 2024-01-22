@@ -1,11 +1,13 @@
 package me.jaffe2718.the_matrix.element.block.entity;
 
 import me.jaffe2718.the_matrix.unit.BlockRegistry;
+import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.Merchant;
@@ -51,21 +53,23 @@ public class VendingMachineBlockEntity
 
     @Override
     public void trade(TradeOffer offer) {
+        if (this.world != null && !this.world.isClient)
+            this.world.playSound(null, this.pos, this.getYesSound(), SoundCategory.RECORDS, 1.0F, 1.0F);
     }
 
     @Override
     public void onSellingItem(ItemStack stack) {
+        if (this.world != null && !this.world.isClient)
+            this.world.playSound(null, this.pos, SoundEventRegistry.VENDING_MACHINE_SWITCHING_OPTIONS, SoundCategory.RECORDS, 1.0F, 1.0F);
     }
 
     @Override
     public int getExperience() {
-        return 0;
+        return 1;
     }
 
     @Override
-    public void setExperienceFromServer(int experience) {
-
-    }
+    public void setExperienceFromServer(int experience) {}
 
     @Override
     public boolean isLeveledMerchant() {
@@ -74,7 +78,7 @@ public class VendingMachineBlockEntity
 
     @Override
     public SoundEvent getYesSound() {
-        return null;
+        return SoundEventRegistry.VENDING_MACHINE_GOODS_POPPING;
     }
 
     @Override

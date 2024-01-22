@@ -128,6 +128,15 @@
     "sound.the_matrix.robot_sentinel_hurt": "Robot Sentinel hurts",
     "sound.the_matrix.robot_sentinel_radar_detection": "Robot Sentinel radar detecting",
     "sound.the_matrix.spanner_twist": "Spanner twists",
+    "sound.the_matrix.vending_machine_goods_popping": "Vending Machine goods popping out",
+    "sound.the_matrix.vending_machine_switching_options": "Vending Machine switching options",
+    "sound.the_matrix.zion_people.female.death": "Zion People dies",
+    "sound.the_matrix.zion_people.female.greet": "Zion People greets",
     "sound.the_matrix.zion_people.female.hurt": "Zion People hurts",
-    "sound.the_matrix.zion_people.male.hurt": "Zion People hurts"
+    "sound.the_matrix.zion_people.female.trade": "Zion People trades",
+    "sound.the_matrix.zion_people.male.death": "Zion People dies",
+    "sound.the_matrix.zion_people.male.greet": "Zion People greets",
+    "sound.the_matrix.zion_people.male.hurt": "Zion People hurts",
+    "sound.the_matrix.zion_people.male.trade": "Zion People trades",
+    "sound.the_matrix.zion_people.soldier.promote": "Zion People promotes"
 }

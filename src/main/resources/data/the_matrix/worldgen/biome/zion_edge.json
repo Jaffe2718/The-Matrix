@@ -4,9 +4,15 @@
     "has_precipitation": false,
     "effects": {
         "sky_color": 12124154,
+        "mood_sound": {
+            "block_search_extent": 8,
+            "offset": 2.0,
+            "sound": "minecraft:ambient.cave",
+            "tick_delay": 6000
+        },
         "fog_color": 16777215,
-        "water_color": 4494053,
-        "water_fog_color": 11007,
+        "water_color": 4159204,
+        "water_fog_color": 329011,
         "grass_color": 5933884
     },
     "spawners": {},

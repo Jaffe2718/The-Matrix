@@ -25,8 +25,18 @@ public abstract class SoundEventRegistry {
     public static final SoundEvent ROBOT_SENTINEL_HURT = SoundEvent.of(TheMatrix.id("robot_sentinel_hurt"));
     public static final SoundEvent ROBOT_SENTINEL_RADAR_DETECTION = SoundEvent.of(TheMatrix.id("robot_sentinel_radar_detection"));
     public static final SoundEvent SPANNER_TWIST = SoundEvent.of(TheMatrix.id("spanner_twist"));
+    public static final SoundEvent VENDING_MACHINE_GOODS_POPPING = SoundEvent.of(TheMatrix.id("vending_machine_goods_popping"));
+    public static final SoundEvent VENDING_MACHINE_SWITCHING_OPTIONS = SoundEvent.of(TheMatrix.id("vending_machine_switching_options"));
+    public static final SoundEvent ZION_PEOPLE_FEMALE_DEATH = SoundEvent.of(TheMatrix.id("zion_people_female_death"));
+    public static final SoundEvent ZION_PEOPLE_FEMALE_GREET = SoundEvent.of(TheMatrix.id("zion_people_female_greet"));
     public static final SoundEvent ZION_PEOPLE_FEMALE_HURT = SoundEvent.of(TheMatrix.id("zion_people_female_hurt"));
+    public static final SoundEvent ZION_PEOPLE_FEMALE_TRADE = SoundEvent.of(TheMatrix.id("zion_people_female_trade"));
+    public static final SoundEvent ZION_PEOPLE_MALE_DEATH = SoundEvent.of(TheMatrix.id("zion_people_male_death"));
+    public static final SoundEvent ZION_PEOPLE_MALE_GREET = SoundEvent.of(TheMatrix.id("zion_people_male_greet"));
     public static final SoundEvent ZION_PEOPLE_MALE_HURT = SoundEvent.of(TheMatrix.id("zion_people_male_hurt"));
+    public static final SoundEvent ZION_PEOPLE_MALE_TRADE = SoundEvent.of(TheMatrix.id("zion_people_male_trade"));
+    public static final SoundEvent ZION_PEOPLE_SOLDIER_PROMOTE = SoundEvent.of(TheMatrix.id("zion_people_soldier_promote"));
+
 
     public static void register() {
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("armored_personnel_unit_hurt"), ARMORED_PERSONNEL_UNIT_HURT);
@@ -47,7 +57,16 @@ public abstract class SoundEventRegistry {
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("robot_sentinel_hurt"), ROBOT_SENTINEL_HURT);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("robot_sentinel_radar_detection"), ROBOT_SENTINEL_RADAR_DETECTION);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("spanner_twist"), SPANNER_TWIST);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("vending_machine_goods_popping"), VENDING_MACHINE_GOODS_POPPING);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("vending_machine_switching_options"), VENDING_MACHINE_SWITCHING_OPTIONS);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_female_death"), ZION_PEOPLE_FEMALE_DEATH);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_female_greet"), ZION_PEOPLE_FEMALE_GREET);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_female_hurt"), ZION_PEOPLE_FEMALE_HURT);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_female_trade"), ZION_PEOPLE_FEMALE_TRADE);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_male_death"), ZION_PEOPLE_MALE_DEATH);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_male_greet"), ZION_PEOPLE_MALE_GREET);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_male_hurt"), ZION_PEOPLE_MALE_HURT);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_male_trade"), ZION_PEOPLE_MALE_TRADE);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("zion_people_soldier_promote"), ZION_PEOPLE_SOLDIER_PROMOTE);
     }
 }

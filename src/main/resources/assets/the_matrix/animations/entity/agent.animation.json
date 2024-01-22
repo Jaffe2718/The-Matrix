@@ -80,6 +80,11 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["variable.head_pitch", 0, 0]
+					}
 				}
 			}
 		},
@@ -103,6 +108,11 @@
 						"0.25": {
 							"vector": [0, 0, 0]
 						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["variable.head_pitch", 0, 0]
 					}
 				}
 			}
@@ -147,6 +157,11 @@
 						"0.25": {
 							"vector": [0, 0, 0]
 						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["variable.head_pitch", 0, 0]
 					}
 				}
 			}

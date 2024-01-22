@@ -1,10 +1,7 @@
 package me.jaffe2718.the_matrix.element.entity.mob;
 
 import me.jaffe2718.the_matrix.TheMatrix;
-import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.FleeRobotGoal;
-import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.GoHomeGoal;
-import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectEnemyGoal;
-import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.SelectHomeGoal;
+import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.*;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.DriveAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.apu_pilot.SelectAPUGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.infantry.ShootGoal;
@@ -56,7 +53,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.HashMap;
-import java.util.List;
 
 import static me.jaffe2718.the_matrix.client.model.entity.ZionPeopleModel.*;
 import static me.jaffe2718.the_matrix.unit.EntityRegistry.ROBOT_CLASSES;
@@ -173,6 +169,25 @@ public class ZionPeopleEntity
     }
 
     /**
+     * Get gender of this Zion people entity.<br>
+     * Male -> true; Female -> false
+     * */
+    private boolean getGender() {
+        int jobId = this.getJobId();
+        return jobId != 3 && jobId != 5;
+    }
+
+    /**
+     * If this entity is a soldier
+     * apu pilot, infantry, rifleman -> true
+     * [else] -> false
+     * */
+    private boolean isSoldier() {
+        int jobId = this.getJobId();
+        return jobId == 1 || jobId == 6 || jobId == 9;
+    }
+
+    /**
      * For machinist -> if this entity is fixing a machine
      * */
     public boolean isFixing() {
@@ -188,6 +203,7 @@ public class ZionPeopleEntity
 
     @Override
     protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+        this.playSound(this.getGender() ? SoundEventRegistry.ZION_PEOPLE_MALE_GREET : SoundEventRegistry.ZION_PEOPLE_FEMALE_GREET, 1, 1);
         if (this.isAlive()) {
             if (!this.getWorld().isClient) {
                 this.prepareOffers();
@@ -233,13 +249,14 @@ public class ZionPeopleEntity
         // universal goals for all jobs
         this.targetSelector.add(2, new SelectHomeGoal(this));
         this.goalSelector.add(1, new SwimGoal(this));
-        // this.goalSelector.add(1, new LongDoorInteractGoal(this, true));    // TODO: add long door interact goal after debugging
+        this.goalSelector.add(1, new LongDoorInteractGoal(this, true));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 1.5D));
-        this.goalSelector.add(3, new GoHomeGoal(this));
-        this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(4, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
-        this.goalSelector.add(5, new WanderAroundGoal(this, 1.0D));
-        this.goalSelector.add(5, new LookAroundGoal(this));
+        this.goalSelector.add(3, new FollowCustomerGoal(this));
+        this.goalSelector.add(4, new GoHomeGoal(this));
+        this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, ZionPeopleEntity.class, 8.0F));
+        this.goalSelector.add(6, new WanderAroundGoal(this, 1.0D));
+        this.goalSelector.add(6, new LookAroundGoal(this));
         switch (this.getJobId()) {
             case 1 -> {    // APU Pilot
                 this.targetSelector.add(1, new SelectAPUGoal(this));
@@ -287,12 +304,7 @@ public class ZionPeopleEntity
 
     @Override
     public int getArmor() {
-        List<Integer> soldierID = List.of(1, 6, 9);
-        if (soldierID.contains(this.getJobId())) {
-            return super.getArmor() * 2;
-        } else {
-            return super.getArmor();
-        }
+        return this.isSoldier() ? super.getArmor() * 2 : super.getArmor();
     }
 
     /**
@@ -344,10 +356,16 @@ public class ZionPeopleEntity
 
     @Override
     public void trade(TradeOffer offer) {
+        if (random.nextInt() % 3 == 0) {
+            this.playSound(this.getYesSound(), 1, 1);
+        }
     }
 
     @Override
     public void onSellingItem(ItemStack stack) {
+        if (random.nextInt() % 3 == 0 && ! this.isClient()) {
+            this.playSound(this.getSellingSound(), 1, 1);
+        }
     }
 
     @Override
@@ -365,19 +383,53 @@ public class ZionPeopleEntity
     }
 
     @Override
-    public SoundEvent getYesSound() {       // TODO: add sounds for different jobs
+    protected SoundEvent getAmbientSound() {   // TODO: add sounds for different jobs
+        switch (this.getJobId()) {
+            case 1 -> {}
+            case 2 -> {}
+            case 3 -> {}
+            case 4 -> {}
+            case 5 -> {}
+            case 6 -> {}
+            case 7 -> {}
+            case 8 -> {}
+            case 9 -> {}
+        }
+        return super.getAmbientSound();
+    }
+
+    @Override
+    public SoundEvent getYesSound() {
+        return this.getGender() ? SoundEventRegistry.ZION_PEOPLE_MALE_TRADE : SoundEventRegistry.ZION_PEOPLE_FEMALE_TRADE;
+    }
+
+    protected SoundEvent getSellingSound() {    // TODO: add sounds for different jobs
+        switch (this.getJobId()) {
+            case 1, 6, 9 -> {   // [Soldier] APU Pilot, Infantry, Rifleman
+                return SoundEventRegistry.ZION_PEOPLE_SOLDIER_PROMOTE;
+            }
+            case 2 -> {         // Carpenter
+
+            }
+            case 3 -> {         // Farm Breeder
+
+            }
+            case 4 -> {}
+            case 5 -> {}
+            case 7 -> {}
+            case 8 -> {}
+        }
         return null;
     }
 
-    @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        List<Integer> femaleID = List.of(3, 5);
-        if (femaleID.contains(this.getJobId())) {
-            return SoundEventRegistry.ZION_PEOPLE_FEMALE_HURT;
-        } else {
-            return SoundEventRegistry.ZION_PEOPLE_MALE_HURT;
-        }
+        return this.getGender() ? SoundEventRegistry.ZION_PEOPLE_MALE_HURT : SoundEventRegistry.ZION_PEOPLE_FEMALE_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return this.getGender() ? SoundEventRegistry.ZION_PEOPLE_MALE_DEATH : SoundEventRegistry.ZION_PEOPLE_FEMALE_DEATH;
     }
 
     @Override
