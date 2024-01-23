@@ -110,6 +110,7 @@
     "message.the_matrix.to_fly": "to fly",
     "message.the_matrix.to_open_the_safety_catch": "to open the safety catch",
     "message.the_matrix.to_shoot": "to shoot",
+    "sound.the_matrix.armored_personnel_unit_death": "Armored Personnel Unit dies",
     "sound.the_matrix.armored_personnel_unit_hurt": "Armored Personnel Unit hurts",
     "sound.the_matrix.armored_personnel_unit_land": "Armored Personnel Unit lands",
     "sound.the_matrix.armored_personnel_unit_shoot": "Armored Personnel Unit shooting",

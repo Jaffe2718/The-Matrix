@@ -39,16 +39,16 @@ This mod is still in development, and the plan is as follows:
 ### Entities
 
 1. Zion
-   - [ ] Armored Personnel Unit (APU) (rideable)
+   - [x] Armored Personnel Unit (APU) (rideable)
       - [x] Define APU entity: see [ArmoredPersonnelUnitEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/vehicle/ArmoredPersonnelUnitEntity.java)
       - [x] Model & Textures: see [ArmoredPersonnelUnitModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/ArmoredPersonnelUnitModel.java)
       - [x] Animations
       - [x] AI Goals
-      - [ ] Sound events
+      - [x] Sound events
          - [x] Ambient
          - [x] Hurt
-         - [ ] Death
-      - [ ] Create APU like iron golem
+         - [x] Death
+      - [x] Create APU like iron golem: see [MachineBlock.java](src/main/java/me/jaffe2718/the_matrix/element/block/MachineBlock.java)
       - [x] Translations
    - [ ] Digger Robot (boss)
      - [x] Model & Textures

@@ -63,7 +63,7 @@ public abstract class EntityRegistry {
             EntityType.Builder.create(DiggerRobotEntity::new, SpawnGroup.MONSTER)
                     .makeFireImmune()
                     .maxTrackingRange(10)
-                    .setDimensions(9.0F, 25F)
+                    .setDimensions(9.0F, 24.5F)
                     .build("digger_robot")
     );
 

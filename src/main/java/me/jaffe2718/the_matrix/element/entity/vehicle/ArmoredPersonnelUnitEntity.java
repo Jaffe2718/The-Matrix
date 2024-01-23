@@ -332,6 +332,11 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEventRegistry.ARMORED_PERSONNEL_UNIT_DEATH;
+    }
+
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEventRegistry.ARMORED_PERSONNEL_UNIT_HURT;
     }

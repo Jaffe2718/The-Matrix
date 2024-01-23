@@ -2,6 +2,7 @@ package me.jaffe2718.the_matrix.unit;
 
 import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.block.LaptopBlock;
+import me.jaffe2718.the_matrix.element.block.MachineBlock;
 import me.jaffe2718.the_matrix.element.block.TeleporterBlock;
 import me.jaffe2718.the_matrix.element.block.VendingMachineBlock;
 import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;
@@ -40,7 +41,7 @@ public abstract class BlockRegistry {
             .suffocates(Blocks::never)
             .nonOpaque());
 
-    public static final Block MACHINE_BLOCK = new Block(FabricBlockSettings
+    public static final Block MACHINE_BLOCK = new MachineBlock(FabricBlockSettings
             .create()
             .collidable(true)
             .instrument(Instrument.BASEDRUM)

@@ -27,7 +27,12 @@ public class ShootEnemyGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        if (this.machineGun.getTarget() == null) return false;
+        if (this.machineGun.getTarget() == null) {
+            if (this.machineGun.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {
+                zionPeople.stopRiding();
+            }
+            return false;
+        }
         return this.machineGun.getFirstPassenger() instanceof ZionPeopleEntity
                 && this.machineGun.getTarget().isAlive()
                 && EntityRegistry.ROBOT_CLASSES.contains(this.machineGun.getTarget().getClass());

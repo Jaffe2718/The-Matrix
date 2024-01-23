@@ -7,6 +7,7 @@ import net.minecraft.sound.SoundEvent;
 
 public abstract class SoundEventRegistry {
 
+    public static final SoundEvent ARMORED_PERSONNEL_UNIT_DEATH = SoundEvent.of(TheMatrix.id("armored_personnel_unit_death"));
     public static final SoundEvent ARMORED_PERSONNEL_UNIT_HURT = SoundEvent.of(TheMatrix.id("armored_personnel_unit_hurt"));
     public static final SoundEvent ARMORED_PERSONNEL_UNIT_LAND = SoundEvent.of(TheMatrix.id("armored_personnel_unit_land"));
     public static final SoundEvent ARMORED_PERSONNEL_UNIT_SHOOT = SoundEvent.of(TheMatrix.id("armored_personnel_unit_shoot"), 32F);
@@ -39,6 +40,7 @@ public abstract class SoundEventRegistry {
 
 
     public static void register() {
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("armored_personnel_unit_death"), ARMORED_PERSONNEL_UNIT_DEATH);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("armored_personnel_unit_hurt"), ARMORED_PERSONNEL_UNIT_HURT);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("armored_personnel_unit_land"), ARMORED_PERSONNEL_UNIT_LAND);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("armored_personnel_unit_shoot"), ARMORED_PERSONNEL_UNIT_SHOOT);

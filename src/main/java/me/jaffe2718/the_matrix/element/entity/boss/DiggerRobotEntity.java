@@ -2,6 +2,8 @@ package me.jaffe2718.the_matrix.element.entity.boss;
 
 import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
+import me.jaffe2718.the_matrix.unit.MathUnit;
+import me.jaffe2718.the_matrix.unit.StructureTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,9 +19,13 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -132,6 +138,23 @@ public class DiggerRobotEntity extends HostileEntity implements GeoEntity {
     @Override
     protected float getJumpVelocity() {
         return 1.5F;
+    }
+
+    @Override
+    protected void jump() {
+        Vec3d horizontalAcceleration = Vec3d.ZERO;
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            @Nullable BlockPos zionPos = serverWorld.locateStructure(StructureTags.ZION_STRUCTURES, BlockPos.ORIGIN, 256, false);
+            double distanceSquared = zionPos != null ? this.squaredDistanceTo(zionPos.toCenterPos()) : Double.MIN_VALUE;
+            if (distanceSquared > 1600) {
+                Vec3d relativePos = MathUnit.relativePos(this.getPos(), zionPos.toCenterPos());
+                horizontalAcceleration = horizontalAcceleration.add(relativePos.x, 0, relativePos.z).normalize();
+            } else {
+                horizontalAcceleration = horizontalAcceleration.add(this.getRandom().nextDouble() - 0.5, 0, this.getRandom().nextDouble() - 0.5).normalize();
+            }
+        }
+        this.addVelocity(horizontalAcceleration);
+        super.jump();
     }
 
     private void summonRobotSentinel(int count) {

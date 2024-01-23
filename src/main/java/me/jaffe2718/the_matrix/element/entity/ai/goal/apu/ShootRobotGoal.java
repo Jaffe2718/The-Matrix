@@ -22,7 +22,12 @@ public class ShootRobotGoal extends Goal {
     }
     @Override
     public boolean canStart() {
-        if (this.apu.getTarget() == null) return false;
+        if (this.apu.getTarget() == null) {
+            if (this.apu.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {
+                zionPeople.stopRiding();
+            }
+            return false;
+        }
         return this.apu.getFirstPassenger() instanceof ZionPeopleEntity
                 && this.apu.getTarget().isAlive()
                 && EntityRegistry.ROBOT_CLASSES.contains(this.apu.getTarget().getClass());

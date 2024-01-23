@@ -206,7 +206,7 @@ public class ZionPeopleEntity
         this.playSound(this.getGender() ? SoundEventRegistry.ZION_PEOPLE_MALE_GREET : SoundEventRegistry.ZION_PEOPLE_FEMALE_GREET, 1, 1);
         if (this.isAlive()) {
             if (!this.getWorld().isClient) {
-                this.prepareOffers();
+                this.getOffers();
                 this.setCustomer(player);
                 this.sendOffers(player, this.getDisplayName(), 1);
                 return ActionResult.success(this.getWorld().isClient);
@@ -343,10 +343,6 @@ public class ZionPeopleEntity
             this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.getJobId());
         }
         return this.offers;
-    }
-
-    private void prepareOffers() {
-        this.offers = TradeOfferListFactory.createZionPeopleTradeOfferList(this.getJobId());
     }
 
     @Override
