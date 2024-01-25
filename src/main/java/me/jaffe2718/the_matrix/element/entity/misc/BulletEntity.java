@@ -26,11 +26,13 @@ public class BulletEntity
     private static final float BULLET_DAMAGE = 18.0F;
 
     public static void shoot(@NotNull Entity owner, Vec3d pos, Vec3d velocity) {
-        BulletEntity bullet = new BulletEntity(EntityRegistry.BULLET, owner.getWorld());
-        bullet.setOwner(owner);
-        bullet.setPosition(pos);
-        bullet.setVelocity(velocity);
-        owner.getWorld().spawnEntity(bullet);
+        BulletEntity bullet = EntityRegistry.BULLET.create(owner.getWorld());//new BulletEntity(EntityRegistry.BULLET, owner.getWorld());
+        if (bullet != null) {
+            bullet.setOwner(owner);
+            bullet.setPosition(pos);
+            bullet.setVelocity(velocity);
+            owner.getWorld().spawnEntity(bullet);
+        }
     }
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.block;
 
+import com.mojang.serialization.MapCodec;
 import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -21,8 +22,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class LaptopBlock extends BlockWithEntity {
+    public static final MapCodec<LaptopBlock> CODEC = createCodec(LaptopBlock::new);
+
     public LaptopBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<LaptopBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -23,7 +24,9 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import static me.jaffe2718.the_matrix.client.model.entity.AgentModel.*;
 
-public class AgentEntity extends HostileEntity implements GeoEntity {
+public class AgentEntity
+        extends HostileEntity
+        implements GeoEntity, Monster {
 
     // public static final TrackedData<Integer> ATTACKING_TICKS = DataTracker.registerData(AgentEntity.class, TrackedDataHandlerRegistry.INTEGER);
     // public static final TrackedData<Boolean> FIST_OR_KICK = DataTracker.registerData(AgentEntity.class, TrackedDataHandlerRegistry.BOOLEAN);

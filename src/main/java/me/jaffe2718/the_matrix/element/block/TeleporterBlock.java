@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.block;
 
+import com.mojang.serialization.MapCodec;
 import me.jaffe2718.the_matrix.element.block.entity.TeleporterBlockEntity;
 import me.jaffe2718.the_matrix.unit.Dimensions;
 import me.jaffe2718.the_matrix.unit.States;
@@ -20,8 +21,15 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 public class TeleporterBlock extends BlockWithEntity {
+    public static final MapCodec<TeleporterBlock> CODEC = createCodec(TeleporterBlock::new);
+
     public TeleporterBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<TeleporterBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

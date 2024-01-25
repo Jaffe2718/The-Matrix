@@ -1,5 +1,6 @@
 package me.jaffe2718.the_matrix.element.block;
 
+import com.mojang.serialization.MapCodec;
 import me.jaffe2718.the_matrix.element.block.entity.VendingMachineBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,9 +19,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class VendingMachineBlock extends BlockWithEntity {
+    public static final MapCodec<VendingMachineBlock> CODEC = createCodec(VendingMachineBlock::new);
 
     public VendingMachineBlock(Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<VendingMachineBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

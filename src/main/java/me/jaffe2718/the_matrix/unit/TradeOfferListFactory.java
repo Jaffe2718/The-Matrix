@@ -39,6 +39,7 @@ public interface TradeOfferListFactory {
                 tradeOfferList.add(coinForItem(25, ItemRegistry.MACHINE_PART));
             }
             case 2 -> {    // Carpenter
+                // buy
                 tradeOfferList.add(itemForCoin(1, Items.OAK_LOG));
                 tradeOfferList.add(itemForCoin(1, Items.SPRUCE_LOG));
                 tradeOfferList.add(itemForCoin(1, Items.BIRCH_LOG));
@@ -47,6 +48,15 @@ public interface TradeOfferListFactory {
                 tradeOfferList.add(itemForCoin(1, Items.DARK_OAK_LOG));
                 tradeOfferList.add(itemForCoin(1, Items.MANGROVE_LOG));
                 tradeOfferList.add(itemForCoin(1, Items.CHERRY_LOG));
+                // sell
+                tradeOfferList.add(coinForItem(1, Items.OAK_LOG));
+                tradeOfferList.add(coinForItem(1, Items.SPRUCE_LOG));
+                tradeOfferList.add(coinForItem(1, Items.BIRCH_LOG));
+                tradeOfferList.add(coinForItem(1, Items.JUNGLE_LOG));
+                tradeOfferList.add(coinForItem(1, Items.ACACIA_LOG));
+                tradeOfferList.add(coinForItem(1, Items.DARK_OAK_LOG));
+                tradeOfferList.add(coinForItem(1, Items.MANGROVE_LOG));
+                tradeOfferList.add(coinForItem(1, Items.CHERRY_LOG));
                 tradeOfferList.add(coinForItem(2, Items.CRIMSON_STEM));
                 tradeOfferList.add(coinForItem(2, Items.WARPED_STEM));
                 tradeOfferList.add(coinForItem(2, Items.BAMBOO));
@@ -133,6 +143,7 @@ public interface TradeOfferListFactory {
             }
             case 7 -> {    // Machinist
                 tradeOfferList.add(coinForItem(64, Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE));
+                tradeOfferList.add(itemForCoin(64, ItemRegistry.PROMETHIUM_INGOT));
                 tradeOfferList.add(itemForCoin(25, ItemRegistry.MACHINE_PART));
                 tradeOfferList.add(itemForCoin(64, ItemRegistry.CPU));
             }

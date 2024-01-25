@@ -13,6 +13,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.sound.SoundEvent;
@@ -29,7 +30,9 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import static me.jaffe2718.the_matrix.client.model.entity.RobotSentinelModel.ATTACK_0;
 import static me.jaffe2718.the_matrix.client.model.entity.RobotSentinelModel.COMMON;
 
-public class RobotSentinelEntity extends HostileEntity implements GeoEntity {
+public class RobotSentinelEntity
+        extends HostileEntity
+        implements GeoEntity, Monster {
 
     private int attackCooldown = 0;
 

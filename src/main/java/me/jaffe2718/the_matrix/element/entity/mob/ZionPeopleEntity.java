@@ -9,12 +9,7 @@ import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.machinist.FixM
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.machinist.SelectMachineGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.SelectMachineGunGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.rifleman.UseMachineGunGoal;
-import me.jaffe2718.the_matrix.unit.MathUnit;
-import me.jaffe2718.the_matrix.unit.ParticleRegistry;
-import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
-import me.jaffe2718.the_matrix.unit.TradeOfferListFactory;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import me.jaffe2718.the_matrix.unit.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Npc;
@@ -82,7 +77,6 @@ public class ZionPeopleEntity
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final String HAS_HOME_KEY = "HasHome";        // nbt boolean
     private static final String HOME_POS_KEY = "HomePos";        // nbt long
-    @Environment(EnvType.SERVER)
     public boolean hasHome = false;
     public BlockPos homePos = BlockPos.ORIGIN;
     @Nullable
@@ -215,6 +209,11 @@ public class ZionPeopleEntity
         } else {
             return super.interactMob(player, hand);
         }
+    }
+
+    @Override
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return false;
     }
 
     @Override
@@ -379,41 +378,33 @@ public class ZionPeopleEntity
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {   // TODO: add sounds for different jobs
-        switch (this.getJobId()) {
-            case 1 -> {}
-            case 2 -> {}
-            case 3 -> {}
-            case 4 -> {}
-            case 5 -> {}
-            case 6 -> {}
-            case 7 -> {}
-            case 8 -> {}
-            case 9 -> {}
-        }
-        return super.getAmbientSound();
-    }
-
-    @Override
     public SoundEvent getYesSound() {
         return this.getGender() ? SoundEventRegistry.ZION_PEOPLE_MALE_TRADE : SoundEventRegistry.ZION_PEOPLE_FEMALE_TRADE;
     }
 
-    protected SoundEvent getSellingSound() {    // TODO: add sounds for different jobs
+    protected SoundEvent getSellingSound() {
         switch (this.getJobId()) {
             case 1, 6, 9 -> {   // [Soldier] APU Pilot, Infantry, Rifleman
                 return SoundEventRegistry.ZION_PEOPLE_SOLDIER_PROMOTE;
             }
             case 2 -> {         // Carpenter
-
+                return SoundEventRegistry.ZION_PEOPLE_CARPENTER_PROMOTE;
             }
             case 3 -> {         // Farm Breeder
-
+                return SoundEventRegistry.ZION_PEOPLE_FARM_BREEDER_PROMOTE;
             }
-            case 4 -> {}
-            case 5 -> {}
-            case 7 -> {}
-            case 8 -> {}
+            case 4 -> {         // Farmer
+                return SoundEventRegistry.ZION_PEOPLE_FARMER_PROMOTE;
+            }
+            case 5 -> {         // Grocer
+                return SoundEventRegistry.ZION_PEOPLE_GROCER_PROMOTE;
+            }
+            case 7 -> {         // Machinist
+                return SoundEventRegistry.ZION_PEOPLE_MACHINIST_PROMOTE;
+            }
+            case 8 -> {         // Miner
+                return SoundEventRegistry.ZION_PEOPLE_MINER_PROMOTE;
+            }
         }
         return null;
     }

@@ -23,15 +23,17 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 public abstract class BlockRegistry {
     // Blocks here
-    public static final Block DEEPSLATE_PROMETHIUM_ORE = new ExperienceDroppingBlock(FabricBlockSettings
-            .create()
-            .collidable(true)
-            .instrument(Instrument.BASEDRUM)
-            .mapColor(MapColor.STONE_GRAY)
-            .requiresTool()
-            .sounds(BlockSoundGroup.DEEPSLATE)
-            .luminance(7)
-            .strength(4.5F, 3.0F), UniformIntProvider.create(3, 7));
+    public static final Block DEEPSLATE_PROMETHIUM_ORE = new ExperienceDroppingBlock(
+            UniformIntProvider.create(3, 7),
+            FabricBlockSettings
+                    .create()
+                    .collidable(true)
+                    .instrument(Instrument.BASEDRUM)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.DEEPSLATE)
+                    .luminance(7)
+                    .strength(4.5F, 3.0F));
 
     public static final Block LAPTOP = new LaptopBlock(FabricBlockSettings
             .create()
@@ -69,14 +71,16 @@ public abstract class BlockRegistry {
             .luminance(15)
             .strength(5.0F, 6.0F));
 
-    public static final Block PROMETHIUM_ORE = new ExperienceDroppingBlock(FabricBlockSettings
-            .create()
-            .collidable(true)
-            .instrument(Instrument.BASEDRUM)
-            .mapColor(MapColor.STONE_GRAY)
-            .requiresTool()
-            .luminance(7)
-            .strength(3.0F, 3.0F), UniformIntProvider.create(3, 7));
+    public static final Block PROMETHIUM_ORE = new ExperienceDroppingBlock(
+            UniformIntProvider.create(3, 7),
+            FabricBlockSettings
+                    .create()
+                    .collidable(true)
+                    .instrument(Instrument.BASEDRUM)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .requiresTool()
+                    .luminance(7)
+                    .strength(3.0F, 3.0F));
 
     public static final Block RAW_PROMETHIUM_BLOCK = new Block(FabricBlockSettings
             .create()

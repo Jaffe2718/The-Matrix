@@ -327,6 +327,11 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     }
 
     @Override
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return false;
+    }
+
+    @Override
     protected float getJumpVelocity() {
         return 0.8F;
     }

@@ -1,13 +1,14 @@
 package me.jaffe2718.the_matrix.unit.gui.screen;
 
-import me.jaffe2718.the_matrix.unit.gui.screen.listener.Game2048ScreenListener;
-import me.jaffe2718.the_matrix.unit.gui.screen.slot.ButtonSlot;
-import me.jaffe2718.the_matrix.unit.gui.screen.slot.MatrixSlot;
-import me.jaffe2718.the_matrix.unit.gui.screen.slot.RewardSlot;
 import me.jaffe2718.the_matrix.element.block.entity.LaptopBlockEntity;
 import me.jaffe2718.the_matrix.unit.ItemRegistry;
 import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.ScreenRegistry;
+import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
+import me.jaffe2718.the_matrix.unit.gui.screen.listener.Game2048ScreenListener;
+import me.jaffe2718.the_matrix.unit.gui.screen.slot.ButtonSlot;
+import me.jaffe2718.the_matrix.unit.gui.screen.slot.MatrixSlot;
+import me.jaffe2718.the_matrix.unit.gui.screen.slot.RewardSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -16,7 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -76,22 +79,27 @@ public class Game2048ScreenHandler extends ScreenHandler {
         this.addSlot(new ButtonSlot(() -> {
             this.laptopBlockEntity.getMatrix2048().up2048();
             this.updateInventories();
+            this.playButtonClickedSound();
         }, 94, 16));   // up button: 53
         this.addSlot(new ButtonSlot(() -> {
             this.laptopBlockEntity.getMatrix2048().down2048();
             this.updateInventories();
+            this.playButtonClickedSound();
         }, 94, 56));   // down button: 54
         this.addSlot(new ButtonSlot(() -> {
             this.laptopBlockEntity.getMatrix2048().left2048();
             this.updateInventories();
+            this.playButtonClickedSound();
         }, 74, 36));   // left button: 55
         this.addSlot(new ButtonSlot(() -> {
             this.laptopBlockEntity.getMatrix2048().right2048();
             this.updateInventories();
+            this.playButtonClickedSound();
         }, 114, 36));  // right button: 56
         this.addSlot(new ButtonSlot(() -> {
             this.laptopBlockEntity.getMatrix2048().reset();
             this.updateInventories();
+            this.playButtonClickedSound();
         }, 94, 36));  // reset button: 57
         this.addListener(new Game2048ScreenListener());
     }
@@ -166,6 +174,13 @@ public class Game2048ScreenHandler extends ScreenHandler {
                 this.laptopBlockEntity.matrixInventory.setStack(i, number > 0 ? new ItemStack(ItemRegistry.COIN, number) : ItemStack.EMPTY);
             }
             this.laptopBlockEntity.rewardInventory.setStack(0, new ItemStack(ItemRegistry.COIN, this.laptopBlockEntity.getMatrix2048().getScore()));
+        }
+    }
+
+    private void playButtonClickedSound() {
+        World world = this.laptopBlockEntity != null ? this.laptopBlockEntity.getWorld() : null;
+        if (world != null) {
+            world.playSound(null, this.laptopBlockEntity.getPos(), SoundEventRegistry.GAME2048_BUTTON_CLICKED, SoundCategory.RECORDS, 1F, 1F);
         }
     }
 }

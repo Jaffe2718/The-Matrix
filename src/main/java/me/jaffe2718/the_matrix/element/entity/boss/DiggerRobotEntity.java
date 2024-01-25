@@ -17,6 +17,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.Monster;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -36,7 +37,9 @@ import java.util.List;
 
 import static me.jaffe2718.the_matrix.client.model.entity.DiggerRobotModel.COMMON;
 
-public class DiggerRobotEntity extends HostileEntity implements GeoEntity {
+public class DiggerRobotEntity
+        extends HostileEntity
+        implements GeoEntity, Monster {
     /**
      * Summon robot sentinel group number, total 5 groups.<br>
      * | difficulty | easy | normal | hard |<br>

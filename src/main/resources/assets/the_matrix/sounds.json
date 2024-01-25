@@ -109,6 +109,24 @@
             }
         ]
     },
+    "game2048_button_clicked": {
+        "subtitle": "sound.the_matrix.game2048.button_clicked",
+        "sounds": [
+            {
+                "name": "the_matrix:game2048/button_clicked",
+                "stream": true
+            }
+        ]
+    },
+    "game2048_gain_coins": {
+        "subtitle": "sound.the_matrix.game2048.gain_coins",
+        "sounds": [
+            {
+                "name": "the_matrix:game2048/gain_coins",
+                "stream": true
+            }
+        ]
+    },
     "loading_bullet": {
         "subtitle": "sound.the_matrix.loading_bullet",
         "sounds": [
@@ -190,6 +208,53 @@
             }
         ]
     },
+    "zion_people_carpenter_promote": {
+        "subtitle": "sound.the_matrix.zion_people.carpenter.promote",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/carpenter/promote_0",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/carpenter/promote_1",
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_farm_breeder_promote":{
+        "subtitle": "sound.the_matrix.zion_people.farm_breeder.promote",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/female/farm_breeder/promote_0",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/female/farm_breeder/promote_1",
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_farmer_promote": {
+        "subtitle": "sound.the_matrix.zion_people.farmer.promote",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/farmer/promote_0",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/farmer/promote_1",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/farmer/promote_2",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/farmer/promote_3",
+                "stream": true
+            }
+        ]
+    },
     "zion_people_female_death": {
         "subtitle": "sound.the_matrix.zion_people.female.death",
         "sounds": [
@@ -223,13 +288,41 @@
         "sounds": [
             {
                 "name": "the_matrix:zion_people/female/trad_0",
-                "stream": true,
-                "weight": 50
+                "stream": true
             },
             {
                 "name": "the_matrix:zion_people/female/trade_1",
-                "stream": true,
-                "weight": 50
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_grocer_promote": {
+        "subtitle": "sound.the_matrix.zion_people.grocer.promote",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/female/grocer/promote_0",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/female/grocer/promote_1",
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_machinist_promote": {
+        "subtitle": "sound.the_matrix.zion_people.machinist.promote",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/machinist/promote_0",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/machinist/promote_1",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/machinist/promote_2",
+                "stream": true
             }
         ]
     },
@@ -266,13 +359,28 @@
         "sounds": [
             {
                 "name": "the_matrix:zion_people/male/trade_0",
-                "stream": true,
-                "weight": 50
+                "stream": true
             },
             {
                 "name": "the_matrix:zion_people/male/trade_1",
-                "stream": true,
-                "weight": 50
+                "stream": true
+            }
+        ]
+    },
+    "zion_people_miner_promote": {
+        "subtitle": "sound.the_matrix.zion_people.miner.promote",
+        "sounds": [
+            {
+                "name": "the_matrix:zion_people/male/miner/promote_0",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/miner/promote_1",
+                "stream": true
+            },
+            {
+                "name": "the_matrix:zion_people/male/miner/promote_2",
+                "stream": true
             }
         ]
     },
