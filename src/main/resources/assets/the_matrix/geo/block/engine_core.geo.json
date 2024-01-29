@@ -1,0 +1,205 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "main",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "core",
+					"parent": "main",
+					"pivot": [2, 8, -2],
+					"cubes": [
+						{"origin": [1, 7, -3], "size": [2, 2, 2], "pivot": [2, 8, -2], "rotation": [-45, 0, 0], "uv": [0, 33]},
+						{"origin": [1, 7, -3], "size": [2, 2, 2], "pivot": [2, 8, -2], "rotation": [0, -45, 0], "uv": [32, 30]},
+						{"origin": [1, 7, -3], "size": [2, 2, 2], "pivot": [2, 8, -2], "rotation": [0, 0, 45], "uv": [0, 29]}
+					]
+				},
+				{
+					"name": "corner",
+					"parent": "main",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 0, -8], "size": [4, 4, 4], "uv": [12, 48]},
+						{"origin": [4, 0, -8], "size": [4, 4, 4], "uv": [48, 0]},
+						{"origin": [4, 0, 4], "size": [4, 4, 4], "uv": [44, 46]},
+						{"origin": [-8, 0, 4], "size": [4, 4, 4], "uv": [44, 32]},
+						{"origin": [4, 12, 4], "size": [4, 4, 4], "uv": [44, 24]},
+						{"origin": [4, 12, -8], "size": [4, 4, 4], "uv": [0, 43]},
+						{"origin": [-8, 12, -8], "size": [4, 4, 4], "uv": [32, 42]},
+						{"origin": [-8, 12, 4], "size": [4, 4, 4], "uv": [16, 40]}
+					]
+				},
+				{
+					"name": "edge",
+					"parent": "main",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "x_axis",
+					"parent": "edge",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "ex0",
+					"parent": "x_axis",
+					"pivot": [0, 2, 6],
+					"cubes": [
+						{"origin": [-4, 1, 5], "size": [8, 2, 2], "uv": [40, 20]}
+					]
+				},
+				{
+					"name": "ex1",
+					"parent": "x_axis",
+					"pivot": [0, 2, -6],
+					"cubes": [
+						{"origin": [-4, 1, -7], "size": [8, 2, 2], "uv": [0, 39]}
+					]
+				},
+				{
+					"name": "ex2",
+					"parent": "x_axis",
+					"pivot": [0, 14, -6],
+					"cubes": [
+						{"origin": [-4, 13, -7], "size": [8, 2, 2], "uv": [36, 15]}
+					]
+				},
+				{
+					"name": "ex3",
+					"parent": "x_axis",
+					"pivot": [0, 14, 6],
+					"cubes": [
+						{"origin": [-4, 13, 5], "size": [8, 2, 2], "uv": [36, 10]}
+					]
+				},
+				{
+					"name": "y_axis",
+					"parent": "edge",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "ey0",
+					"parent": "y_axis",
+					"pivot": [-6, 8, -6],
+					"cubes": [
+						{"origin": [-7, 4, -7], "size": [2, 8, 2], "uv": [44, 54]}
+					]
+				},
+				{
+					"name": "ey1",
+					"parent": "y_axis",
+					"pivot": [6, 8, -6],
+					"cubes": [
+						{"origin": [5, 4, -7], "size": [2, 8, 2], "uv": [0, 51]}
+					]
+				},
+				{
+					"name": "ey2",
+					"parent": "y_axis",
+					"pivot": [6, 8, 6],
+					"cubes": [
+						{"origin": [5, 4, 5], "size": [2, 8, 2], "uv": [36, 50]}
+					]
+				},
+				{
+					"name": "ey3",
+					"parent": "y_axis",
+					"pivot": [-6, 8, 6],
+					"cubes": [
+						{"origin": [-7, 4, 5], "size": [2, 8, 2], "uv": [28, 50]}
+					]
+				},
+				{
+					"name": "z_axis",
+					"parent": "edge",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "ez0",
+					"parent": "z_axis",
+					"pivot": [-6, 2, 0],
+					"cubes": [
+						{"origin": [-7, 1, -4], "size": [2, 2, 8], "uv": [36, 0]}
+					]
+				},
+				{
+					"name": "ez1",
+					"parent": "z_axis",
+					"pivot": [6, 2, 0],
+					"cubes": [
+						{"origin": [5, 1, -4], "size": [2, 2, 8], "uv": [32, 32]}
+					]
+				},
+				{
+					"name": "ez2",
+					"parent": "z_axis",
+					"pivot": [6, 14, 0],
+					"cubes": [
+						{"origin": [5, 13, -4], "size": [2, 2, 8], "uv": [20, 30]}
+					]
+				},
+				{
+					"name": "ez3",
+					"parent": "z_axis",
+					"pivot": [-6, 14, 0],
+					"cubes": [
+						{"origin": [-7, 13, -4], "size": [2, 2, 8], "uv": [0, 29]}
+					]
+				},
+				{
+					"name": "gear_set",
+					"parent": "main",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "g0",
+					"parent": "gear_set",
+					"pivot": [0, 5, 0],
+					"cubes": [
+						{"origin": [-3, 4.5, -3], "size": [6, 1, 6], "uv": [18, 15]},
+						{"origin": [-3, 4.5, -3], "size": [6, 1, 6], "pivot": [0, 0.5, 0], "rotation": [0, -30, 0], "uv": [18, 8]},
+						{"origin": [-3, 4.5, -3], "size": [6, 1, 6], "pivot": [0, 0.5, 0], "rotation": [0, -60, 0], "uv": [18, 1]}
+					]
+				},
+				{
+					"name": "g1",
+					"parent": "gear_set",
+					"pivot": [0, 11, 0],
+					"cubes": [
+						{"origin": [-3, 10.5, -3], "size": [6, 1, 6], "uv": [0, 14]},
+						{"origin": [-3, 10.5, -3], "size": [6, 1, 6], "pivot": [0, 6.5, 0], "rotation": [0, -30, 0], "uv": [0, 7]},
+						{"origin": [-3, 10.5, -3], "size": [6, 1, 6], "pivot": [0, 6.5, 0], "rotation": [0, -60, 0], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "g2",
+					"parent": "gear_set",
+					"pivot": [0.5, 8, 2.5],
+					"cubes": [
+						{"origin": [-3, 6, 0.5], "size": [7, 4, 4], "uv": [22, 22]},
+						{"origin": [-3, 6, 0.5], "size": [7, 4, 4], "pivot": [0.5, 8, 2.5], "rotation": [-45, 0, 0], "uv": [0, 21]}
+					]
+				},
+				{
+					"name": "g3",
+					"parent": "gear_set",
+					"pivot": [-2.5, 8, -2],
+					"cubes": [
+						{"origin": [-4, 6.5, -3.5], "size": [3, 3, 3], "uv": [49, 40]},
+						{"origin": [-4, 6.5, -3.5], "size": [3, 3, 3], "pivot": [-2.5, 8, -2], "rotation": [0, 0, 45], "uv": [12, 29]}
+					]
+				}
+			]
+		}
+	]
+}

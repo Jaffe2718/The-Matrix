@@ -30,7 +30,6 @@ public abstract class PlayerEntityMixin {
 
     @Inject(at = @At("TAIL"), method = "readCustomDataFromNbt")
     private void readCustomDataFromNbtMixin(@NotNull NbtCompound nbt, CallbackInfo ci) {
-        // TODO: unfinished, add new dimension for agent smith boss
         InventoryManager inventoryManager = Objects.requireNonNullElse(
                 EventHandler.playerInventoryMap.get(((PlayerEntity) (Object) this).getUuid()),
                 new InventoryManager((PlayerEntity) (Object) this));
@@ -41,7 +40,6 @@ public abstract class PlayerEntityMixin {
 
     @Inject(at = @At("TAIL"), method = "writeCustomDataToNbt")
     private void writeCustomDataToNbtMixin(@NotNull NbtCompound nbt, CallbackInfo ci) {
-        // TODO: unfinished, add new dimension for agent smith boss
         InventoryManager inventoryManager = Objects.requireNonNullElse(
                 EventHandler.playerInventoryMap.get(((PlayerEntity) (Object) this).getUuid()),
                 new InventoryManager((PlayerEntity) (Object) this));

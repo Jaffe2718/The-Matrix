@@ -24,6 +24,7 @@ public class GoHomeGoal extends Goal {
         this.zionPeople.getNavigation().startMovingTo(homePos.getX(), homePos.getY(), homePos.getZ(), 1.0);
     }
 
+    @SuppressWarnings("deprecation")
     private static boolean checkHomePos(@NotNull BlockPos pos, @NotNull World world) {
         return world.getBlockState(pos.up(2)).isOf(Blocks.LANTERN)
                 && world.getBlockState(pos.up()).isAir()
@@ -40,7 +41,7 @@ public class GoHomeGoal extends Goal {
     public boolean canStart() {
         this.zionPeople.hasHome = checkHomePos(this.zionPeople.homePos, this.zionPeople.getWorld());
         double d2 = this.zionPeople.squaredDistanceTo(this.zionPeople.homePos.toCenterPos());
-        if (d2 > 4096) this.zionPeople.hasHome = false;
+        if (d2 > 8192) this.zionPeople.hasHome = false;
         boolean d2gt8 = this.zionPeople.hasHome && d2 > 8;
         int dayTime = (int) (this.zionPeople.getWorld().getTimeOfDay() % 24000L);
         boolean isNight = dayTime >= 13000 && dayTime <= 23000;

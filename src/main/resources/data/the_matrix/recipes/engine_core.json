@@ -1,24 +1,24 @@
 {
     "type": "minecraft:crafting_shaped",
-    "category": "equipment",
+    "category": "misc",
     "pattern": [
-        " M",
-        "NP",
-        "N "
+        "MPM",
+        "PCP",
+        "MPM"
     ],
     "key": {
+        "C": {
+            "item": "the_matrix:cpu"
+        },
         "M": {
             "item": "the_matrix:machine_part"
-        },
-        "N": {
-            "item": "minecraft:netherite_ingot"
         },
         "P": {
             "item": "the_matrix:promethium_ingot"
         }
     },
     "result": {
-        "item": "the_matrix:mining_drill",
+        "item": "the_matrix:engine_core",
         "count": 1
     },
     "show_notification": true

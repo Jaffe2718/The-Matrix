@@ -8,8 +8,8 @@ This mod is still in development, and the plan is as follows:
 
 1. Zion
    - [x] Define Zion Dimension Type
-   - [ ] Define noise function to generate terrain
-   - [ ] Define biomes (Zion cave)
+   - [x] Define noise function to generate terrain
+   - [x] Define biomes (Zion cave)
 
 2. Virtual World
    - [ ] Define Virtual World Dimension Type
@@ -28,10 +28,10 @@ This mod is still in development, and the plan is as follows:
 
 ### Biomes
 
-- [ ] Zion
-   - [ ] Zion cave
+- [x] Zion
+   - [x] Zion cave
       - [x] Define Zion cave biome
-      - [ ] Creatures generation
+      - [x] Creatures generation
 - [ ] Virtual World
    - [ ] Virtual city
 - [ ] Robot World
@@ -74,7 +74,7 @@ This mod is still in development, and the plan is as follows:
          - [ ] Death
       - [x] Translations
    - [ ] Space Warship (rideable)
-   - [ ] Zion People
+   - [x] Zion People
        - [x] Define Zion People entity: see [ZionPeopleEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/ZionPeopleEntity.java)
        - [x] Model & Textures: see [ZionPeopleModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/ZionPeopleModel.java)
           - [x] Jobs (0 -> random)
@@ -89,13 +89,12 @@ This mod is still in development, and the plan is as follows:
              - [x] 9 -> rifleman
        - [x] Animations
        - [x] AI Goals
-       - [ ] Sound events
-          - [ ] Ambient
-          - [ ] Hurt
-          - [ ] Death
-          - [ ] Attack
+       - [x] Sound events
+          - [x] Hurt
+          - [x] Death
+          - [x] Attack
        - [x] Trading
-       - [ ] Spawn conditions
+       - [x] Spawn conditions
 2. Virtual World
    - [ ] Agent
       - [x] Define Agent entity: see [AgentEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/AgentEntity.java)
@@ -165,19 +164,18 @@ This mod is still in development, and the plan is as follows:
          - [x] Tooltip
 
 2. Zion
-   - [ ] Transmitter (to tp to Virtual World)
-      - [ ] Define transmitter item
-      - [ ] Define Block of transmitters
-      - [ ] Realise function to tp to Virtual World
+   - [x] Teleporter (to tp to Virtual World)
+      - [x] Define Teleporter item
+      - [x] Define Block of Teleporters
+      - [x] Realise function to tp to Virtual World
    
 3. Common
    - [ ] CPUs
       - [x] Define CPU item
-      - [ ] Realise function to make the space warship
-      - [ ] To recipe Laptop
-   - [ ] Laptop (to earn coins)
+      - [x] To recipe Laptop
+   - [x] Laptop (to earn coins)
       - [x] Define laptop item
-      - [ ] Realise function to earn coins by playing game 2048
+      - [x] Realise function to earn coins by playing game 2048
    - [x] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
    - [x] Mechanical Armors
    - [x] Mining Drill (to mine)
@@ -189,15 +187,15 @@ This mod is still in development, and the plan is as follows:
       - [x] Animations & Models & Textures
       - [x] Realise function to shoot
    - [ ] Electromagnetic hand grenades (to kill robots)
-   - [ ] Promethium Ore (to make energy batteries, etc)
+   - [x] Promethium Ore (to make energy batteries, etc)
       - [x] Define [deepslate] promethium ore block
       - [x] Define promethium ore item
-      - [ ] Spawn conditions
+      - [x] Spawn conditions
    - [x] Promethium Ingot (to make energy batteries)
    - [x] Promethium Block (to make energy batteries)
 
 ### Particles
-   - [ ] Zion
+   - [x] Zion
       - [x] APU machine gun shoot
       - [x] Electromagnetic gun shoot
    - [ ] Virtual World

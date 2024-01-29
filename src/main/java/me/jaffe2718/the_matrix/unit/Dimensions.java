@@ -15,22 +15,23 @@ import static me.jaffe2718.the_matrix.TheMatrix.MOD_ID;
 public interface Dimensions {
     RegistryKey<World> ROBOT_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("robot_world"));
     RegistryKey<World> VIRTUAL_WORLD = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("virtual_world"));
+    RegistryKey<World> VIRTUAL_END = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("virtual_end"));
     RegistryKey<World> ZION = RegistryKey.of(RegistryKeys.WORLD, TheMatrix.id("zion"));
 
     /**
      * @param targetWorld the world to teleport to, can be {@link #ROBOT_WORLD}, {@link #VIRTUAL_WORLD}
-     * @param zionWorld the zion world, {@link #ZION}
+     * @param currentWorld the zion world, {@link #ZION}
      * @param zionPos the position to teleport from
      * @return the position to teleport to
      */
     @Contract("_, _, _ -> new")
-    static @NotNull Vec3d getWorldTeleportPos(@NotNull ServerWorld targetWorld, @NotNull ServerWorld zionWorld, @NotNull BlockPos zionPos) {
+    static @NotNull Vec3d getWorldTeleportPos(@NotNull ServerWorld targetWorld, @NotNull ServerWorld currentWorld, @NotNull BlockPos zionPos) {
         // get the coordinate scale between the two worlds
-        double coordinateScale = targetWorld.getDimension().coordinateScale() / zionWorld.getDimension().coordinateScale();
+        double coordinateScale = targetWorld.getDimension().coordinateScale() / currentWorld.getDimension().coordinateScale();
         // get the scaled position of the zion spawn position
         BlockPos scaledPos = new BlockPos((int) Math.round(zionPos.getX() * coordinateScale), zionPos.getY(), (int) Math.round(zionPos.getZ() * coordinateScale));
         int dy = -2;
-        while (dy != 0) {
+        while (dy != 0 && MathUnit.isBetween(scaledPos.getX(), targetWorld.getTopY() + 1, targetWorld.getTopY())) {
             dy = checkSpawnPos(targetWorld, scaledPos);
             scaledPos = scaledPos.add(0, dy, 0);
         }

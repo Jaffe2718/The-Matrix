@@ -20,9 +20,9 @@ public class TheMatrixClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         KeyBindings.register();
+        BlockEntityRendererFactories.register(BlockRegistry.ENGINE_CORE_BLOCK_ENTITY, EngineCoreRenderer::new);
         BlockEntityRendererFactories.register(BlockRegistry.LAPTOP_BLOCK_ENTITY, LaptopRenderer::new);
         BlockEntityRendererFactories.register(BlockRegistry.TELEPORTER_BLOCK_ENTITY, PlasmaEmitterBlockEntityRenderer::new);
-//        BlockEntityRendererFactories.register(BlockRegistry.VENDING_MACHINE_BLOCK_ENTITY, VendingMachineRenderer::new);
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.VENDING_MACHINE, RenderLayer.getCutout());
         EntityRendererRegistry.register(EntityRegistry.AGENT, AgentRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.ARMORED_PERSONAL_UNIT, ArmoredPersonnelUnitRenderer::new);

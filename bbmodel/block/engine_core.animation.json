@@ -1,0 +1,96 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.engine_core.common": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"ex0": {
+					"rotation": {
+						"vector": ["90 * query.anim_time", 0, 0]
+					}
+				},
+				"ex1": {
+					"rotation": {
+						"vector": ["90 * query.anim_time", 0, 0]
+					}
+				},
+				"ex2": {
+					"rotation": {
+						"vector": ["90 * query.anim_time", 0, 0]
+					}
+				},
+				"ex3": {
+					"rotation": {
+						"vector": ["90 * query.anim_time", 0, 0]
+					}
+				},
+				"ez0": {
+					"rotation": {
+						"vector": [0, 0, "90 * query.anim_time"]
+					}
+				},
+				"ez1": {
+					"rotation": {
+						"vector": [0, 0, "90 * query.anim_time"]
+					}
+				},
+				"ez2": {
+					"rotation": {
+						"vector": [0, 0, "90 * query.anim_time"]
+					}
+				},
+				"ez3": {
+					"rotation": {
+						"vector": [0, 0, "90 * query.anim_time"]
+					}
+				},
+				"ey0": {
+					"rotation": {
+						"vector": [0, "90 * query.anim_time", 0]
+					}
+				},
+				"ey1": {
+					"rotation": {
+						"vector": [0, "90 * query.anim_time", 0]
+					}
+				},
+				"ey2": {
+					"rotation": {
+						"vector": [0, "90 * query.anim_time", 0]
+					}
+				},
+				"ey3": {
+					"rotation": {
+						"vector": [0, "90 * query.anim_time", 0]
+					}
+				},
+				"g0": {
+					"rotation": {
+						"vector": [0, "360 * query.anim_time", 0]
+					}
+				},
+				"g1": {
+					"rotation": {
+						"vector": [0, "- 540 * query.anim_time", 0]
+					}
+				},
+				"g2": {
+					"rotation": {
+						"vector": ["360 * query.anim_time", 0, 0]
+					}
+				},
+				"g3": {
+					"rotation": {
+						"vector": [0, 0, "360 * query.anim_time"]
+					}
+				},
+				"core": {
+					"rotation": {
+						"vector": ["270 * math.sin(query.anim_time * 300)", "360 * math.sin(query.anim_time * 400)", "180 * math.sin(query.anim_time * 500)"]
+					}
+				}
+			}
+		}
+	}
+}

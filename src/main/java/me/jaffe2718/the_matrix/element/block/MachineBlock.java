@@ -28,7 +28,7 @@ public class MachineBlock extends Block {
     @Override
     public void onPlaced(@NotNull World world, BlockPos pos, @NotNull BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         if (world instanceof ServerWorld serverWorld
-                && serverWorld.getBlockState(pos.down()).isOf(BlockRegistry.PLASMA_LAMP)
+                && serverWorld.getBlockState(pos.down()).isOf(BlockRegistry.ENGINE_CORE)
                 && placer instanceof PlayerEntity) {
             if (checkFaceX(serverWorld, pos) || checkFaceZ(serverWorld, pos)) {
                 clear5x5x5(serverWorld, pos);
@@ -100,7 +100,7 @@ public class MachineBlock extends Block {
             return 0;
         } else if (state.isOf(BlockRegistry.MACHINE_BLOCK)) {
             return 1;
-        } else if (state.isOf(BlockRegistry.PLASMA_LAMP)) {
+        } else if (state.isOf(BlockRegistry.ENGINE_CORE)) {
             return 2;
         } else {
             return -1;

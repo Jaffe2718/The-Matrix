@@ -45,7 +45,7 @@ public class TeleporterBlock extends BlockWithEntity {
     @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world instanceof ServerWorld serverWorld && player.getVehicle() == null) {
+        if (world instanceof ServerWorld serverWorld && player.canUsePortals()) {
             RegistryKey<World> currentDimension = serverWorld.getRegistryKey();
             if (currentDimension == Dimensions.ZION) {  // show teleport screen
                 player.openHandledScreen(state.createScreenHandlerFactory(world, pos));

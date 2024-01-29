@@ -1,9 +1,11 @@
 {
     "block.the_matrix.deepslate_promethium_ore": "Deepslate Promethium Ore",
+    "block.the_matrix.engine_core": "Engine Core",
     "block.the_matrix.laptop": "Laptop",
     "block.the_matrix.laptop.tooltip": "Play it to earn coins",
     "block.the_matrix.machine_block": "Machine Block",
     "block.the_matrix.plasma_lamp": "Plasma Lamp",
+    "block.the_matrix.portal_01_block": "Portal 01 Block",
     "block.the_matrix.promethium_block": "Promethium Block",
     "block.the_matrix.promethium_ore": "Promethium Ore",
     "block.the_matrix.raw_promethium_block": "Raw Promethium Block",

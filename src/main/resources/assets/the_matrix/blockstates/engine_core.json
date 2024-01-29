@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": {
+            "model": "the_matrix:block/engine_core"
+        }
+    }
+}

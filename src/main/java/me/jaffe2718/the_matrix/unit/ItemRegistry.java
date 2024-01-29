@@ -35,6 +35,7 @@ public abstract class ItemRegistry {
     public static final Item MECHANICAL_CHESTPLATE = new MechanicalArmorItem(ArmorItem.Type.CHESTPLATE, new FabricItemSettings().fireproof());
     public static final Item MECHANICAL_LEGGINGS = new MechanicalArmorItem(ArmorItem.Type.LEGGINGS, new FabricItemSettings().fireproof());
     public static final Item MECHANICAL_BOOTS = new MechanicalArmorItem(ArmorItem.Type.BOOTS, new FabricItemSettings().fireproof());
+
     public static final Item BATTERY = new Item(new FabricItemSettings()) {
         @Override
         public void appendTooltip(ItemStack stack, @Nullable World world, @NotNull List<Text> tooltip, TooltipContext context) {
@@ -63,6 +64,7 @@ public abstract class ItemRegistry {
     public static final Item CPU = new Item(new FabricItemSettings());
     public static final Item DEEPSLATE_PROMETHIUM_ORE = new BlockItem(BlockRegistry.DEEPSLATE_PROMETHIUM_ORE, new FabricItemSettings());
     public static final Item ELECTROMAGNETIC_GUN = new ElectromagneticGunItem(new FabricItemSettings().maxCount(1).maxDamage(100));
+    public static final Item ENGINE_CORE = new EngineCoreItem(BlockRegistry.ENGINE_CORE, new FabricItemSettings());
     public static final Item LAPTOP = new LaptopItem(BlockRegistry.LAPTOP, new FabricItemSettings());
     public static final Item MACHINE_BLOCK = new BlockItem(BlockRegistry.MACHINE_BLOCK, new FabricItemSettings());
     public static final Item MACHINE_GUN = new MachineGunItem(new FabricItemSettings());
@@ -121,6 +123,7 @@ public abstract class ItemRegistry {
         Registry.register(Registries.ITEM, TheMatrix.id("cpu"), CPU);
         Registry.register(Registries.ITEM, TheMatrix.id("deepslate_promethium_ore"), DEEPSLATE_PROMETHIUM_ORE);
         Registry.register(Registries.ITEM, TheMatrix.id("electromagnetic_gun"), ELECTROMAGNETIC_GUN);
+        Registry.register(Registries.ITEM, TheMatrix.id("engine_core"), ENGINE_CORE);
         Registry.register(Registries.ITEM, TheMatrix.id("laptop"), LAPTOP);
         Registry.register(Registries.ITEM, TheMatrix.id("machine_block"), MACHINE_BLOCK);
         Registry.register(Registries.ITEM, TheMatrix.id("machine_gun"), MACHINE_GUN);
@@ -161,6 +164,7 @@ public abstract class ItemRegistry {
             group.add(CPU);
             group.add(DEEPSLATE_PROMETHIUM_ORE);
             group.add(ELECTROMAGNETIC_GUN);
+            group.add(ENGINE_CORE);
             group.add(LAPTOP);
             group.add(MACHINE_BLOCK);
             group.add(MACHINE_GUN);
