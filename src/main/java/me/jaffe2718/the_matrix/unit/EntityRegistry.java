@@ -9,6 +9,7 @@ import me.jaffe2718.the_matrix.element.entity.mob.RobotSentinelEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.SpaceshipEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -97,6 +98,16 @@ public abstract class EntityRegistry {
                     .build("robot_sentinel")
     );
 
+    public static final EntityType<SpaceshipEntity> SPACESHIP = Registry.register(
+            Registries.ENTITY_TYPE,
+            TheMatrix.id("spaceship"),
+            EntityType.Builder.create(SpaceshipEntity::new, SpawnGroup.MISC)
+                    .makeFireImmune()
+                    .maxTrackingRange(10)
+                    .setDimensions(5F, 2.5F)
+                    .build("spaceship")
+    );
+
     public static final EntityType<ZionPeopleEntity> ZION_PEOPLE = Registry.register(
             Registries.ENTITY_TYPE,
             TheMatrix.id("zion_people"),
@@ -112,6 +123,7 @@ public abstract class EntityRegistry {
         FabricDefaultAttributeRegistry.register(DIGGER_ROBOT, DiggerRobotEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(MACHINE_GUN, MachineGunEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ROBOT_SENTINEL, RobotSentinelEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SPACESHIP, SpaceshipEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(ZION_PEOPLE, ZionPeopleEntity.createAttributes());
     }
 }

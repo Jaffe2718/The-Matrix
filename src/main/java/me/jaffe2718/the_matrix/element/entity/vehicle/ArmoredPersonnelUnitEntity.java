@@ -55,7 +55,7 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createLivingAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 600.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 750.0D)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_ARMOR, 10.0D)
                 .add(EntityAttributes.GENERIC_ARMOR_TOUGHNESS, 2.0D)

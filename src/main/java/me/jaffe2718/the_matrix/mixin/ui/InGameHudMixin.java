@@ -3,6 +3,7 @@ package me.jaffe2718.the_matrix.mixin.ui;
 import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.SpaceshipEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -18,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class InGameHudMixin {
     @Unique
     private static final Identifier BULLET_TEXTURE = TheMatrix.id("hud/bullet");
+    @Unique
+    private static final Identifier POWER_TEXTURE = TheMatrix.id("hud/power");
     @Unique
     private static final Identifier VEHICLE_CONTAINER_HEART_TEXTURE = new Identifier("hud/heart/vehicle_container");
     @Unique
@@ -88,7 +91,6 @@ public abstract class InGameHudMixin {
                                 context.drawGuiTexture(VEHICLE_HALF_HEART_TEXTURE, q, m, 9, 9);
                             }
                         }
-
                         m -= 10;
                     }
 
@@ -103,6 +105,8 @@ public abstract class InGameHudMixin {
             this.renderAPUBulletNumBar(context, apu);
         } else if (this.getRiddenEntity() instanceof MachineGunEntity machineGun) {
             this.renderMachineGunBulletNumBar(context, machineGun);
+        } else if (this.getRiddenEntity() instanceof SpaceshipEntity spaceship) {
+            this.renderSpaceshipPowerBar(context, spaceship);
         }
     }
 
@@ -133,6 +137,21 @@ public abstract class InGameHudMixin {
         context.drawGuiTexture(JUMP_BAR_COOLDOWN_TEXTURE, x, y, 182, 5);
         if (bulletPercentage > 0.0F) {
             context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, 182, 5, 0, 0, x, y, bulletLength, 5);
+        }
+    }
+
+    @Unique
+    private void renderSpaceshipPowerBar(@NotNull DrawContext context, @NotNull SpaceshipEntity mount) {
+        this.client.getProfiler().push("jumpBar");
+        int x = this.scaledWidth / 2 - 91;
+        int y = this.scaledHeight - 29;
+        float powerPercentage = (float) mount.getPower() / SpaceshipEntity.MAX_POWER;
+        int powerLength = (int) (powerPercentage * 182.0F);
+        context.drawGuiTexture(POWER_TEXTURE, x - 10, y - 2, 9, 9);
+        context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, x, y, 182, 5);
+        context.drawGuiTexture(JUMP_BAR_COOLDOWN_TEXTURE, x, y, 182, 5);
+        if (powerPercentage > 0.0F) {
+            context.drawGuiTexture(JUMP_BAR_BACKGROUND_TEXTURE, 182, 5, 0, 0, x, y, powerLength, 5);
         }
     }
 }

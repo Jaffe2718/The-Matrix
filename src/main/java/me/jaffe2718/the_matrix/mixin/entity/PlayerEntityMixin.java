@@ -2,6 +2,7 @@ package me.jaffe2718.the_matrix.mixin.entity;
 
 import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.mob.AgentEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.SpaceshipEntity;
 import me.jaffe2718.the_matrix.element.item.HackerBootsItem;
 import me.jaffe2718.the_matrix.element.item.HackerCloakItem;
 import me.jaffe2718.the_matrix.element.item.HackerPantsItem;
@@ -10,8 +11,11 @@ import me.jaffe2718.the_matrix.unit.InventoryManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
@@ -58,6 +62,25 @@ public abstract class PlayerEntityMixin {
         if (source.getAttacker() instanceof AgentEntity &&
                 ((PlayerEntity) (Object) this).getEquippedStack(EquipmentSlot.LEGS).getItem() instanceof HackerPantsItem) {
             cir.setReturnValue(true);
+        }
+        if (((PlayerEntity) (Object) this).getVehicle() instanceof SpaceshipEntity
+                && source.getTypeRegistryEntry().getKey().isPresent()) {   // invulnerable when in spaceship
+            RegistryKey<DamageType> damageType = source.getTypeRegistryEntry().getKey().get();
+            cir.setReturnValue(damageType == DamageTypes.EXPLOSION
+                    || damageType == DamageTypes.FALL
+                    || damageType == DamageTypes.FALLING_ANVIL
+                    || damageType == DamageTypes.FALLING_BLOCK
+                    || damageType == DamageTypes.FALLING_STALACTITE
+                    || damageType == DamageTypes.FIREBALL
+                    || damageType == DamageTypes.FIREWORKS
+                    || damageType == DamageTypes.LAVA
+                    || damageType == DamageTypes.HOT_FLOOR
+                    || damageType == DamageTypes.MOB_ATTACK
+                    || damageType == DamageTypes.MOB_PROJECTILE
+                    || damageType == DamageTypes.MOB_ATTACK_NO_AGGRO
+                    || damageType == DamageTypes.ON_FIRE
+                    || damageType == DamageTypes.PLAYER_ATTACK
+                    || damageType == DamageTypes.TRIDENT);
         }
     }
 

@@ -51,7 +51,7 @@ public abstract class BlockRegistry {
             .suffocates(Blocks::never)
             .nonOpaque());
 
-    public static final Block MACHINE_BLOCK = new MachineBlock(FabricBlockSettings
+    public static final Block MACHINE_BLOCK = new Block(FabricBlockSettings
             .create()
             .collidable(true)
             .instrument(Instrument.BASEDRUM)

@@ -181,6 +181,15 @@
             }
         ]
     },
+    "spaceship_accelerating": {
+        "subtitle": "sound.the_matrix.spaceship_accelerating",
+        "sounds": [
+            {
+                "name": "the_matrix:spaceship/accelerating",
+                "stream": true
+            }
+        ]
+    },
     "spanner_twist": {
         "subtitle": "sound.the_matrix.spanner_twist",
         "sounds": [
@@ -287,7 +296,7 @@
         "subtitle": "sound.the_matrix.zion_people.female.trade",
         "sounds": [
             {
-                "name": "the_matrix:zion_people/female/trad_0",
+                "name": "the_matrix:zion_people/female/trade_0",
                 "stream": true
             },
             {

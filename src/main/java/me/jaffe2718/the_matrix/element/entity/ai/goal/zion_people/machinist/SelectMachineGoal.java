@@ -3,6 +3,7 @@ package me.jaffe2718.the_matrix.element.entity.ai.goal.zion_people.machinist;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.SpaceshipEntity;
 import me.jaffe2718.the_matrix.unit.EntityRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.TrackTargetGoal;
@@ -35,7 +36,9 @@ public class SelectMachineGoal extends TrackTargetGoal {
         List<PathAwareEntity> allMachines = this.mob.getWorld().getEntitiesByClass(
                 PathAwareEntity.class,
                 this.getSearchBox(this.mob.getAttributeValue(EntityAttributes.GENERIC_FOLLOW_RANGE)),
-                machine -> (machine instanceof ArmoredPersonnelUnitEntity || machine instanceof MachineGunEntity)
+                machine -> (machine instanceof ArmoredPersonnelUnitEntity
+                            || machine instanceof MachineGunEntity
+                            || machine instanceof SpaceshipEntity)
                         && machine.isAlive()
                         && !machine.hasPassengers()
                         && machine.getHealth() < machine.getMaxHealth()

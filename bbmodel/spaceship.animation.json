@@ -1,0 +1,38 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.spaceship.common": {
+			"loop": true,
+			"bones": {
+				"main": {
+					"rotation": {
+						"vector": ["variable.pitch", 0, 0]
+					},
+					"scale": {
+						"vector": [1.25, 1.25, 1.25]
+					}
+				},
+				"plasma0": {
+					"scale": {
+						"vector": [1, 1, "variable.has_driver * (1 + variable.is_accelerating)"]
+					}
+				},
+				"plasma1": {
+					"scale": {
+						"vector": [1, 1, "variable.has_driver * (1 + variable.is_accelerating)"]
+					}
+				},
+				"plasma3": {
+					"scale": {
+						"vector": [1, 1, "variable.has_driver * (1 + variable.is_accelerating)"]
+					}
+				},
+				"plasma2": {
+					"scale": {
+						"vector": [1, 1, "variable.has_driver * (1 + variable.is_accelerating)"]
+					}
+				}
+			}
+		}
+	}
+}

@@ -27,6 +27,7 @@ public abstract class SoundEventRegistry {
     public static final SoundEvent ROBOT_SENTINEL_DEATH = SoundEvent.of(TheMatrix.id("robot_sentinel_death"));
     public static final SoundEvent ROBOT_SENTINEL_HURT = SoundEvent.of(TheMatrix.id("robot_sentinel_hurt"));
     public static final SoundEvent ROBOT_SENTINEL_RADAR_DETECTION = SoundEvent.of(TheMatrix.id("robot_sentinel_radar_detection"));
+    public static final SoundEvent SPACESHIP_ACCELERATING = SoundEvent.of(TheMatrix.id("spaceship_accelerating"));
     public static final SoundEvent SPANNER_TWIST = SoundEvent.of(TheMatrix.id("spanner_twist"));
     public static final SoundEvent VENDING_MACHINE_GOODS_POPPING = SoundEvent.of(TheMatrix.id("vending_machine_goods_popping"));
     public static final SoundEvent VENDING_MACHINE_SWITCHING_OPTIONS = SoundEvent.of(TheMatrix.id("vending_machine_switching_options"));
@@ -68,6 +69,7 @@ public abstract class SoundEventRegistry {
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("robot_sentinel_death"), ROBOT_SENTINEL_DEATH);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("robot_sentinel_hurt"), ROBOT_SENTINEL_HURT);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("robot_sentinel_radar_detection"), ROBOT_SENTINEL_RADAR_DETECTION);
+        Registry.register(Registries.SOUND_EVENT, TheMatrix.id("spaceship_accelerating"), SPACESHIP_ACCELERATING);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("spanner_twist"), SPANNER_TWIST);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("vending_machine_goods_popping"), VENDING_MACHINE_GOODS_POPPING);
         Registry.register(Registries.SOUND_EVENT, TheMatrix.id("vending_machine_switching_options"), VENDING_MACHINE_SWITCHING_OPTIONS);

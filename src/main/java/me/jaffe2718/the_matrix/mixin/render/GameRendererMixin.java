@@ -1,6 +1,7 @@
 package me.jaffe2718.the_matrix.mixin.render;
 
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.SpaceshipEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +21,10 @@ public class GameRendererMixin {
         if (MinecraftClient.getInstance().player != null &&
                 MinecraftClient.getInstance().player.getVehicle() instanceof ArmoredPersonnelUnitEntity) {
             return d + 20;
+        } else if (MinecraftClient.getInstance().player != null
+                && MinecraftClient.getInstance().player.getVehicle() instanceof SpaceshipEntity spaceship
+                && spaceship.isAccelerating()) {
+            return d + 10;
         } else {
             return d;
         }

@@ -48,7 +48,7 @@ This mod is still in development, and the plan is as follows:
          - [x] Ambient
          - [x] Hurt
          - [x] Death
-      - [x] Create APU like iron golem: see [MachineBlock.java](src/main/java/me/jaffe2718/the_matrix/element/block/MachineBlock.java)
+      - [x] Create APU like iron golem: see [EngineCoreBlock.java](src/main/java/me/jaffe2718/the_matrix/element/block/EngineCoreBlock.java)
       - [x] Translations
    - [ ] Digger Robot (boss)
      - [x] Model & Textures
@@ -73,7 +73,17 @@ This mod is still in development, and the plan is as follows:
          - [ ] Hurt
          - [ ] Death
       - [x] Translations
-   - [ ] Space Warship (rideable)
+   - [x] Spaceship (rideable) see [SpaceshipEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/vehicle/SpaceshipEntity.java)
+      - [x] Define Spaceship entity
+      - [x] Model & Textures: see [SpaceshipModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/SpaceshipModel.java)
+      - [x] Create Spaceship : see [EngineCoreBlock.java](src/main/java/me/jaffe2718/the_matrix/element/block/EngineCoreBlock.java)
+      - [x] Animations
+      - [x] AI Goals
+      - [x] Sound events
+         - [x] Ambient
+         - [x] Hurt
+         - [x] Death
+      - [x] Translations
    - [x] Zion People
        - [x] Define Zion People entity: see [ZionPeopleEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/ZionPeopleEntity.java)
        - [x] Model & Textures: see [ZionPeopleModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/ZionPeopleModel.java)
@@ -127,9 +137,7 @@ This mod is still in development, and the plan is as follows:
       - [x] Define Robot Sentinel entity: see [RobotSentinelEntity.java](src/main/java/me/jaffe2718/the_matrix/element/entity/mob/RobotSentinelEntity.java)
       - [x] Model & Textures: see [RobotSentinelModel.java](src/main/java/me/jaffe2718/the_matrix/client/model/entity/RobotSentinelModel.java)
       - [x] Animations
-      - [ ] AI Goals
-         - [x] basic define
-         - [ ] advanced define
+      - [x] AI Goals
       - [x] Sound events
          - [x] Ambient
          - [x] Hurt
@@ -138,6 +146,8 @@ This mod is still in development, and the plan is as follows:
           - [x] Machine parts
           - [x] CPU
       - [ ] Spawn conditions
+          - [ ] Robot World
+          - [x] Zion
 
 
 ### Items
@@ -170,13 +180,13 @@ This mod is still in development, and the plan is as follows:
       - [x] Realise function to tp to Virtual World
    
 3. Common
-   - [ ] CPUs
+   - [x] CPUs
       - [x] Define CPU item
       - [x] To recipe Laptop
    - [x] Laptop (to earn coins)
       - [x] Define laptop item
       - [x] Realise function to earn coins by playing game 2048
-   - [x] Machines parts (get it by killing robots, to make many things like space warship, APU mecha, etc)
+   - [x] Machines parts (get it by killing robots, to make many things like spaceship, APU, etc.)
    - [x] Mechanical Armors
    - [x] Mining Drill (to mine)
    - [x] Batteries (to power the electromagnetic guns)
@@ -186,7 +196,6 @@ This mod is still in development, and the plan is as follows:
       - [x] Define electromagnetic gun item
       - [x] Animations & Models & Textures
       - [x] Realise function to shoot
-   - [ ] Electromagnetic hand grenades (to kill robots)
    - [x] Promethium Ore (to make energy batteries, etc)
       - [x] Define [deepslate] promethium ore block
       - [x] Define promethium ore item
