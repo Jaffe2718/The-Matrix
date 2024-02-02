@@ -176,7 +176,7 @@ public class ZionPeopleEntity
      * apu pilot, infantry, rifleman -> true
      * [else] -> false
      * */
-    private boolean isSoldier() {
+    public boolean isSoldier() {
         int jobId = this.getJobId();
         return jobId == 1 || jobId == 6 || jobId == 9;
     }

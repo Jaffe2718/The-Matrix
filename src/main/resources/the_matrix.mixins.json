@@ -6,7 +6,8 @@
     "mixins": [
         "entity.EnderPearlEntityMixin",
         "entity.PlayerEntityMixin",
-        "entity.attribute.EntityAttributesMixin"
+        "entity.attribute.EntityAttributesMixin",
+        "server.network.ServerPlayNetworkHandlerMixin"
     ],
     "client": [
         "render.GameRendererMixin",

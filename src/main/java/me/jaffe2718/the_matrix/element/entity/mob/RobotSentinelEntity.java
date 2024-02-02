@@ -3,6 +3,9 @@ package me.jaffe2718.the_matrix.element.entity.mob;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel.AttackGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel.IdleFlyGoal;
 import me.jaffe2718.the_matrix.element.entity.ai.goal.robot_sentinel.SelectTargetGoal;
+import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.MachineGunEntity;
+import me.jaffe2718.the_matrix.element.entity.vehicle.SpaceshipEntity;
 import me.jaffe2718.the_matrix.unit.MathUnit;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.entity.Entity;
@@ -58,8 +61,14 @@ public class RobotSentinelEntity
         this.goalSelector.add(1, new AttackGoal(this));
         this.goalSelector.add(2, new IdleFlyGoal(this));
         this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(2, new SelectTargetGoal<>(this, PlayerEntity.class, true));
-        this.targetSelector.add(2, new SelectTargetGoal<>(this, ZionPeopleEntity.class, true));
+        this.targetSelector.add(2, new SelectTargetGoal<>(this, ArmoredPersonnelUnitEntity.class, true, Entity::hasPassengers));
+        this.targetSelector.add(2, new SelectTargetGoal<>(this, MachineGunEntity.class, true, Entity::hasPassengers));
+        this.targetSelector.add(2, new SelectTargetGoal<>(this, SpaceshipEntity.class, true, Entity::hasPassengers));
+        this.targetSelector.add(3, new SelectTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(4, new SelectTargetGoal<>(this, ZionPeopleEntity.class, true,
+                entity -> entity instanceof ZionPeopleEntity zionPeople && zionPeople.isSoldier()));
+        this.targetSelector.add(5, new SelectTargetGoal<>(this, ZionPeopleEntity.class, true,
+                entity -> entity instanceof ZionPeopleEntity zionPeople && !zionPeople.isSoldier()));
     }
 
     @Override

@@ -133,8 +133,10 @@ public class ElectromagneticBulletEntity
     }
 
     private void destroy() {
-        this.discard();
-        this.getWorld().emitGameEvent(GameEvent.ENTITY_DAMAGE, this.getPos(), GameEvent.Emitter.of(this));
+        try {
+            this.getWorld().emitGameEvent(GameEvent.ENTITY_DAMAGE, this.getPos(), GameEvent.Emitter.of(this));
+            this.discard();
+        } catch (Exception ignored) {}
     }
 
     /**

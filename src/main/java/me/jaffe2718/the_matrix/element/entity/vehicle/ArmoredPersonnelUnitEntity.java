@@ -6,6 +6,7 @@ import me.jaffe2718.the_matrix.element.entity.misc.BulletEntity;
 import me.jaffe2718.the_matrix.element.entity.mob.ZionPeopleEntity;
 import me.jaffe2718.the_matrix.unit.*;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -21,8 +22,10 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.c2s.play.ButtonClickC2SPacket;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
@@ -52,6 +55,9 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
     private static final TrackedData<Boolean> IS_WALKING = DataTracker.registerData(ArmoredPersonnelUnitEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final String BULLET_NUM_KEY = "BulletNum";
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    /** Work on the server side, to apply the shoot cooldown, min=0, max=4, default=0 */
+    public int shootCooldown = 0;
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return PathAwareEntity.createLivingAttributes()
@@ -241,8 +247,40 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         super.travel(relativeVelocity);
     }
 
+    /**
+     * The APU can only be controlled by the player, if the passenger is zion people, the APU will control itself.
+     * The functions of player controlling the APU are:
+     * 1. move the APU, {@link #travel(Vec3d)}
+     * 2. shoot the bullet, {@link #shoot()}, {@link me.jaffe2718.the_matrix.mixin.server.network.ServerPlayNetworkHandlerMixin}
+     * */
     @Override
     public void tick() {
+        if (this.shootCooldown > 0) {
+            this.shootCooldown--;
+        }
+        if (this.getControllingPassenger() instanceof ClientPlayerEntity clientPlayer) {
+            if (this.getBulletNum() == 0) {
+                clientPlayer.sendMessage(Text.translatable("message.the_matrix.apu_no_bullet"), true);
+            } else if (!KeyBindings.FIRE_SAFETY_CATCH.isPressed()) {
+                clientPlayer.sendMessage(Text.translatable("message.the_matrix.press")
+                        .append(" ")
+                        .append(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyLocalizedText())
+                        .append(" ")
+                        .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
+            } else if (!MinecraftClient.getInstance().options.attackKey.isPressed()) {
+                clientPlayer.sendMessage(Text.translatable("message.the_matrix.press")
+                        .append(" ")
+                        .append(MinecraftClient.getInstance().options.attackKey.getBoundKeyLocalizedText())
+                        .append(" ")
+                        .append(Text.translatable("message.the_matrix.to_shoot")), true);
+            }
+            clientPlayer.networkHandler.sendPacket(new ButtonClickC2SPacket(
+                    clientPlayer.currentScreenHandler.syncId,
+                    (KeyBindings.FIRE_SAFETY_CATCH.isPressed() ? KeyBindings.BUTTON_EVENT_IDS[0] : KeyBindings.BUTTON_EVENT_IDS[3])));
+            clientPlayer.networkHandler.sendPacket(new ButtonClickC2SPacket(
+                    clientPlayer.currentScreenHandler.syncId,
+                    (MinecraftClient.getInstance().options.attackKey.isPressed() ? KeyBindings.BUTTON_EVENT_IDS[1] : KeyBindings.BUTTON_EVENT_IDS[4])));
+        }
         if (this.getControllingPassenger() instanceof PlayerEntity player && this.age % 4 == 0) {
             this.setWalking((Math.abs(player.sidewaysSpeed) + Math.abs(player.forwardSpeed)) > 5e-2);
             if (this.isOnGround() &&
@@ -254,48 +292,6 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
                             this.getX(), this.getY(), this.getZ(),
                             32, 1, 1, 1, 0.0);
                 }
-            }
-            if (KeyBindings.FIRE_SAFETY_CATCH.isPressed()) {
-                if (MinecraftClient.getInstance().options.attackKey.isPressed() &&
-                        this.hasPassenger(MinecraftClient.getInstance().player)) {
-                    if (this.getBulletNum() > 0) {
-                        // step 1: calculate the velocity of the bullet and the position of the gun
-                        Vec3d velocity = player.getRotationVector().multiply(12);
-                        Vec3d gunPos = player.getEyePos().add(player.getRotationVector().multiply(2.4));
-                        BulletEntity.shoot(this, gunPos, velocity);
-                        // step 2: apply recoil (affect the player's head yaw and body pitch)
-                        player.setYaw(player.getYaw() + this.random.nextFloat() * 3 - 1.5F);
-                        player.setPitch(player.getPitch() - this.random.nextFloat() * 3);
-                        // step 3: play sound & spawn particles & consume a bullet
-                        if (this.age % 8 == 0) {
-                            this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
-                            this.playSound(SoundEventRegistry.BULLET_SHELL_HITTING_THE_GROUND, 1.0F, 1.0F);
-                        }
-                        Vec3d view = this.getRotationVector();
-                        Vec3d leftGunPos = this.getPos().add(0, this.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(-view.z, 0, view.x).normalize().multiply(2.5));
-                        Vec3d rightGunPos = this.getPos().add(0, this.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(view.z, 0, -view.x).normalize().multiply(2.5));
-                        // spawn particles
-                        if (this.getWorld() instanceof ServerWorld serverWorld) {
-                            serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, leftGunPos.getX(), leftGunPos.getY(), leftGunPos.getZ(),
-                                    1, 0, 0, 0, 0.3);
-                            serverWorld.spawnParticles(ParticleRegistry.BULLET_SHELL, rightGunPos.getX(), rightGunPos.getY(), rightGunPos.getZ(),
-                                    1, 0, 0, 0, 0.3);
-                        }
-                        this.consumeBullet();
-                    } else {
-                        player.sendMessage(Text.translatable("message.the_matrix.apu_no_bullet"), true);
-                    }
-                } else {
-                    player.sendMessage(Text
-                            .translatable("message.the_matrix.press").append(" ")
-                            .append(Text.translatable(MinecraftClient.getInstance().options.attackKey.getBoundKeyTranslationKey())).append(" ")
-                            .append(Text.translatable("message.the_matrix.to_shoot")), true);
-                }
-            } else if (player.isMainPlayer()) {
-                player.sendMessage(Text
-                        .translatable("message.the_matrix.press").append(" ")
-                        .append(Text.translatable(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyTranslationKey())).append(" ")
-                        .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
             }
         } else if (this.getFirstPassenger() instanceof ZionPeopleEntity zionPeople) {
             this.setTarget(zionPeople.getTarget());
@@ -351,6 +347,33 @@ public class ArmoredPersonnelUnitEntity extends PathAwareEntity implements GeoEn
         controllers.add(
                 new AnimationController<>(this, "Walk", this::handleWalk)
         );
+    }
+
+    public void shoot() {
+        this.shootCooldown = 4;
+        if (this.getControllingPassenger() instanceof ServerPlayerEntity serverPlayer
+                && this.getBulletNum() > 0) {
+            // step 1: calculate the velocity of the bullet and the position of the gun
+            Vec3d velocity = serverPlayer.getRotationVector().multiply(12);
+            Vec3d gunPos = serverPlayer.getEyePos().add(serverPlayer.getRotationVector().multiply(2.4));
+            BulletEntity.shoot(this, gunPos, velocity);
+            // step 2: apply recoil (affect the player's head yaw and body pitch)
+            serverPlayer.setYaw(serverPlayer.getYaw() + this.getRandom().nextFloat() * 3 - 1.5F);
+            serverPlayer.setPitch(serverPlayer.getPitch() - this.getRandom().nextFloat() * 3);
+            // step 3: play sound
+            this.playSound(SoundEventRegistry.ARMORED_PERSONNEL_UNIT_SHOOT, 1.0F, 1.0F);
+            this.playSound(SoundEventRegistry.BULLET_SHELL_HITTING_THE_GROUND, 1.0F, 1.0F);
+            // step 4: spawn a bullet shell particle
+            Vec3d view = this.getRotationVector();
+            Vec3d leftGunPos = this.getPos().add(0, this.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(-view.z, 0, view.x).normalize().multiply(2.5));
+            Vec3d rightGunPos = this.getPos().add(0, this.getHeight(), 0).add(view.multiply(4)).add(new Vec3d(view.z, 0, -view.x).normalize().multiply(2.5));
+            serverPlayer.getServerWorld().spawnParticles(ParticleRegistry.BULLET_SHELL, leftGunPos.getX(), leftGunPos.getY(), leftGunPos.getZ(),
+                    1, 0, 0, 0, 0.3);
+            serverPlayer.getServerWorld().spawnParticles(ParticleRegistry.BULLET_SHELL, rightGunPos.getX(), rightGunPos.getY(), rightGunPos.getZ(),
+                    1, 0, 0, 0, 0.3);
+            // step 5: consume a bullet
+            this.consumeBullet();
+        }
     }
 
     private PlayState handleWalk(@NotNull AnimationState<ArmoredPersonnelUnitEntity> state) {

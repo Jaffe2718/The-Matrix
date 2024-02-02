@@ -25,6 +25,7 @@
     "mixins": [
         "the_matrix.mixins.json"
     ],
+    "accessWidener": "the_matrix.accesswidener",
     "depends": {
         "java": ">=17",
         "fabricloader": ">=${loader_version}",

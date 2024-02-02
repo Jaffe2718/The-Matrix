@@ -13,6 +13,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -43,13 +44,10 @@ public class BulletEntity
 
     @Override
     protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
-        // super.onEntityHit(entityHitResult);
         Entity target = entityHitResult.getEntity();
         target.damage(this.getDamageSources().arrow(this, this.getOwner()), BULLET_DAMAGE);
-//        Vec3d groundPunchVelocity = this.getVelocity().multiply(1, 0, 1).normalize().multiply(0.3);
-//        target.addVelocity(groundPunchVelocity.x, 0.1, groundPunchVelocity.z);
         this.playSound(SoundEventRegistry.BULLET_HITTING_ENTITY, 1.0F, 1.0F);
-        this.discard();
+        this.destroy();
     }
 
     @Override
@@ -62,7 +60,14 @@ public class BulletEntity
             Vec3d hitPos = blockHitResult.getPos();
             serverWorld.spawnParticles(new BlockStateParticleEffect(ParticleTypes.BLOCK, blockState), hitPos.getX(), hitPos.getY(), hitPos.getZ(), 8, 0.5, 0.5, 0.5, 0.0);
         }
-        this.discard();
+        this.destroy();
+    }
+
+    private void destroy() {
+        try {
+            this.getWorld().emitGameEvent(GameEvent.ENTITY_DAMAGE, this.getPos(), GameEvent.Emitter.of(this));
+            this.discard();
+        } catch (Exception ignored) {}
     }
 
     @Override

@@ -6,6 +6,7 @@ import me.jaffe2718.the_matrix.unit.ItemRegistry;
 import me.jaffe2718.the_matrix.unit.KeyBindings;
 import me.jaffe2718.the_matrix.unit.SoundEventRegistry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -22,6 +23,7 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.c2s.play.ButtonClickC2SPacket;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -50,7 +52,7 @@ public class SpaceshipEntity
         extends PathAwareEntity
         implements GeoEntity {
 
-    public static final int MAX_POWER = 24;
+    public static final int MAX_POWER = 30;
 
     /** Tracks the amount of power remaining in the spaceship, min = 0, max = 24, default = 0 */
     private static final TrackedData<Integer> REMAINING_POWER = DataTracker.registerData(SpaceshipEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -60,7 +62,7 @@ public class SpaceshipEntity
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     /** Work on the server side, to apply the shoot cooldown, min=0, max=10, default=0 */
-    private int shootCooldown;
+    public int shootCooldown;
 
     public static DefaultAttributeContainer createAttributes() {
         return PathAwareEntity.createLivingAttributes()
@@ -112,6 +114,7 @@ public class SpaceshipEntity
             player.getItemCooldownManager().set(ItemRegistry.BATTERY, 40);
             return ActionResult.success(this.getWorld().isClient);
         } else if (handStack.isOf(ItemRegistry.SPANNER)
+                && !this.hasPassengers()        // the spaceship can't be repaired while riding it
                 && !player.getItemCooldownManager().isCoolingDown(ItemRegistry.SPANNER)
                 && this.getHealth() < this.getMaxHealth()) {
             this.heal(20F);
@@ -158,6 +161,13 @@ public class SpaceshipEntity
         return super.isInvulnerableTo(damageSource);
     }
 
+    /**
+     * The spaceship can only be driven by the player.
+     * @see me.jaffe2718.the_matrix.mixin.server.network.ServerPlayNetworkHandlerMixin
+     * @see SpaceshipEntity#travel(Vec3d)
+     * @see SpaceshipEntity#shoot()
+     * @see SpaceshipEntity#startAccelerating()
+     * */
     @Override
     public void tick() {
         this.setOnGround(!this.hasPassengers() && super.isOnGround());
@@ -171,38 +181,44 @@ public class SpaceshipEntity
         if (this.shootCooldown > 0) {
             this.shootCooldown--;
         }
-        if (this.getControllingPassenger() instanceof PlayerEntity player) {
-            if (this.getPower() > 0) {
-                if (KeyBindings.FIRE_SAFETY_CATCH.isPressed() && this.hasPassenger(MinecraftClient.getInstance().player)) {
-                    if (MinecraftClient.getInstance().options.attackKey.isPressed() && this.shootCooldown == 0) {
-                        this.shoot();
-                    } else if (MinecraftClient.getInstance().options.useKey.isPressed() && !this.isAccelerating()) {
-                        this.startAccelerating();
-                    } else if (!this.getWorld().isClient) {
-                        if (this.age % 150 > 74) {
-                            player.sendMessage(Text.translatable("message.the_matrix.press")
-                                    .append(" ")
-                                    .append(Text.translatable(MinecraftClient.getInstance().options.attackKey.getBoundKeyTranslationKey()))
-                                    .append(" ")
-                                    .append(Text.translatable("message.the_matrix.to_shoot")), true);
-                        } else {
-                            player.sendMessage(Text.translatable("message.the_matrix.press")
-                                    .append(" ")
-                                    .append(Text.translatable(MinecraftClient.getInstance().options.useKey.getBoundKeyTranslationKey()))
-                                    .append(" ")
-                                    .append(Text.translatable("message.the_matrix.to_accelerate")), true
-                            );
-                        }
-                    }
+        // client side: show the key press tips & send the packet to the server
+        if (this.getControllingPassenger() instanceof ClientPlayerEntity clientPlayer) {
+            if (this.getPower() == 0) {
+                clientPlayer.sendMessage(Text.translatable("message.the_matrix.spaceship.should_charge"), true);
+            } else if (KeyBindings.FIRE_SAFETY_CATCH.isPressed()
+                    && !MinecraftClient.getInstance().options.attackKey.isPressed()
+                    && !MinecraftClient.getInstance().options.useKey.isPressed()) {
+                if (this.age % 150 > 74) {
+                    clientPlayer.sendMessage(Text.translatable("message.the_matrix.press")
+                            .append(" ")
+                            .append(MinecraftClient.getInstance().options.attackKey.getBoundKeyLocalizedText())
+                            .append(" ")
+                            .append(Text.translatable("message.the_matrix.to_shoot")), true);
                 } else {
-                    player.sendMessage(Text
-                            .translatable("message.the_matrix.press").append(" ")
-                            .append(Text.translatable(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyTranslationKey())).append(" ")
-                            .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
+                    clientPlayer.sendMessage(Text.translatable("message.the_matrix.press")
+                            .append(" ")
+                            .append(MinecraftClient.getInstance().options.useKey.getBoundKeyLocalizedText())
+                            .append(" ")
+                            .append(Text.translatable("message.the_matrix.to_accelerate")), true
+                    );
                 }
             } else {
-                player.sendMessage(Text.translatable("message.the_matrix.spaceship.should_charge"), true);
+                clientPlayer.sendMessage(Text
+                        .translatable("message.the_matrix.press")
+                        .append(" ")
+                        .append(KeyBindings.FIRE_SAFETY_CATCH.getBoundKeyLocalizedText())
+                        .append(" ")
+                        .append(Text.translatable("message.the_matrix.to_open_the_safety_catch")), true);
             }
+            clientPlayer.networkHandler.sendPacket(new ButtonClickC2SPacket(
+                    clientPlayer.currentScreenHandler.syncId,
+                    (KeyBindings.FIRE_SAFETY_CATCH.isPressed() ? KeyBindings.BUTTON_EVENT_IDS[0] : KeyBindings.BUTTON_EVENT_IDS[3])));
+            clientPlayer.networkHandler.sendPacket(new ButtonClickC2SPacket(
+                    clientPlayer.currentScreenHandler.syncId,
+                    (MinecraftClient.getInstance().options.attackKey.isPressed() ? KeyBindings.BUTTON_EVENT_IDS[1] : KeyBindings.BUTTON_EVENT_IDS[4])));
+            clientPlayer.networkHandler.sendPacket(new ButtonClickC2SPacket(
+                    clientPlayer.currentScreenHandler.syncId,
+                    (MinecraftClient.getInstance().options.useKey.isPressed() ? KeyBindings.BUTTON_EVENT_IDS[2] : KeyBindings.BUTTON_EVENT_IDS[5])));
         }
         super.tick();
     }
@@ -259,8 +275,8 @@ public class SpaceshipEntity
         this.dataTracker.set(ACCELERATE_TICKS, Math.max(0, this.dataTracker.get(ACCELERATE_TICKS) - 1));
     }
 
-    private void startAccelerating() {
-        this.getWorld().playSoundFromEntity(this, SoundEventRegistry.SPACESHIP_ACCELERATING, this.getSoundCategory(), 1.0F, 1.0F);
+    public void startAccelerating() {
+        this.playSound(SoundEventRegistry.SPACESHIP_ACCELERATING, 1.0F, 1.0F);
         this.dataTracker.set(REMAINING_POWER, Math.max(0, this.dataTracker.get(REMAINING_POWER) - 1));
         this.dataTracker.set(ACCELERATE_TICKS, 30);
     }
@@ -273,7 +289,7 @@ public class SpaceshipEntity
         return this.dataTracker.get(REMAINING_POWER);
     }
 
-    private void shoot() {
+    public void shoot() {
         this.shootCooldown = 10;
         this.dataTracker.set(REMAINING_POWER, Math.max(0, this.dataTracker.get(REMAINING_POWER) - 1));
         if (this.getControllingPassenger() instanceof PlayerEntity player) {
