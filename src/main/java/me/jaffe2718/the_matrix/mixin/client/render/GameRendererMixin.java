@@ -1,4 +1,4 @@
-package me.jaffe2718.the_matrix.mixin.render;
+package me.jaffe2718.the_matrix.mixin.client.render;
 
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;
 import me.jaffe2718.the_matrix.element.entity.vehicle.SpaceshipEntity;

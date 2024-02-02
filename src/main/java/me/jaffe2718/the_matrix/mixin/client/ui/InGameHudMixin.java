@@ -1,4 +1,4 @@
-package me.jaffe2718.the_matrix.mixin.ui;
+package me.jaffe2718.the_matrix.mixin.client.ui;
 
 import me.jaffe2718.the_matrix.TheMatrix;
 import me.jaffe2718.the_matrix.element.entity.vehicle.ArmoredPersonnelUnitEntity;

@@ -10,9 +10,9 @@
         "server.network.ServerPlayNetworkHandlerMixin"
     ],
     "client": [
-        "render.GameRendererMixin",
-        "ui.InGameHudMixin",
-        "ui.IntegratedServerLoaderMixin"
+        "client.render.GameRendererMixin",
+        "client.ui.InGameHudMixin",
+        "client.ui.IntegratedServerLoaderMixin"
     ],
     "injectors": {
         "defaultRequire": 1
