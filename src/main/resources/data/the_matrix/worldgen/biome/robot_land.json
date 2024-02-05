@@ -4,6 +4,7 @@
     "has_precipitation": false,
     "effects": {
         "sky_color": 12124154,
+        "foliage_color": 11983713,
         "mood_sound": {
             "block_search_extent": 8,
             "offset": 2.0,
@@ -11,12 +12,26 @@
             "tick_delay": 6000
         },
         "fog_color": 16777215,
+        "grass_color": 11983713,
         "water_color": 4159204,
-        "water_fog_color": 329011,
-        "grass_color": 5933884
+        "water_fog_color": 329011
     },
-    "spawners": {},
-    "spawn_costs": {},
+    "spawners": {
+        "monster": [
+            {
+                "type": "the_matrix:robot_sentinel",
+                "maxCount": 1,
+                "minCount": 1,
+                "weight": 100
+            }
+        ]
+    },
+    "spawn_costs": {
+        "the_matrix:robot_sentinel": {
+            "energy_budget": 0.1,
+            "charge": 10
+        }
+    },
     "carvers": {},
     "features": [
         [],

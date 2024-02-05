@@ -54,7 +54,7 @@ public class SpaceshipEntity
 
     public static final int MAX_POWER = 30;
 
-    /** Tracks the amount of power remaining in the spaceship, min = 0, max = 24, default = 0 */
+    /** Tracks the amount of power remaining in the spaceship, min = 0, max = {@link SpaceshipEntity#MAX_POWER}, default = 0 */
     private static final TrackedData<Integer> REMAINING_POWER = DataTracker.registerData(SpaceshipEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     /** Tracks the amount of ticks the entity has been accelerated for, min = 0, max = 30 */
@@ -282,7 +282,7 @@ public class SpaceshipEntity
     }
 
     private void charge() {
-        this.dataTracker.set(REMAINING_POWER, Math.min(24, this.dataTracker.get(REMAINING_POWER) + 6));
+        this.dataTracker.set(REMAINING_POWER, Math.min(SpaceshipEntity.MAX_POWER, this.dataTracker.get(REMAINING_POWER) + 6));
     }
 
     public int getPower() {

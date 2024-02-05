@@ -49,6 +49,14 @@ public class RobotSentinelEntity
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 128.0D);
     }
 
+    private static boolean hasNoCreativePassenger(@NotNull Entity mount) {
+        if (mount.getFirstPassenger() instanceof PlayerEntity player) {
+            return !player.isCreative();
+        } else {
+            return true;
+        }
+    }
+
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public RobotSentinelEntity(EntityType<? extends RobotSentinelEntity> entityType, World world) {
         super(entityType, world);
@@ -61,9 +69,9 @@ public class RobotSentinelEntity
         this.goalSelector.add(1, new AttackGoal(this));
         this.goalSelector.add(2, new IdleFlyGoal(this));
         this.targetSelector.add(1, new RevengeGoal(this));
-        this.targetSelector.add(2, new SelectTargetGoal<>(this, ArmoredPersonnelUnitEntity.class, true, Entity::hasPassengers));
-        this.targetSelector.add(2, new SelectTargetGoal<>(this, MachineGunEntity.class, true, Entity::hasPassengers));
-        this.targetSelector.add(2, new SelectTargetGoal<>(this, SpaceshipEntity.class, true, Entity::hasPassengers));
+        this.targetSelector.add(2, new SelectTargetGoal<>(this, ArmoredPersonnelUnitEntity.class, true, RobotSentinelEntity::hasNoCreativePassenger));
+        this.targetSelector.add(2, new SelectTargetGoal<>(this, MachineGunEntity.class, true, RobotSentinelEntity::hasNoCreativePassenger));
+        this.targetSelector.add(2, new SelectTargetGoal<>(this, SpaceshipEntity.class, true, RobotSentinelEntity::hasNoCreativePassenger));
         this.targetSelector.add(3, new SelectTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(4, new SelectTargetGoal<>(this, ZionPeopleEntity.class, true,
                 entity -> entity instanceof ZionPeopleEntity zionPeople && zionPeople.isSoldier()));

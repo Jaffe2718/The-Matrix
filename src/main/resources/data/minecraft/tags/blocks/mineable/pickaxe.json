@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
+        "the_matrix:engine_core",
         "the_matrix:deepslate_promethium_ore",
         "the_matrix:machine_block",
         "the_matrix:plasma_lamp",
